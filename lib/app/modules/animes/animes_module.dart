@@ -7,7 +7,7 @@ import 'package:dio/dio.dart';
 class AnimesModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => AnimesRepository(i.get())),
+        Bind((i) => AnimesRepository(i.get<Dio>())),
         Bind((i) => AnimesBloc()),
         Bind((i) => Dio()),
       ];

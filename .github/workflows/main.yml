@@ -14,18 +14,13 @@ jobs:
       with:
         flutter-version: '1.12.13+hotfix.5'
     - run: flutter pub get
+    - run: flutter analyze
     - run: flutter test
-    - run: flutter build apk --release
+    # - run: flutter build apk --release
     # - run: flutter build appbundle --target-platform android-arm,android-arm64,android-x64
-    # - name: Create a Release APK
-    #   uses: ncipollo/release-action@v1
+    # - name: Exportar Release
+    #   uses: actions/upload-artifact@v1
     #   with:
-    #     artifacts: "build/app/outputs/apk/release/*.apk"
-    #     commit: ''
-    #     token: ${{ secrets.TOKEN }}
-    - name: Exportar Release
-      uses: actions/upload-artifact@v1
-      with:
-        name: release
-        path: build/app/outputs/apk/release/
+    #     name: release
+    #     path: build/app/outputs/apk/release/
 

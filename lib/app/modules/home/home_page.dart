@@ -20,12 +20,12 @@ class _HomePageState extends State<HomePage> {
         children: <Widget>[
           Center(
               child: RaisedButton(
-            onPressed: () => Navigator.of(context).pushNamed('/mangas'),
+            onPressed: () => Navigator.pushNamed(context, '/mangas'),
             child: Text("Ler Mangás"),
           )),
           Center(
               child: RaisedButton(
-            onPressed: () => Navigator.of(context).pushNamed('/animes'),
+            onPressed: () => Navigator.pushNamed(context, '/animes'),
             child: Text("Assistir Animes"),
           )),
         ],

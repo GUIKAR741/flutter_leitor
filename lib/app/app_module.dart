@@ -1,5 +1,3 @@
-import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
-import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/app_bloc.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter/material.dart';
@@ -15,8 +13,6 @@ class AppModule extends MainModule {
   @override
   List<Router> get routers => [
         Router('/', module: HomeModule()),
-        Router('/mangas', module: MangasModule()),
-        Router('/animes', module: AnimesModule()),
       ];
 
   @override
