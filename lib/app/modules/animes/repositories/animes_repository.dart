@@ -2,7 +2,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:dio/dio.dart';
 
 class AnimesRepository extends Disposable {
-  Future fetchPost(Dio client) async {
+  final Dio client;
+
+  AnimesRepository(this.client);
+
+  Future fetchPost() async {
     final response =
         await client.get('https://jsonplaceholder.typicode.com/posts/1');
     return response.data;

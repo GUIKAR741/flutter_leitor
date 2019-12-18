@@ -25,4 +25,9 @@ jobs:
     #     artifacts: "build/app/outputs/apk/release/*.apk"
     #     commit: ''
     #     token: ${{ secrets.TOKEN }}
+    - name: Exportar Release
+      uses: actions/upload-artifact@v1
+      with:
+        name: release
+        path: build/app/outputs/apk/release/
 

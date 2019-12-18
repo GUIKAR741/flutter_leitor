@@ -2,7 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dio/dio.dart';
 
-import 'package:flutter_leitor/app/shared/repositories/animes_repository.dart';
+import 'package:flutter_leitor/app/modules/animes/repositories/animes_repository.dart';
 
 class MockClient extends Mock implements Dio {}
 
@@ -11,8 +11,8 @@ void main() {
   MockClient client;
 
   setUp(() {
-    repository = AnimesRepository();
     client = MockClient();
+    repository = AnimesRepository(client);
   });
 
   group('AnimesRepository Test', () {
@@ -24,7 +24,7 @@ void main() {
       when(client.get('https://jsonplaceholder.typicode.com/posts/1'))
           .thenAnswer(
               (_) async => Response(data: {'title': 'Test'}, statusCode: 200));
-      Map<String, dynamic> data = await repository.fetchPost(client);
+      Map<String, dynamic> data = await repository.fetchPost();
       expect(data['title'], 'Test');
     });
   });
