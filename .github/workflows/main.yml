@@ -1,6 +1,9 @@
 name: Teste e Criar
 
-on: [push]
+on: 
+  push:
+    tags:
+    - '*'
 
 jobs:
   build:
