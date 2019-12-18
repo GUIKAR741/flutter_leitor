@@ -8,11 +8,13 @@ class AnimesRepository extends Disposable {
 
   Future fetchPost() async {
     final response =
-        await client.get('https://jsonplaceholder.typicode.com/posts/1');
+        await client.get("https://leitor-mangas-flutter.firebaseio.com/dados/animes.json");
     return response.data;
   }
 
   //dispose will be called automatically
   @override
-  void dispose() {}
+  void dispose() {
+    this.client.close();
+  }
 }
