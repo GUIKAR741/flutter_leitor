@@ -5,10 +5,18 @@ class Titulo {
 
   Titulo({this.imagem, this.link, this.nome});
 
-  Titulo.fromJson(Map<String, dynamic> json) {
-    imagem = json['imagem'];
-    link = json['link'];
-    nome = json['nome'];
+  static Titulo fromJson(Map<String, dynamic> json) {
+    if (json == null) return null;
+    return Titulo(
+      imagem: json['imagem'],
+      link: json['link'],
+      nome: json['nome']
+    );
+  }
+
+   static List<Titulo> fromJsonList(List json) {
+    if (json == null) return null;
+    return json.cast<Map<String, dynamic>>().map(fromJson).toList();
   }
 
   Map<String, dynamic> toJson() {
@@ -18,4 +26,14 @@ class Titulo {
     data['nome'] = this.nome;
     return data;
   }
+
+  @override
+  String toString() => nome;
+
+  @override
+  operator ==(o) => o.nome == nome && o.imagem == imagem && o.link == link;
+
+  @override
+  int get hashCode => nome.hashCode ^ imagem.hashCode ^ link.hashCode;
+  
 }

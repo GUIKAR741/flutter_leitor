@@ -1,3 +1,4 @@
+import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 import 'package:dio/dio.dart';
@@ -23,9 +24,9 @@ void main() {
     test('returns a Post if the http call completes successfully', () async {
       when(client.get("https://leitor-mangas-flutter.firebaseio.com/dados/mangas.json"))
           .thenAnswer(
-              (_) async => Response(data: {'title': 'Test'}, statusCode: 200));
-      Map<String, dynamic> data = await repository.fetchPost();
-      expect(data['title'], 'Test');
+              (_) async => Response(data: {"id": [{"nome": "", "link": "", "imagem": ""}]}, statusCode: 200));
+      List<Titulo> data = await repository.pegarMangas();
+      expect(data, [Titulo(nome: "", link: "", imagem: "")]);
     });
   });
 }

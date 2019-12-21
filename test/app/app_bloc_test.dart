@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/app_module.dart';
 import 'package:flutter_leitor/app/app_bloc.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   Modular.init(AppModule());
   Modular.bindModule(AppModule());
   AppBloc bloc;
