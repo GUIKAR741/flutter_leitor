@@ -44,6 +44,13 @@ class _MangaPageState extends State<MangaPage> {
                       return ListTile(
                         contentPadding: EdgeInsets.symmetric(horizontal: 15),
                         title: Text(snapshot.data[index].titulo),
+                        onTap: () {
+                          Navigator.pushNamed(context, '/mangas/ler_manga',
+                              arguments: {
+                                'manga': widget.manga,
+                                'capitulo': snapshot.data[index]
+                              });
+                        },
                       );
                     },
                     separatorBuilder: (_, index) => Divider(),

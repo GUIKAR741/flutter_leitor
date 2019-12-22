@@ -5,6 +5,7 @@ import 'package:flutter_leitor/app/modules/animes/animes_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   Modular.init(AppModule());
   Modular.bindModule(AnimesModule());
   AnimesBloc bloc;

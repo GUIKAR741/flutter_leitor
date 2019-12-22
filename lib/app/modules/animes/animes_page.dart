@@ -1,6 +1,8 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
+import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_anime_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
 class AnimesPage extends StatefulWidget {
@@ -17,9 +19,20 @@ class _AnimesPageState extends State<AnimesPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(widget.title),
-        ),
+        appBar: AppBar(title: Text(widget.title), actions: <Widget>[
+          IconButton(
+              icon: Icon(
+                Icons.refresh,
+              ),
+              onPressed: () => bloc.listar(refresh: true)),
+          IconButton(
+              icon: Icon(
+                Icons.search,
+              ),
+              onPressed: () {
+                showSearch(context: context, delegate: PesquisarAnime());
+              })
+        ]),
         body: StreamBuilder(
           stream: bloc.dados,
           builder: (_, AsyncSnapshot<List<Titulo>> snapshot) {
@@ -35,7 +48,8 @@ class _AnimesPageState extends State<AnimesPage> {
                   leading: Container(
                     height: 100,
                     width: 50,
-                    child: Image.network(snapshot.data[index].imagem),
+                    child: ExtendedImage.network(snapshot.data[index].imagem,
+                        cache: true, fit: BoxFit.fill),
                   ),
                   title: Text(snapshot.data[index].nome),
                   onTap: () {

@@ -1,3 +1,4 @@
+import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:dio/dio.dart';
@@ -6,17 +7,17 @@ import 'package:html/parser.dart';
 import 'dart:convert';
 
 class AnimeRepository extends Disposable {
-  final Dio client;
+  final CustomDio dio;
 
-  AnimeRepository(this.client);
+  AnimeRepository(this.dio);
 
   Future _getLink(String link) async {
-    final response = await client.get(link);
+    final response = await dio.client.get(link);
     return response.data;
   }
 
   Future _postLink(String link, Map<String, dynamic> data) async {
-    final response = await client.post(link, data: FormData.fromMap(data));
+    final response = await dio.client.post(link, data: FormData.fromMap(data));
     return json.decode(response.data);
   }
 
@@ -49,15 +50,23 @@ class AnimeRepository extends Disposable {
           soup = parse(item);
           Element ep = soup.querySelector('div.epsBoxSobre');
           // print(ep.parent.querySelector('div.epsBoxImg').querySelector('img').attributes['src']);
-          String imagem = ep.parent.querySelector('div.epsBoxImg').querySelector('img').attributes['src'];
-          List<String> info = ep.querySelectorAll('img').where((d) => d.attributes['alt']?.isNotEmpty ?? false).map((e)=>e.attributes['alt']).toList().reversed.toList();
+          String imagem = ep.parent
+              .querySelector('div.epsBoxImg')
+              .querySelector('img')
+              .attributes['src'];
+          List<String> info = ep
+              .querySelectorAll('img')
+              .where((d) => d.attributes['alt']?.isNotEmpty ?? false)
+              .map((e) => e.attributes['alt'])
+              .toList()
+              .reversed
+              .toList();
           episodios.add(Episodio(
               titulo: ep.querySelector('a').text,
               link: ep.querySelector('a').attributes['href'],
-              info: 'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
-              imagem: imagem
-            )
-          );
+              info:
+                  'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
+              imagem: imagem));
         }
       }
     }
@@ -69,35 +78,82 @@ class AnimeRepository extends Disposable {
         List<Element> ova = parent.querySelectorAll('div.epsBox');
         if (ova.isNotEmpty) {
           for (Element ep in ova) {
-            String imagem = ep.querySelector('div.epsBoxImg').querySelector('img').attributes['data-src'];
-            List<String> info = ep.querySelectorAll('img').where((d) => d.attributes['alt']?.isNotEmpty ?? false).map((e)=>e.attributes['alt']).toList().reversed.toList();
+            String imagem = ep
+                .querySelector('div.epsBoxImg')
+                .querySelector('img')
+                .attributes['data-src'];
+            List<String> info = ep
+                .querySelectorAll('img')
+                .where((d) => d.attributes['alt']?.isNotEmpty ?? false)
+                .map((e) => e.attributes['alt'])
+                .toList()
+                .reversed
+                .toList();
             episodios.add(Episodio(
                 titulo:
                     "OVA: ${ep.querySelector('div.epsBoxSobre').querySelector('a').text}",
                 link: ep.querySelector('a').attributes['href'],
-                info: 'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
-                imagem: imagem
-              )
-            );
+                info:
+                    'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
+                imagem: imagem));
           }
         }
         List<Element> filme = parent.querySelectorAll('div.epsBoxFilme');
         if (filme.isNotEmpty) {
           for (Element ep in filme) {
-            String imagem = ep.querySelector('div.epsBoxImgFilme').querySelector('img').attributes['data-src'];
-            List<String> info = ep.querySelectorAll('img').where((d) => d.attributes['alt']?.isNotEmpty ?? false).map((e)=>e.attributes['alt']).toList().reversed.toList();
+            String imagem = ep
+                .querySelector('div.epsBoxImgFilme')
+                .querySelector('img')
+                .attributes['data-src'];
+            List<String> info = ep
+                .querySelectorAll('img')
+                .where((d) => d.attributes['alt']?.isNotEmpty ?? false)
+                .map((e) => e.attributes['alt'])
+                .toList()
+                .reversed
+                .toList();
             episodios.add(Episodio(
                 titulo: "Filme: ${ep.querySelector('h4').text}",
                 link: ep.querySelector('a').attributes['href'],
-                info: 'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
-                imagem: imagem
-              )
-            );
+                info:
+                    'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
+                imagem: imagem));
           }
         }
       }
     }
     return episodios;
+  }
+
+  Future<String> linkVideo(String link) async {
+    String data = await _getLink(link);
+    Document soup = parse(data);
+    dynamic linkVideo = soup.querySelector('source');
+    String video;
+    if (linkVideo != null) {
+      video = (await dio.client.get(linkVideo.attributes['src'],
+          options: Options(
+              headers: {'Referer': link},
+              followRedirects: false,
+              receiveDataWhenStatusError: true,
+              validateStatus: (i)=>true))).headers.value('location');
+    } else {
+      linkVideo = soup
+          .querySelectorAll('a')
+          .where((e) => e.attributes['title'] == 'Baixar Video')
+          .toList()[0]
+          .attributes['href'];
+      data = await _getLink(linkVideo);
+      soup = parse(data);
+      linkVideo = soup.querySelector('a.bt-download').attributes['href'];
+      video = (await dio.client.get(linkVideo,
+          options: Options(
+              headers: {'Referer': link},
+              followRedirects: false,
+              receiveDataWhenStatusError: true,
+              validateStatus: (i)=>true))).headers.value('location');
+    }
+    return video;
   }
 
   @override

@@ -5,16 +5,26 @@ import 'package:rxdart/rxdart.dart';
 
 class AnimesBloc extends Disposable {
   final AnimesRepository repo;
-  
+  List<Titulo> titulos = [];
   BehaviorSubject<List<Titulo>> dados = BehaviorSubject<List<Titulo>>();
 
   AnimesBloc(this.repo){
-    this.repo.pegarAnimes().then((mangas){
+    listar();
+  }
+
+  void listar({bool refresh=false}){
+    this.dados.add(null);
+    this.repo.pegarAnimes(refresh).then((mangas) {
+      titulos = mangas;
       this.dados.add(mangas);
     });
   }
 
-  //dispose will be called automatically by closing its streams
+  void pesquisar(res){
+    List<Titulo> pesquisa = titulos.where((t) => t.nome.toLowerCase().contains(res.toLowerCase())).toList();
+    dados.add(pesquisa.length > 0 ? pesquisa : titulos);
+  }
+
   @override
   void dispose() {
     dados.close();

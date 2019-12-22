@@ -1,3 +1,4 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
@@ -29,14 +30,7 @@ class _AnimePageState extends State<AnimePage> {
         appBar: AppBar(
           title: Text(widget.anime.nome),
         ),
-        body:
-        //  Center(
-        //   child: RaisedButton(
-        //     child: Text("Aperte"),
-        //     onPressed: bloc.listarEpisodios,
-        //   ),
-        // )
-        StreamBuilder(
+        body: StreamBuilder(
           stream: bloc.dados,
           builder: (_, AsyncSnapshot<List<Episodio>> snapshot) {
             if (!snapshot.hasData) {
@@ -52,11 +46,15 @@ class _AnimePageState extends State<AnimePage> {
                         contentPadding: EdgeInsets.symmetric(horizontal: 15),
                         leading: Container(
                           height: 100,
-                          width: 50,
-                          child: Image.network(snapshot.data[index].imagem),
+                          width: 70,
+                          child: ExtendedImage.network(
+                              snapshot.data[index].imagem,
+                              cache: true,
+                              fit: BoxFit.fill),
                         ),
                         title: Text(snapshot.data[index].titulo),
                         subtitle: Text(snapshot.data[index].info),
+                        onTap: () {},
                       );
                     },
                     separatorBuilder: (_, index) => Divider(),
@@ -65,7 +63,6 @@ class _AnimePageState extends State<AnimePage> {
               ],
             );
           },
-        )
-        );
+        ));
   }
 }

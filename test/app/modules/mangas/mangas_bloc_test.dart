@@ -5,6 +5,7 @@ import 'package:flutter_leitor/app/modules/mangas/mangas_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   Modular.init(AppModule());
   Modular.bindModule(MangasModule());
   MangasBloc bloc;
