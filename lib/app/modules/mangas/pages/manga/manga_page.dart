@@ -28,6 +28,12 @@ class _MangaPageState extends State<MangaPage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.manga.nome),
+          actions: <Widget>[
+            IconButton(
+              onPressed: bloc.inverterCapitulos,
+              icon: Icon(Icons.swap_vert),
+            )
+          ],
         ),
         body: StreamBuilder(
           stream: bloc.dados,

@@ -36,6 +36,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.2"
+  chewie:
+    dependency: "direct main"
+    description:
+      name: chewie
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.9.8+1"
   collection:
     dependency: transitive
     description:
@@ -90,13 +97,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_mobx:
-    dependency: transitive
-    description:
-      name: flutter_mobx
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.4+1"
   flutter_modular:
     dependency: "direct main"
     description:
@@ -163,13 +163,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.8"
-  mobx:
-    dependency: transitive
-    description:
-      name: mobx
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.3.10"
   mockito:
     dependency: "direct dev"
     description:
@@ -177,6 +170,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.1.1"
+  open_iconic_flutter:
+    dependency: transitive
+    description:
+      name: open_iconic_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.3.0"
   path:
     dependency: transitive
     description:
@@ -294,13 +294,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.5"
-  system_shortcuts:
-    dependency: transitive
-    description:
-      name: system_shortcuts
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.7"
   term_glyph:
     dependency: transitive
     description:
@@ -329,15 +322,8 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.0.8"
-  video_box:
-    dependency: "direct main"
-    description:
-      name: video_box
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.8.1"
   video_player:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: video_player
       url: "https://pub.dartlang.org"
@@ -357,13 +343,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.1.1+1"
-  volume:
-    dependency: transitive
-    description:
-      name: volume
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.0"
   xml:
     dependency: transitive
     description:

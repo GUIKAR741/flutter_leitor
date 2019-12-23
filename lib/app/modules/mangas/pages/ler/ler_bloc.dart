@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.dart';
+import 'package:flutter_leitor/app/modules/mangas/widgets/pagina_manga/pagina_manga_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -9,8 +10,8 @@ class LerBloc extends Disposable {
   final MangaRepository repo;
   List<String> imagens;
   int index = 0;
-  final StreamController<String> _dados = StreamController<String>.broadcast();
-  Stream<String> get dados => _dados.stream;
+  final StreamController<List<PaginaMangaWidget>> _dados = StreamController<List<PaginaMangaWidget>>.broadcast();
+  Stream<List<PaginaMangaWidget>> get dados => _dados.stream;
 
   final StreamController<String> _pagina = StreamController<String>.broadcast();
   Stream<String> get pagina => _pagina.stream;
@@ -22,16 +23,19 @@ class LerBloc extends Disposable {
       index = 0;
       imagens = data;
       _pagina.add("${index + 1}/${imagens.length}");
-      _dados.add(imagens[index]);
+      _dados.add(data.map((String i) => PaginaMangaWidget(url: i)).toList());
     });
   }
 
+  mudar(int pagina){
+    if(pagina>index) proximo();
+    else anterior();
+  }
+
   anterior(){
-    // _pagina.add(--index + 1);
     if(index - 1 >= 0){
       --index;
       _pagina.add("${index + 1}/${imagens.length}");
-      _dados.add(imagens[index]);
     }
   }
   
@@ -39,7 +43,6 @@ class LerBloc extends Disposable {
     if(index + 1 < imagens.length){
       ++index;
       _pagina.add("${index + 1}/${imagens.length}");
-      _dados.add(imagens[index]);
     }
   }
 

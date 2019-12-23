@@ -12,12 +12,21 @@ class MangaBloc extends Disposable {
 
   final StreamController<List<Capitulo>> _dados = StreamController<List<Capitulo>>.broadcast();
   Stream<List<Capitulo>> get dados => _dados.stream;
+  bool _isReversed = false;
 
   MangaBloc(this.repo);
   
   listarCapitulos(){
     repo.capitulos(manga.link).then((data){
       _dados.add(data);
+    });
+  }
+
+  inverterCapitulos(){
+    _dados.add(null);
+    repo.capitulos(manga.link).then((data){
+      _dados.add(_isReversed ? data : data.reversed.toList());
+      _isReversed = !_isReversed;
     });
   }
 

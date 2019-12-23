@@ -24,11 +24,6 @@ class _MangasPageState extends State<MangasPage> {
           actions: <Widget>[
             IconButton(
                 icon: Icon(
-                  Icons.refresh,
-                ),
-                onPressed: () => bloc.listar(refresh: true)),
-            IconButton(
-                icon: Icon(
                   Icons.search,
                 ),
                 onPressed: () {
@@ -42,26 +37,31 @@ class _MangasPageState extends State<MangasPage> {
             if (!snapshot.hasData) {
               return Center(child: CircularProgressIndicator());
             }
-            return ListView.separated(
-              itemCount: snapshot.data.length,
-              itemBuilder: (_, index) {
-                return ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                  leading: Container(
-                    height: 100,
-                    width: 50,
-                    child: ExtendedImage.network(snapshot.data[index].imagem,
-                        cache: true, fit: BoxFit.fill),
-                  ),
-                  title: Text(snapshot.data[index].nome),
-                  onTap: () {
-                    Navigator.pushNamed(context, '/mangas/manga',
-                        arguments: snapshot.data[index]);
-                  },
-                );
+            return RefreshIndicator(
+              onRefresh: () async {
+                bloc.listar(refresh: true);
               },
-              separatorBuilder: (_, index) => Divider(),
+              child: ListView.separated(
+                itemCount: snapshot.data.length,
+                itemBuilder: (_, index) {
+                  return ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                    leading: Container(
+                      height: 100,
+                      width: 50,
+                      child: ExtendedImage.network(snapshot.data[index].imagem,
+                          cache: true, fit: BoxFit.fill),
+                    ),
+                    title: Text(snapshot.data[index].nome),
+                    onTap: () {
+                      Navigator.pushNamed(context, '/mangas/manga',
+                          arguments: snapshot.data[index]);
+                    },
+                  );
+                },
+                separatorBuilder: (_, index) => Divider(),
+              ),
             );
           },
         ));

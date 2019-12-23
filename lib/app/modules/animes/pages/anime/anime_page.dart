@@ -29,6 +29,12 @@ class _AnimePageState extends State<AnimePage> {
     return Scaffold(
         appBar: AppBar(
           title: Text(widget.anime.nome),
+          actions: <Widget>[
+            IconButton(
+              onPressed: bloc.inverterEpisodios,
+              icon: Icon(Icons.swap_vert),
+            )
+          ],
         ),
         body: StreamBuilder(
           stream: bloc.dados,
@@ -54,7 +60,7 @@ class _AnimePageState extends State<AnimePage> {
                         ),
                         title: Text(snapshot.data[index].titulo),
                         subtitle: Text(snapshot.data[index].info),
-                        onTap: () {},
+                        onTap: () => bloc.mudarPagina(context, snapshot.data[index]),
                       );
                     },
                     separatorBuilder: (_, index) => Divider(),
