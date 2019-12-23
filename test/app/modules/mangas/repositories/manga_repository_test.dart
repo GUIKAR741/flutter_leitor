@@ -1,18 +1,18 @@
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
+// import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:mockito/mockito.dart';
+// import 'package:mockito/mockito.dart';
 
-import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.dart';
+// import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.dart';
 
-class MockClient extends Mock implements CustomDio {}
+// class MockClient extends Mock implements CustomDio {}
 
 void main() {
-  MangaRepository repository;
-  MockClient client;
+  // MangaRepository repository;
+  // MockClient client;
 
   setUp(() {
-    client = MockClient();
-    repository = MangaRepository(client);
+    // client = MockClient();
+    // repository = MangaRepository(client);
   });
 
   group('MangaRepository Test', () {
