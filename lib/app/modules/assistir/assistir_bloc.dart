@@ -18,18 +18,25 @@ class AssistirBloc extends Disposable {
   Stream<Chewie> get dados => _dados.stream;
 
   void iniciarLink(Episodio ep) {
-    repo.linkVideo(ep.link).then((data) {
+    repo.linkVideo(ep).then((data) {
+      if (data == 'link_invalido') {
+        ep.titulo = 'Indisponivel';
+        _videoPlayerController = VideoPlayerController.network(null);
+        _chewieController =
+            ChewieController(videoPlayerController: _videoPlayerController);
+      }
       _videoPlayerController = VideoPlayerController.network(data);
       _chewieController = ChewieController(
         videoPlayerController: _videoPlayerController,
         aspectRatio: 3 / 2,
         autoPlay: true,
         // fullScreenByDefault: true,
+
         materialProgressColors: ChewieProgressColors(
           playedColor: Colors.red,
           handleColor: Colors.blue,
           backgroundColor: Colors.grey,
-          bufferedColor: Colors.lightGreen,
+          bufferedColor: Colors.green,
         ),
       );
       _dados.add(Chewie(
@@ -40,8 +47,8 @@ class AssistirBloc extends Disposable {
 
   @override
   void dispose() {
+    _dados.close();
     _videoPlayerController.dispose();
     _chewieController.dispose();
-    _dados.close();
   }
 }

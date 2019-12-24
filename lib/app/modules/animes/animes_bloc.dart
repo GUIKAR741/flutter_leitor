@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/repositories/animes_repository.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,7 +8,7 @@ class AnimesBloc extends Disposable {
   final AnimesRepository repo;
   List<Titulo> titulos = [];
   BehaviorSubject<List<Titulo>> dados = BehaviorSubject<List<Titulo>>();
-
+  final ScrollController scrollController = ScrollController();
   AnimesBloc(this.repo){
     listar();
   }

@@ -38,27 +38,30 @@ class _AnimesPageState extends State<AnimesPage> {
               onRefresh: () async {
                 bloc.listar(refresh: true);
               },
-              child: ListView.separated(
-                itemCount: snapshot.data.length,
-                itemBuilder: (_, index) {
-                  return ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                    leading: Container(
-                      height: 100,
-                      width: 50,
-                      child: ExtendedImage.network(snapshot.data[index].imagem,
-                          cache: true, fit: BoxFit.fill),
-                    ),
-                    title: Text(snapshot.data[index].nome),
-                    onTap: () {
-                      // print(snapshot.data[index]);
-                      Navigator.pushNamed(context, '/animes/anime',
-                          arguments: snapshot.data[index]);
-                    },
-                  );
-                },
-                separatorBuilder: (_, index) => Divider(),
+              child: Scrollbar(
+                controller: bloc.scrollController,
+                child: ListView.separated(
+                  controller: bloc.scrollController,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                      leading: ExtendedImage.network(
+                          snapshot.data[index].imagem,
+                          width: 50,
+                          cache: true,
+                          enableMemoryCache: true,
+                          fit: BoxFit.fill),
+                      title: Text(snapshot.data[index].nome),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/animes/anime',
+                            arguments: snapshot.data[index]);
+                      },
+                    );
+                  },
+                  separatorBuilder: (_, index) => Divider(),
+                ),
               ),
             );
           },

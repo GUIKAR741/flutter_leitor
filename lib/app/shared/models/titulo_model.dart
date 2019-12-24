@@ -2,15 +2,17 @@ class Titulo {
   String imagem;
   String link;
   String nome;
+  String descricao;
 
-  Titulo({this.imagem, this.link, this.nome});
+  Titulo({this.imagem, this.link, this.nome, this.descricao = ''});
 
   static Titulo fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return Titulo(
       imagem: json['imagem'],
       link: json['link'],
-      nome: json['nome']
+      nome: json['nome'],
+      descricao: json['descricao']
     );
   }
 
@@ -24,6 +26,7 @@ class Titulo {
     data['imagem'] = this.imagem;
     data['link'] = this.link;
     data['nome'] = this.nome;
+    data['descricao'] = this.descricao;
     return data;
   }
 

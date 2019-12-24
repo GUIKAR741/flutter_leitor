@@ -41,26 +41,32 @@ class _MangasPageState extends State<MangasPage> {
               onRefresh: () async {
                 bloc.listar(refresh: true);
               },
-              child: ListView.separated(
-                itemCount: snapshot.data.length,
-                itemBuilder: (_, index) {
-                  return ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                    leading: Container(
-                      height: 100,
-                      width: 50,
-                      child: ExtendedImage.network(snapshot.data[index].imagem,
-                          cache: true, fit: BoxFit.fill),
-                    ),
-                    title: Text(snapshot.data[index].nome),
-                    onTap: () {
-                      Navigator.pushNamed(context, '/mangas/manga',
-                          arguments: snapshot.data[index]);
-                    },
-                  );
-                },
-                separatorBuilder: (_, index) => Divider(),
+              child: Scrollbar(
+                controller: bloc.scroll,
+                child: ListView.separated(
+                  controller: bloc.scroll,
+                  itemCount: snapshot.data.length,
+                  itemBuilder: (_, index) {
+                    return ListTile(
+                      contentPadding:
+                          EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                      leading: Container(
+                        height: 100,
+                        width: 50,
+                        child: ExtendedImage.network(
+                            snapshot.data[index].imagem,
+                            cache: true,
+                            fit: BoxFit.fill),
+                      ),
+                      title: Text(snapshot.data[index].nome),
+                      onTap: () {
+                        Navigator.pushNamed(context, '/mangas/manga',
+                            arguments: snapshot.data[index]);
+                      },
+                    );
+                  },
+                  separatorBuilder: (_, index) => Divider(),
+                ),
               ),
             );
           },

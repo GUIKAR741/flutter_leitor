@@ -1,3 +1,4 @@
+import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
@@ -55,26 +56,23 @@ class _AnimePageState extends State<AnimePage> {
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async => bloc.listarEpisodios(),
-                    child: ListView.separated(
-                      itemCount: snapshot.data.length,
-                      itemBuilder: (_, index) {
-                        return ListTile(
-                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                          leading: Container(
-                            height: 100,
-                            width: 70,
-                            child: ExtendedImage.network(
-                                snapshot.data[index].imagem,
-                                cache: true,
-                                fit: BoxFit.fill),
-                          ),
-                          title: Text(snapshot.data[index].titulo),
-                          subtitle: Text(snapshot.data[index].info),
-                          onTap: () =>
-                              bloc.mudarPagina(context, snapshot.data[index]),
-                        );
-                      },
-                      separatorBuilder: (_, index) => Divider(),
+                    child: DraggableScrollbar.semicircle(
+                      controller: bloc.scrollController,
+                      child: ListView.separated(
+                        controller: bloc.scrollController,
+                        itemCount: snapshot.data.length,
+                        itemBuilder: (_, index) {
+                          return index == 0
+                              ? Column(
+                                  children: <Widget>[
+                                    card(),
+                                    listTile(snapshot, index)
+                                  ],
+                                )
+                              : listTile(snapshot, index);
+                        },
+                        separatorBuilder: (_, index) => Divider(),
+                      ),
                     ),
                   ),
                 ),
@@ -82,5 +80,46 @@ class _AnimePageState extends State<AnimePage> {
             );
           },
         ));
+  }
+
+  Widget listTile(snapshot, index) {
+    return ListTile(
+      contentPadding: EdgeInsets.symmetric(horizontal: 15),
+      leading: Container(
+        height: 100,
+        width: 70,
+        child: ExtendedImage.network(snapshot.data[index].imagem,
+            cache: true, fit: BoxFit.fill),
+      ),
+      title: Text(snapshot.data[index].titulo),
+      subtitle: Text(snapshot.data[index].info),
+      onTap: () => bloc.mudarPagina(context, snapshot.data[index]),
+    );
+  }
+
+  Widget card() {
+    return Card(
+        child: Row(
+      children: <Widget>[
+        ExtendedImage.network(
+          widget.anime.imagem,
+          height: 150,
+          width: 100,
+        ),
+        Expanded(
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                child: Text(
+                  widget.anime.descricao,
+                  textAlign: TextAlign.start,
+                ),
+              )
+            ],
+          ),
+        ),
+      ],
+    ));
   }
 }

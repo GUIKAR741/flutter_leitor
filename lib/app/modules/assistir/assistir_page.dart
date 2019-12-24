@@ -23,9 +23,15 @@ class _AssistirPageState extends State<AssistirPage> {
 
   @override
   Widget build(BuildContext context) {
+    // String titulo = widget.episodio.titulo;
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.episodio.titulo),
+        title: StreamBuilder(
+          stream: bloc.dados,
+          builder: (_, snapshot) {
+            return snapshot.hasData? Text(widget.episodio.titulo): Text('Carregando...');
+          }
+        ),
       ),
       body: Column(
         children: <Widget>[

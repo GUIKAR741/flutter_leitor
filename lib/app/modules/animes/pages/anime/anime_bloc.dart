@@ -14,10 +14,11 @@ class AnimeBloc extends Disposable {
   bool _isReversed = false;
 
   AnimeBloc(this.repo);
+  final ScrollController scrollController = ScrollController();
 
   listarEpisodios() {
     dados.add(null);
-    repo.episodios(anime.link).then((data) {
+    repo.episodios(anime).then((data) {
       episodios = data;
       dados.add(data);
     });
@@ -25,7 +26,7 @@ class AnimeBloc extends Disposable {
 
   inverterEpisodios() {
     dados.add(null);
-    repo.episodios(anime.link).then((data) {
+    repo.episodios(anime).then((data) {
       dados.add(_isReversed ? data : data.reversed.toList());
       episodios = data;
       _isReversed = !_isReversed;
