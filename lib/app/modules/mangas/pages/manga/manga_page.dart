@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
+import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
@@ -30,6 +31,15 @@ class _MangaPageState extends State<MangaPage> {
           title: Text(widget.manga.nome),
           actions: <Widget>[
             IconButton(
+                icon: Icon(
+                  Icons.search,
+                ),
+                onPressed: () {
+                  showSearch(
+                      context: context,
+                      delegate: PesquisarCapitulo(manga: widget.manga));
+                }),
+            IconButton(
               onPressed: bloc.inverterCapitulos,
               icon: Icon(Icons.swap_vert),
             )
@@ -44,22 +54,25 @@ class _MangaPageState extends State<MangaPage> {
             return Column(
               children: <Widget>[
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (_, index) {
-                      return ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                        title: Text(snapshot.data[index].titulo),
-                        onTap: () {
-                          Navigator.pushNamed(context, '/mangas/ler_manga',
-                              arguments: {
-                                'manga': widget.manga,
-                                'capitulo': snapshot.data[index]
-                              });
-                        },
-                      );
-                    },
-                    separatorBuilder: (_, index) => Divider(),
+                  child: RefreshIndicator(
+                    onRefresh: () async => bloc.listarCapitulos(),
+                    child: ListView.separated(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (_, index) {
+                        return ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                          title: Text(snapshot.data[index].titulo),
+                          onTap: () {
+                            Navigator.pushNamed(context, '/mangas/ler_manga',
+                                arguments: {
+                                  'manga': widget.manga,
+                                  'capitulo': snapshot.data[index]
+                                });
+                          },
+                        );
+                      },
+                      separatorBuilder: (_, index) => Divider(),
+                    ),
                   ),
                 ),
               ],

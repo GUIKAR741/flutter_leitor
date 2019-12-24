@@ -1,34 +1,43 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:rxdart/subjects.dart';
 
 class AnimeBloc extends Disposable {
   Titulo anime;
   final AnimeRepository repo;
-
-  final StreamController<List<Episodio>> _dados =
-      StreamController<List<Episodio>>.broadcast();
-  Stream<List<Episodio>> get dados => _dados.stream;
+  List<Episodio> episodios = [];
+  final BehaviorSubject<List<Episodio>> dados =
+      BehaviorSubject<List<Episodio>>();
   bool _isReversed = false;
 
   AnimeBloc(this.repo);
 
   listarEpisodios() {
+    dados.add(null);
     repo.episodios(anime.link).then((data) {
-      _dados.add(data);
+      episodios = data;
+      dados.add(data);
     });
   }
 
   inverterEpisodios() {
-    _dados.add(null);
+    dados.add(null);
     repo.episodios(anime.link).then((data) {
-      _dados.add(_isReversed ? data : data.reversed.toList());
+      dados.add(_isReversed ? data : data.reversed.toList());
+      episodios = data;
       _isReversed = !_isReversed;
     });
+  }
+
+  void pesquisar(res) {
+    dados.add(null);
+    List<Episodio> pesquisa = episodios
+        .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
+        .toList();
+    dados.add(pesquisa.length > 0 ? pesquisa : episodios);
   }
 
   mudarPagina(context, Episodio episodio) async {
@@ -37,6 +46,6 @@ class AnimeBloc extends Disposable {
 
   @override
   void dispose() {
-    _dados.close();
+    dados.close();
   }
 }

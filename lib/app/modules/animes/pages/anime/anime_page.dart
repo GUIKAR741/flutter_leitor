@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
+import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
@@ -31,6 +32,13 @@ class _AnimePageState extends State<AnimePage> {
           title: Text(widget.anime.nome),
           actions: <Widget>[
             IconButton(
+                icon: Icon(
+                  Icons.search,
+                ),
+                onPressed: () {
+                  showSearch(context: context, delegate: PesquisarEpisodio());
+                }),
+            IconButton(
               onPressed: bloc.inverterEpisodios,
               icon: Icon(Icons.swap_vert),
             )
@@ -45,25 +53,29 @@ class _AnimePageState extends State<AnimePage> {
             return Column(
               children: <Widget>[
                 Expanded(
-                  child: ListView.separated(
-                    itemCount: snapshot.data.length,
-                    itemBuilder: (_, index) {
-                      return ListTile(
-                        contentPadding: EdgeInsets.symmetric(horizontal: 15),
-                        leading: Container(
-                          height: 100,
-                          width: 70,
-                          child: ExtendedImage.network(
-                              snapshot.data[index].imagem,
-                              cache: true,
-                              fit: BoxFit.fill),
-                        ),
-                        title: Text(snapshot.data[index].titulo),
-                        subtitle: Text(snapshot.data[index].info),
-                        onTap: () => bloc.mudarPagina(context, snapshot.data[index]),
-                      );
-                    },
-                    separatorBuilder: (_, index) => Divider(),
+                  child: RefreshIndicator(
+                    onRefresh: () async => bloc.listarEpisodios(),
+                    child: ListView.separated(
+                      itemCount: snapshot.data.length,
+                      itemBuilder: (_, index) {
+                        return ListTile(
+                          contentPadding: EdgeInsets.symmetric(horizontal: 15),
+                          leading: Container(
+                            height: 100,
+                            width: 70,
+                            child: ExtendedImage.network(
+                                snapshot.data[index].imagem,
+                                cache: true,
+                                fit: BoxFit.fill),
+                          ),
+                          title: Text(snapshot.data[index].titulo),
+                          subtitle: Text(snapshot.data[index].info),
+                          onTap: () =>
+                              bloc.mudarPagina(context, snapshot.data[index]),
+                        );
+                      },
+                      separatorBuilder: (_, index) => Divider(),
+                    ),
                   ),
                 ),
               ],

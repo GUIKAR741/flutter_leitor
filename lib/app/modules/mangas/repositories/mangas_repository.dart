@@ -21,13 +21,21 @@ class MangasRepository extends Disposable {
     if (prefs.containsKey('data_atualizacao')) {
       DateTime dataSalva = DateTime.parse(prefs.getString('data_atualizacao'));
       DateTime dataAtual = DateTime.now();
+      if(dataAtual.isBefore(dataSalva)){
+        String data = await verificaData();
+        prefs.setString('data_atualizacao', data);
+      }
       extra['refresh'] = dataAtual.isBefore(dataSalva);
     } else {
       String data = await verificaData();
       prefs.setString('data_atualizacao', data);
       extra['refresh'] = true;
     }
-    extra['refresh'] = refresh ? refresh : extra['refresh'];
+    if(refresh){
+      String data = await verificaData();
+      prefs.setString('data_atualizacao', data);
+      extra['refresh'] = refresh;
+    }
     final response = await dio.client.get(
         "https://leitor-mangas-flutter.firebaseio.com/dados/mangas.json",
         options: Options(extra: extra));

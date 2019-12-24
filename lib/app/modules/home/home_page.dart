@@ -17,6 +17,18 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          StreamBuilder(
+            stream: bloc.tema,
+            builder: (context, snapshot) {
+              IconData icone = snapshot.hasData ? (snapshot.data ? Icons.brightness_7 : Icons.brightness_3) : Icons.brightness_7;
+              return IconButton(
+                icon: Icon(icone),
+                onPressed: bloc.mudarTema,
+              );
+            }
+          )
+        ],
       ),
       body: Center(
         child: Column(
@@ -29,10 +41,6 @@ class _HomePageState extends State<HomePage> {
             RaisedButton(
               onPressed: () => Navigator.pushNamed(context, '/animes'),
               child: Text("Assistir Animes"),
-            ),
-            RaisedButton(
-              onPressed: bloc.mudarTema,
-              child: Text("Mudar Tema"),
             ),
           ],
         ),
