@@ -18,12 +18,11 @@ class _AssistirPageState extends State<AssistirPage> {
   @override
   void initState() {
     super.initState();
-    bloc.iniciarLink(widget.episodio);
+    bloc.iniciarLink(context, widget.episodio);
   }
 
   @override
   Widget build(BuildContext context) {
-    // String titulo = widget.episodio.titulo;
     return Scaffold(
       appBar: AppBar(
         title: StreamBuilder(
