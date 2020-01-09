@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:chewie/chewie.dart';
-import 'package:flutter/material.dart' show Colors, ModalRoute, Navigator;
+import 'package:flutter/material.dart'
+    show BuildContext, Colors, ModalRoute, Navigator;
 import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -17,7 +18,7 @@ class AssistirBloc extends Disposable {
   final StreamController<Chewie> _dados = StreamController<Chewie>.broadcast();
   Stream<Chewie> get dados => _dados.stream;
 
-  void iniciarLink(context, Episodio ep) {
+  void iniciarLink(BuildContext context, Episodio ep) {
     repo.linkVideo(ep).then((data) {
       if (data == 'link_invalido') {
         ep.titulo = 'Indisponivel';

@@ -1,36 +1,28 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
-class MangaPage extends StatefulWidget {
+class MangaPage extends StatelessWidget {
   final Titulo manga;
-  const MangaPage({Key key, this.manga}) : super(key: key);
+  final MangaBloc bloc;
+  MangaPage({Key key, this.manga, this.bloc}) : super(key: key);
 
   @override
-  _MangaPageState createState() => _MangaPageState();
-}
-
-class _MangaPageState extends State<MangaPage> {
-  MangaBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = MangasModule.to.get<MangaBloc>();
-    bloc.manga = widget.manga;
+  StatelessElement createElement() {
+    bloc.manga = manga;
     bloc.listarCapitulos();
+    return super.createElement();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.manga.nome),
+          title: Text(manga.nome),
           actions: <Widget>[
             IconButton(
                 icon: Icon(
@@ -39,7 +31,7 @@ class _MangaPageState extends State<MangaPage> {
                 onPressed: () {
                   showSearch(
                       context: context,
-                      delegate: PesquisarCapitulo(manga: widget.manga));
+                      delegate: PesquisarCapitulo(manga: manga));
                 }),
             IconButton(
               onPressed: bloc.inverterCapitulos,
@@ -68,10 +60,10 @@ class _MangaPageState extends State<MangaPage> {
                               ? Column(
                                   children: <Widget>[
                                     card(),
-                                    listTile(snapshot, index)
+                                    listTile(snapshot, index, context)
                                   ],
                                 )
-                              : listTile(snapshot, index);
+                              : listTile(snapshot, index, context);
                         },
                         separatorBuilder: (_, index) => Divider(),
                       ),
@@ -84,13 +76,13 @@ class _MangaPageState extends State<MangaPage> {
         ));
   }
 
-  Widget listTile(snapshot, index) {
+  Widget listTile(snapshot, index, context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 15),
       title: Text(snapshot.data[index].titulo),
       onTap: () {
         Navigator.pushNamed(context, '/mangas/ler_manga', arguments: {
-          'manga': widget.manga,
+          'manga': manga,
           'capitulo': snapshot.data[index]
         });
       },
@@ -102,7 +94,7 @@ class _MangaPageState extends State<MangaPage> {
         child: Row(
       children: <Widget>[
         ExtendedImage.network(
-          widget.manga.imagem,
+          manga.imagem,
           height: 150,
           width: 100,
         ),
@@ -110,7 +102,7 @@ class _MangaPageState extends State<MangaPage> {
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             child: Text(
-              widget.manga.descricao,
+              manga.descricao,
               textAlign: TextAlign.start,
             ),
           ),

@@ -3,18 +3,12 @@ import 'package:flutter_leitor/app/app_bloc.dart';
 import 'package:flutter_leitor/app/app_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-class AppWidget extends StatefulWidget {
-  @override
-  _AppWidgetState createState() => _AppWidgetState();
-}
-
-class _AppWidgetState extends State<AppWidget> {
-  AppBloc bloc = AppModule.to.get<AppBloc>();
-
+class AppWidget extends StatelessWidget {
+  
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<bool>(
-      stream: bloc.tema,
+      stream: AppModule.to.get<AppBloc>().tema,
       builder: (context, snapshot) {
         ThemeData tema = ThemeData.dark();
         return MaterialApp(

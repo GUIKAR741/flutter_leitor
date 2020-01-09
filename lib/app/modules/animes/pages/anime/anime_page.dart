@@ -1,36 +1,28 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
-class AnimePage extends StatefulWidget {
+class AnimePage extends StatelessWidget {
   final Titulo anime;
-  const AnimePage({Key key, this.anime}) : super(key: key);
-
+  final AnimeBloc bloc;
+  const AnimePage({Key key, this.anime, this.bloc}) : super(key: key);
+  
   @override
-  _AnimePageState createState() => _AnimePageState();
-}
-
-class _AnimePageState extends State<AnimePage> {
-  AnimeBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = AnimesModule.to.get<AnimeBloc>();
-    bloc.anime = widget.anime;
+  StatelessElement createElement() {
+    bloc.anime = anime;
     bloc.listarEpisodios();
+    return super.createElement();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.anime.nome),
+          title: Text(anime.nome),
           actions: <Widget>[
             IconButton(
                 icon: Icon(
@@ -66,10 +58,10 @@ class _AnimePageState extends State<AnimePage> {
                               ? Column(
                                   children: <Widget>[
                                     card(),
-                                    listTile(snapshot, index)
+                                    listTile(snapshot, index, context)
                                   ],
                                 )
-                              : listTile(snapshot, index);
+                              : listTile(snapshot, index, context);
                         },
                         separatorBuilder: (_, index) => Divider(),
                       ),
@@ -82,7 +74,7 @@ class _AnimePageState extends State<AnimePage> {
         ));
   }
 
-  Widget listTile(snapshot, index) {
+  Widget listTile(snapshot, index, context) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 15),
       leading: Container(
@@ -102,7 +94,7 @@ class _AnimePageState extends State<AnimePage> {
         child: Row(
       children: <Widget>[
         ExtendedImage.network(
-          widget.anime.imagem,
+          anime.imagem,
           height: 150,
           width: 100,
         ),
@@ -112,7 +104,7 @@ class _AnimePageState extends State<AnimePage> {
               Padding(
                 padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 child: Text(
-                  widget.anime.descricao,
+                  anime.descricao,
                   textAlign: TextAlign.start,
                 ),
               )

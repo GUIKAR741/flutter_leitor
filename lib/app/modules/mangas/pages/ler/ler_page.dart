@@ -4,27 +4,18 @@ import 'package:flutter_leitor/app/modules/mangas/widgets/pagina_manga/pagina_ma
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
-import '../../mangas_module.dart';
-
-class LerPage extends StatefulWidget {
+class LerPage extends StatelessWidget {
   final Titulo manga;
   final Capitulo capitulo;
-  const LerPage({Key key, this.manga, this.capitulo}) : super(key: key);
+  final LerBloc bloc;
+
+  LerPage({Key key, this.manga, this.capitulo, this.bloc}) : super(key: key);
 
   @override
-  _LerPageState createState() => _LerPageState();
-}
-
-class _LerPageState extends State<LerPage> {
-  LerBloc bloc;
-
-  @override
-  void initState() {
-    super.initState();
-    bloc = MangasModule.to.get<LerBloc>();
-    bloc.capitulo = widget.capitulo;
+  StatelessElement createElement() {
+    bloc.capitulo = capitulo;
     bloc.listarImagens();
-    // bloc.listarCapitulos();
+    return super.createElement();
   }
 
   Widget mostrarPaginas() {
@@ -42,7 +33,10 @@ class _LerPageState extends State<LerPage> {
                   ),
                 ),
               )
-            : CircularProgressIndicator();
+            : Padding(
+                padding: EdgeInsets.only(right: 10),
+                child: CircularProgressIndicator(),
+              );
       },
     );
   }
@@ -51,7 +45,7 @@ class _LerPageState extends State<LerPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${widget.manga.nome} - ${widget.capitulo.titulo}"),
+        title: Text("${manga.nome} - ${capitulo.titulo}"),
         actions: <Widget>[
           Center(
             child: mostrarPaginas(),

@@ -2,21 +2,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/app_bloc.dart';
 import 'package:flutter_leitor/app/app_module.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   final String title;
-  const HomePage({Key key, this.title = "Leitor"}) : super(key: key);
+  final AppBloc bloc = AppModule.to.get<AppBloc>();
 
-  @override
-  _HomePageState createState() => _HomePageState();
-}
+  HomePage({Key key, this.title = "Leitor"}) : super(key: key);
 
-class _HomePageState extends State<HomePage> {
-  AppBloc bloc = AppModule.to.get<AppBloc>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(title),
         actions: <Widget>[
           StreamBuilder(
             stream: bloc.tema,

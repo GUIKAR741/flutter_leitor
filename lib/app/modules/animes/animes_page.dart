@@ -5,21 +5,17 @@ import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_anime_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
-class AnimesPage extends StatefulWidget {
+class AnimesPage extends StatelessWidget {
   final String title;
-  const AnimesPage({Key key, this.title = "Animes"}) : super(key: key);
+  final AnimesBloc bloc = AnimesModule.to.get<AnimesBloc>();
+  
+  AnimesPage({Key key, this.title = "Animes"}) : super(key: key);
 
-  @override
-  _AnimesPageState createState() => _AnimesPageState();
-}
-
-class _AnimesPageState extends State<AnimesPage> {
-  AnimesBloc bloc = AnimesModule.to.get<AnimesBloc>();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(widget.title), actions: <Widget>[
+        appBar: AppBar(title: Text(title), actions: <Widget>[
           IconButton(
               icon: Icon(
                 Icons.search,

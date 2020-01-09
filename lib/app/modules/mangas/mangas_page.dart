@@ -5,22 +5,17 @@ import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_manga_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
-class MangasPage extends StatefulWidget {
+class MangasPage extends StatelessWidget {
   final String title;
-  const MangasPage({Key key, this.title = "Mangas"}) : super(key: key);
+  final MangasBloc bloc = MangasModule.to.get<MangasBloc>();
 
-  @override
-  _MangasPageState createState() => _MangasPageState();
-}
-
-class _MangasPageState extends State<MangasPage> {
-  MangasBloc bloc = MangasModule.to.get<MangasBloc>();
+  MangasPage({Key key, this.title = "Mangas"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text(widget.title),
+          title: Text(title),
           actions: <Widget>[
             IconButton(
                 icon: Icon(
