@@ -17,6 +17,7 @@ environment:
   sdk: ">=2.1.0 <3.0.0"
 
 dependencies:
+  sticky_headers: ^0.1.8+1
   draggable_scrollbar: ^0.0.4
   video_player: ^0.10.5+1
   chewie: ^0.9.8+1

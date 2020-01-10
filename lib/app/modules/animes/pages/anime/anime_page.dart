@@ -5,6 +5,7 @@ import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 
 class AnimePage extends StatelessWidget {
   final Titulo anime;
@@ -90,28 +91,33 @@ class AnimePage extends StatelessWidget {
   }
 
   Widget card() {
-    return Card(
-        child: Row(
-      children: <Widget>[
-        ExtendedImage.network(
-          anime.imagem,
-          height: 150,
-          width: 100,
-        ),
-        Expanded(
-          child: Column(
-            children: <Widget>[
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                child: Text(
-                  anime.descricao,
-                  textAlign: TextAlign.start,
-                ),
-              )
-            ],
+    return StickyHeader(
+      header: Container(
+        color: Colors.blueGrey[700],
+        padding: EdgeInsets.all(5),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          anime.descricao,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
           ),
         ),
-      ],
-    ));
+      ),
+      content: Container(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: ExtendedImage.network(
+                anime.imagem,
+                height: 300,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

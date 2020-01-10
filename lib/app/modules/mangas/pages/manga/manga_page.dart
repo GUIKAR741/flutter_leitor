@@ -1,5 +1,6 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
+import 'package:sticky_headers/sticky_headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
@@ -58,6 +59,7 @@ class MangaPage extends StatelessWidget {
                         itemBuilder: (_, index) {
                           return index == 0
                               ? Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     card(),
                                     listTile(snapshot, index, context)
@@ -81,33 +83,40 @@ class MangaPage extends StatelessWidget {
       contentPadding: EdgeInsets.symmetric(horizontal: 15),
       title: Text(snapshot.data[index].titulo),
       onTap: () {
-        Navigator.pushNamed(context, '/mangas/ler_manga', arguments: {
-          'manga': manga,
-          'capitulo': snapshot.data[index]
-        });
+        Navigator.pushNamed(context, '/mangas/ler_manga',
+            arguments: {'manga': manga, 'capitulo': snapshot.data[index]});
       },
     );
   }
 
   Widget card() {
-    return Card(
-        child: Row(
-      children: <Widget>[
-        ExtendedImage.network(
-          manga.imagem,
-          height: 150,
-          width: 100,
-        ),
-        Expanded(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-            child: Text(
-              manga.descricao,
-              textAlign: TextAlign.start,
-            ),
+    return StickyHeader(
+      header: Container(
+        color: Colors.blueGrey[700],
+        padding: EdgeInsets.all(5),
+        alignment: Alignment.centerLeft,
+        child: Text(
+          manga.descricao,
+          textAlign: TextAlign.center,
+          style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
           ),
         ),
-      ],
-    ));
+      ),
+      content: Container(
+        child: Row(
+          children: <Widget>[
+            Expanded(
+              child: ExtendedImage.network(
+                manga.imagem,
+                height: 300,
+                fit: BoxFit.fill,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
