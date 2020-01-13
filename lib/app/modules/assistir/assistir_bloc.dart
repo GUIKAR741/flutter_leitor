@@ -2,7 +2,7 @@ import 'dart:async';
 
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart'
-    show BuildContext, Colors, ModalRoute, Navigator;
+    show Colors, ModalRoute;
 import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -18,7 +18,7 @@ class AssistirBloc extends Disposable {
   final StreamController<Chewie> _dados = StreamController<Chewie>.broadcast();
   Stream<Chewie> get dados => _dados.stream;
 
-  void iniciarLink(BuildContext context, Episodio ep) {
+  void iniciarLink(Episodio ep) {
     repo.linkVideo(ep).then((data) {
       if (data == 'link_invalido') {
         ep.titulo = 'Indisponivel';
@@ -44,7 +44,7 @@ class AssistirBloc extends Disposable {
       _videoPlayerController.addListener(() {
         if (_videoPlayerController.value.position ==
             _videoPlayerController.value.duration) {
-          Navigator.popUntil(context, ModalRoute.withName('/animes/anime'));
+          Modular.to.popUntil(ModalRoute.withName('/animes/anime'));
         }
       });
 

@@ -29,5 +29,6 @@ class AnimesBloc extends Disposable {
   @override
   void dispose() {
     dados.close();
+    scrollController.dispose();
   }
 }

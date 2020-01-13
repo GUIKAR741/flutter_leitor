@@ -10,16 +10,23 @@ import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/ler/ler_page.dart';
 
 main() {
-  Modular.init(AppModule());
-  Modular.bindModule(MangasModule());
+  TestWidgetsFlutterBinding.ensureInitialized();
+  AppModule app;
+  MangasModule mangas;
+  setUpAll((){
+    app = AppModule();
+    mangas = MangasModule();
+    Modular.init(app);
+    Modular.bindModule(mangas);
+  });
   testWidgets('LerPage has title', (WidgetTester tester) async {
     await tester.pumpWidget(buildTestableWidget(LerPage(
       manga: Titulo(nome: 'Ler'),
-      capitulo: Capitulo(titulo: 'Ler', link: ''),
+      capitulo: Capitulo(titulo: 'Le', link: ''),
       bloc: MangasModule.to.get<LerBloc>(),
     )));
     await tester.pump(Duration(minutes: 1));
-    final titleFinder = find.text('Ler - Ler');
+    final titleFinder = find.text('Le');
     expect(titleFinder, findsOneWidget);
   });
 }

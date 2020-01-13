@@ -4,21 +4,15 @@ import 'package:flutter_leitor/app/modules/assistir/assistir_module.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_bloc.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 
-class AssistirPage extends StatefulWidget {
+class AssistirPage extends StatelessWidget {
   final Episodio episodio;
-  const AssistirPage({Key key, this.episodio}) : super(key: key);
+  final AssistirBloc bloc = AssistirModule.to.get<AssistirBloc>();
+  AssistirPage({Key key, this.episodio}) : super(key: key);
 
   @override
-  _AssistirPageState createState() => _AssistirPageState();
-}
-
-class _AssistirPageState extends State<AssistirPage> {
-  AssistirBloc bloc = AssistirModule.to.get<AssistirBloc>();
-
-  @override
-  void initState() {
-    super.initState();
-    bloc.iniciarLink(context, widget.episodio);
+  StatelessElement createElement() {
+    bloc.iniciarLink(episodio);
+    return super.createElement();
   }
 
   @override
@@ -28,7 +22,7 @@ class _AssistirPageState extends State<AssistirPage> {
         title: StreamBuilder(
           stream: bloc.dados,
           builder: (_, snapshot) {
-            return snapshot.hasData? Text(widget.episodio.titulo): Text('Carregando...');
+            return snapshot.hasData? Text(episodio.titulo): Text('Carregando...');
           }
         ),
       ),

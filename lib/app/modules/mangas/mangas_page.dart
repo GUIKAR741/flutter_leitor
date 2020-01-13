@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/modules/mangas/mangas_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_manga_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class MangasPage extends StatelessWidget {
   final String title;
@@ -55,7 +56,7 @@ class MangasPage extends StatelessWidget {
                       ),
                       title: Text(snapshot.data[index].nome),
                       onTap: () {
-                        Navigator.pushNamed(context, '/mangas/manga',
+                        Modular.to.pushNamed('/mangas/manga',
                             arguments: snapshot.data[index]);
                       },
                     );

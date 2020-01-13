@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class PesquisarCapitulo extends Pesquisar {
   final Titulo manga;
@@ -41,7 +42,7 @@ class PesquisarCapitulo extends Pesquisar {
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
               title: Text(snapshot.data[index].titulo),
               onTap: () {
-                Navigator.pushNamed(context, '/mangas/ler_manga', arguments: {
+                Modular.to.pushNamed('/mangas/ler_manga', arguments: {
                   'manga': manga,
                   'capitulo': snapshot.data[index]
                 });

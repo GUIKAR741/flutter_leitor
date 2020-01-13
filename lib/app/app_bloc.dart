@@ -3,7 +3,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AppBloc extends Disposable {
-  //dispose will be called automatically by closing its streams
   final BehaviorSubject<bool> _tema$ = BehaviorSubject<bool>();
   Stream<bool> get tema => _tema$.stream;
 

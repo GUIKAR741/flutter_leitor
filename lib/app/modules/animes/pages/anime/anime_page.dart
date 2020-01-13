@@ -5,13 +5,12 @@ import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 
 class AnimePage extends StatelessWidget {
   final Titulo anime;
   final AnimeBloc bloc;
   const AnimePage({Key key, this.anime, this.bloc}) : super(key: key);
-  
+
   @override
   StatelessElement createElement() {
     bloc.anime = anime;
@@ -77,7 +76,7 @@ class AnimePage extends StatelessWidget {
 
   Widget listTile(snapshot, index, context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 15),
+      contentPadding: EdgeInsets.symmetric(horizontal: 10),
       leading: Container(
         height: 100,
         width: 70,
@@ -86,38 +85,40 @@ class AnimePage extends StatelessWidget {
       ),
       title: Text(snapshot.data[index].titulo),
       subtitle: Text(snapshot.data[index].info),
-      onTap: () => bloc.mudarPagina(context, snapshot.data[index]),
+      onTap: () => bloc.mudarPagina(snapshot.data[index]),
     );
   }
 
   Widget card() {
-    return StickyHeader(
-      header: Container(
-        color: Colors.blueGrey[700],
-        padding: EdgeInsets.all(5),
-        alignment: Alignment.centerLeft,
-        child: Text(
-          anime.descricao,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+    return Column(
+      children: <Widget>[
+        Container(
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ExtendedImage.network(
+                  anime.imagem,
+                  height: 300,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-      content: Container(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: ExtendedImage.network(
-                anime.imagem,
-                height: 300,
-                fit: BoxFit.fill,
-              ),
+        Container(
+          color: Colors.blueGrey[700],
+          padding: EdgeInsets.all(5),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            anime.descricao,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }

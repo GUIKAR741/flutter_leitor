@@ -29,5 +29,6 @@ class MangasBloc extends Disposable {
   @override
   void dispose() {
     dados.close();
+    scroll.dispose();
   }
 }

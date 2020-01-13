@@ -45,7 +45,7 @@ class LerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${manga.nome} - ${capitulo.titulo}"),
+        title: Text("${capitulo.titulo}"),
         actions: <Widget>[
           Center(
             child: mostrarPaginas(),

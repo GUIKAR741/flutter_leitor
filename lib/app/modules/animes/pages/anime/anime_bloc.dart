@@ -41,12 +41,13 @@ class AnimeBloc extends Disposable {
     dados.add(pesquisa.length > 0 ? pesquisa : episodios);
   }
 
-  mudarPagina(context, Episodio episodio) async {
-    Navigator.pushNamed(context, '/assistir', arguments: episodio);
+  mudarPagina(Episodio episodio) async {
+    Modular.to.pushNamed('/assistir', arguments: episodio);
   }
 
   @override
   void dispose() {
     dados.close();
+    scrollController.dispose();
   }
 }

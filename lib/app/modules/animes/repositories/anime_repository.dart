@@ -50,6 +50,7 @@ class AnimeRepository extends Disposable {
       if (fim > 0) {
         for (String item in pagina['body']) {
           soup = parse(item);
+          String tempoEp = soup.querySelector('div.epsBoxImg > div.tempoEps').innerHtml;
           Element ep = soup.querySelector('div.epsBoxSobre');
           // print(ep.parent.querySelector('div.epsBoxImg').querySelector('img').attributes['src']);
           String imagem = ep.parent
@@ -67,7 +68,7 @@ class AnimeRepository extends Disposable {
               titulo: ep.querySelector('a').text,
               link: ep.querySelector('a').attributes['href'],
               info:
-                  'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
+                  'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'} Duração: $tempoEp',
               imagem: imagem));
         }
       }
@@ -80,6 +81,7 @@ class AnimeRepository extends Disposable {
         List<Element> ova = parent.querySelectorAll('div.epsBox');
         if (ova.isNotEmpty) {
           for (Element ep in ova) {
+            String tempoEp = ep.querySelector('div.tempoEps').innerHtml;
             String imagem = ep
                 .querySelector('div.epsBoxImg')
                 .querySelector('img')
@@ -96,32 +98,33 @@ class AnimeRepository extends Disposable {
                     "OVA: ${ep.querySelector('div.epsBoxSobre').querySelector('a').text}",
                 link: ep.querySelector('a').attributes['href'],
                 info:
-                    'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
+                    'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'} Duração: $tempoEp',
                 imagem: imagem));
           }
         }
-        List<Element> filme = parent.querySelectorAll('div.epsBoxFilme');
-        if (filme.isNotEmpty) {
-          for (Element ep in filme) {
-            String imagem = ep
-                .querySelector('div.epsBoxImgFilme')
-                .querySelector('img')
-                .attributes['data-src'];
-            List<String> info = ep
-                .querySelectorAll('img')
-                .where((d) => d.attributes['alt']?.isNotEmpty ?? false)
-                .map((e) => e.attributes['alt'])
-                .toList()
-                .reversed
-                .toList();
-            episodios.add(Episodio(
-                titulo: "Filme: ${ep.querySelector('h4').text}",
-                link: ep.querySelector('a').attributes['href'],
-                info:
-                    'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'}',
-                imagem: imagem));
-          }
-        }
+        // List<Element> filme = parent.querySelectorAll('div.epsBoxFilme');
+        // if (filme.isNotEmpty) {
+        //   for (Element ep in filme) {
+        //     String imagem = ep
+        //         .querySelector('div.epsBoxImgFilme')
+        //         .querySelector('img')
+        //         .attributes['data-src'];
+        //     String tempoEp = ep.querySelector('div.tempoEps').innerHtml;
+        //     List<String> info = ep
+        //         .querySelectorAll('img')
+        //         .where((d) => d.attributes['alt']?.isNotEmpty ?? false)
+        //         .map((e) => e.attributes['alt'])
+        //         .toList()
+        //         .reversed
+        //         .toList();
+        //     episodios.add(Episodio(
+        //         titulo: "Filme: ${ep.querySelector('h4').text}",
+        //         link: ep.querySelector('a').attributes['href'],
+        //         info:
+        //             'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'} Duração: $tempoEp',
+        //         imagem: imagem));
+        //   }
+        // }
       }
     }
     return episodios;
@@ -153,7 +156,7 @@ class AnimeRepository extends Disposable {
           .querySelectorAll('a')
           .where((e) => e.attributes['title'] == 'Baixar Video')
           .toList();
-      if(baixar.length==0){
+      if (baixar.length == 0) {
         return 'link_invalido';
       }
       linkVideo = baixar[0].attributes['href'];

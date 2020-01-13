@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/modules/animes/animes_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_anime_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class AnimesPage extends StatelessWidget {
   final String title;
@@ -51,7 +52,7 @@ class AnimesPage extends StatelessWidget {
                           fit: BoxFit.fill),
                       title: Text(snapshot.data[index].nome),
                       onTap: () {
-                        Navigator.pushNamed(context, '/animes/anime',
+                        Modular.to.pushNamed('/animes/anime',
                             arguments: snapshot.data[index]);
                       },
                     );

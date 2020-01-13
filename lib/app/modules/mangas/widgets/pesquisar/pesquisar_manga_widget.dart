@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/modules/mangas/mangas_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class PesquisarManga extends Pesquisar {
   MangasBloc bloc = MangasModule.to.get<MangasBloc>();
@@ -41,7 +42,7 @@ class PesquisarManga extends Pesquisar {
               ),
               title: Text(snapshot.data[index].nome),
               onTap: () {
-                Navigator.pushNamed(context, '/mangas/manga',
+                Modular.to.pushNamed('/mangas/manga',
                     arguments: snapshot.data[index]);
               },
             );

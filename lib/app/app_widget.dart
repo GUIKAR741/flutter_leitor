@@ -17,6 +17,7 @@ class AppWidget extends StatelessWidget {
           theme: !snapshot.hasData ? tema : (snapshot.data ? ThemeData.dark() : ThemeData.light()),
           initialRoute: '/',
           onGenerateRoute: Modular.generateRoute,
+          navigatorKey: Modular.navigatorKey,
         );
       }
     );

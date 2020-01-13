@@ -25,7 +25,8 @@ class MangaRepository extends Disposable {
     divs.forEach((data) {
       capitulos.add(Capitulo(
           titulo: data.querySelector('a').text,
-          link: data.querySelector('a').attributes['href']));
+          link: data.querySelector('a').attributes['href'],
+          info: data.querySelector('a').nextElementSibling.innerHtml));
     });
     return capitulos;
   }

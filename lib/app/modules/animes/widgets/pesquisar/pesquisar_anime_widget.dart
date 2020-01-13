@@ -2,6 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../animes_bloc.dart';
 import '../../animes_module.dart';
@@ -43,7 +44,7 @@ class PesquisarAnime extends Pesquisar {
               title: Text(snapshot.data[index].nome),
               onTap: () {
                 // print(snapshot.data[index]);
-                Navigator.pushNamed(context, '/animes/anime',
+                Modular.to.pushNamed('/animes/anime',
                     arguments: snapshot.data[index]);
               },
             );

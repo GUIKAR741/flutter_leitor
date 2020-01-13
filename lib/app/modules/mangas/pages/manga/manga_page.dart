@@ -1,11 +1,11 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
-import 'package:sticky_headers/sticky_headers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class MangaPage extends StatelessWidget {
   final Titulo manga;
@@ -82,41 +82,44 @@ class MangaPage extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 15),
       title: Text(snapshot.data[index].titulo),
+      subtitle: Text(snapshot.data[index].info),
       onTap: () {
-        Navigator.pushNamed(context, '/mangas/ler_manga',
+        Modular.to.pushNamed('/mangas/ler_manga',
             arguments: {'manga': manga, 'capitulo': snapshot.data[index]});
       },
     );
   }
 
   Widget card() {
-    return StickyHeader(
-      header: Container(
-        color: Colors.blueGrey[700],
-        padding: EdgeInsets.all(5),
-        alignment: Alignment.centerLeft,
-        child: Text(
-          manga.descricao,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
+    return Column(
+      children: <Widget>[
+        Container(
+          child: Row(
+            children: <Widget>[
+              Expanded(
+                child: ExtendedImage.network(
+                  manga.imagem,
+                  height: 300,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ],
           ),
         ),
-      ),
-      content: Container(
-        child: Row(
-          children: <Widget>[
-            Expanded(
-              child: ExtendedImage.network(
-                manga.imagem,
-                height: 300,
-                fit: BoxFit.fill,
-              ),
+        Container(
+          color: Colors.blueGrey[700],
+          padding: EdgeInsets.all(5),
+          alignment: Alignment.centerLeft,
+          child: Text(
+            manga.descricao,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
