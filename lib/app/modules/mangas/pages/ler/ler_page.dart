@@ -3,6 +3,7 @@ import 'package:flutter_leitor/app/modules/mangas/pages/ler/ler_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pagina_manga/pagina_manga_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatelessWidget {
   final Titulo manga;
@@ -57,9 +58,10 @@ class LerPage extends StatelessWidget {
             stream: bloc.dados,
             builder: (_, AsyncSnapshot<List<PaginaMangaWidget>> snapshot) {
               return snapshot.hasData
-                  ? PageView(
+                  ? PreloadPageView(
                       onPageChanged: bloc.mudar,
                       children: snapshot.data,
+                      preloadPagesCount: 5,
                     )
                   : CircularProgressIndicator();
             }),
