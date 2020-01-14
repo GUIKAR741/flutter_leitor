@@ -29,6 +29,6 @@ jobs:
     - name: Create a Release APK
       uses: ncipollo/release-action@v1
       with:
-        artifacts: "build/app/outputs/apk/release/*.apk"
-        token: ${{ secrets.TOKEN }}
+        artifact: "build/app/outputs/apk/release/*.apk"
+        token: ${{ secrets.TOKEN_SECRETO }}
 
