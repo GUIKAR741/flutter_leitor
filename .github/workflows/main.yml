@@ -1,6 +1,10 @@
 name: Teste e Criar
 
-on: [push]
+on: 
+  push:
+    branchs:
+      - '*'
+
 
 jobs:
   build:
