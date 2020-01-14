@@ -50,7 +50,8 @@ class AnimeRepository extends Disposable {
       if (fim > 0) {
         for (String item in pagina['body']) {
           soup = parse(item);
-          String tempoEp = soup.querySelector('div.epsBoxImg > div.tempoEps').innerHtml;
+          String tempoEp =
+              soup.querySelector('div.epsBoxImg > div.tempoEps').innerHtml;
           Element ep = soup.querySelector('div.epsBoxSobre');
           // print(ep.parent.querySelector('div.epsBoxImg').querySelector('img').attributes['src']);
           String imagem = ep.parent

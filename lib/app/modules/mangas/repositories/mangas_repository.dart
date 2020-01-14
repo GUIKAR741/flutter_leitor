@@ -21,7 +21,7 @@ class MangasRepository extends Disposable {
     if (prefs.containsKey('data_atualizacao')) {
       DateTime dataSalva = DateTime.parse(prefs.getString('data_atualizacao'));
       DateTime dataAtual = DateTime.now();
-      if(dataAtual.isBefore(dataSalva)){
+      if (dataAtual.isBefore(dataSalva)) {
         String data = await verificaData();
         prefs.setString('data_atualizacao', data);
       }
@@ -31,7 +31,7 @@ class MangasRepository extends Disposable {
       prefs.setString('data_atualizacao', data);
       extra['refresh'] = true;
     }
-    if(refresh){
+    if (refresh) {
       String data = await verificaData();
       prefs.setString('data_atualizacao', data);
       extra['refresh'] = refresh;

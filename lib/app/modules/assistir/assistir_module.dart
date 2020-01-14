@@ -14,9 +14,7 @@ class AssistirModule extends ChildModule {
 
   @override
   List<Router> get routers => [
-        Router('/',
-            child: (_, args) => AssistirPage(
-                episodio: args.data)),
+        Router('/', child: (_, args) => AssistirPage(episodio: args.data)),
       ];
 
   static Inject get to => Inject<AssistirModule>.of();

@@ -39,11 +39,17 @@ class PaginaMangaWidget extends StatelessWidget {
           case LoadState.failed:
             return Container(
                 alignment: Alignment.center,
-                child: GestureDetector(
-                    onTap: () {
-                      state.reLoadImage();
-                    },
-                    child: Text('Erro ao carregar')));
+                child: Column(
+                  children: <Widget>[
+                    Expanded(
+                      child: GestureDetector(
+                          onTap: () {
+                            state.reLoadImage();
+                          },
+                          child: Text('Erro ao carregar')),
+                    ),
+                  ],
+                ));
             break;
         }
         return null;

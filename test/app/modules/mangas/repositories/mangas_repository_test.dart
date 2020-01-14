@@ -1,17 +1,13 @@
 import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
-// import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
-import 'package:dio/dio.dart';
 
 import 'package:flutter_leitor/app/modules/mangas/repositories/mangas_repository.dart';
 
-class MockClient extends Mock implements Dio {}
 class MockCustom extends Mock implements CustomDio {}
 
 void main() {
   MangasRepository repository;
-  // MockClient client;
   MockCustom custom;
 
   setUp(() {

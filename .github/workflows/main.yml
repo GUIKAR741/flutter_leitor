@@ -4,6 +4,8 @@ on:
   push:
     branchs:
       - '*'
+    tags-ignote:
+      - '*'
 
 
 jobs:

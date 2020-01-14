@@ -6,7 +6,7 @@ abstract class Pesquisar extends SearchDelegate<String> {
   final TextInputAction textInputAction;
 
   Pesquisar({
-    this.searchFieldLabel='Pesquisar',
+    this.searchFieldLabel = 'Pesquisar',
     this.keyboardType,
     this.textInputAction = TextInputAction.search,
   }) : super(

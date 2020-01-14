@@ -2,8 +2,10 @@ name: Release Tag
 
 on:
   push:
+    branchs-ignores:
+      - '*'
     tags:
-      - 'v*'
+      - '*'
 
 jobs:
   build:

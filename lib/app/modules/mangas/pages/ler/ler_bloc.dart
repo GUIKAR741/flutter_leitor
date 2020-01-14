@@ -10,16 +10,17 @@ class LerBloc extends Disposable {
   final MangaRepository repo;
   List<String> imagens;
   int index = 0;
-  final StreamController<List<PaginaMangaWidget>> _dados = StreamController<List<PaginaMangaWidget>>.broadcast();
+  final StreamController<List<PaginaMangaWidget>> _dados =
+      StreamController<List<PaginaMangaWidget>>.broadcast();
   Stream<List<PaginaMangaWidget>> get dados => _dados.stream;
 
   final StreamController<String> _pagina = StreamController<String>.broadcast();
   Stream<String> get pagina => _pagina.stream;
 
   LerBloc(this.repo);
-  
-  listarImagens(){
-    repo.imagens(capitulo.link).then((data){
+
+  listarImagens() {
+    repo.imagens(capitulo.link).then((data) {
       index = 0;
       imagens = data;
       _pagina.add("${index + 1}/${imagens.length}");
@@ -27,20 +28,22 @@ class LerBloc extends Disposable {
     });
   }
 
-  mudar(int pagina){
-    if(pagina>index) proximo();
-    else anterior();
+  mudar(int pagina) {
+    if (pagina > index)
+      proximo();
+    else
+      anterior();
   }
 
-  anterior(){
-    if(index - 1 >= 0){
+  anterior() {
+    if (index - 1 >= 0) {
       --index;
       _pagina.add("${index + 1}/${imagens.length}");
     }
   }
-  
-  proximo(){
-    if(index + 1 < imagens.length){
+
+  proximo() {
+    if (index + 1 < imagens.length) {
       ++index;
       _pagina.add("${index + 1}/${imagens.length}");
     }

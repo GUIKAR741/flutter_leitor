@@ -41,11 +41,10 @@ class PesquisarCapitulo extends Pesquisar {
             return ListTile(
               contentPadding: EdgeInsets.symmetric(horizontal: 15),
               title: Text(snapshot.data[index].titulo),
+              subtitle: Text(snapshot.data[index].info),
               onTap: () {
-                Modular.to.pushNamed('/mangas/ler_manga', arguments: {
-                  'manga': manga,
-                  'capitulo': snapshot.data[index]
-                });
+                Modular.to.pushNamed('/mangas/ler_manga',
+                    arguments: snapshot.data[index]);
               },
             );
           },

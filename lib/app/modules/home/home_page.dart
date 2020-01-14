@@ -16,21 +16,26 @@ class HomePage extends StatelessWidget {
         title: Text(title),
         actions: <Widget>[
           StreamBuilder(
-            stream: bloc.tema,
-            builder: (context, snapshot) {
-              IconData icone = snapshot.hasData ? (snapshot.data ? Icons.brightness_7 : Icons.brightness_3) : Icons.brightness_7;
-              return IconButton(
-                icon: Icon(icone),
-                onPressed: bloc.mudarTema,
-              );
-            }
-          )
+              stream: bloc.tema,
+              builder: (context, snapshot) {
+                IconData icone = snapshot.hasData
+                    ? (snapshot.data ? Icons.brightness_7 : Icons.brightness_3)
+                    : Icons.brightness_7;
+                return IconButton(
+                  icon: Icon(icone),
+                  onPressed: bloc.mudarTema,
+                );
+              })
         ],
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
+            RaisedButton(
+              onPressed: () => Modular.to.pushNamed('/hqs'),
+              child: Text("Ler HQs"),
+            ),
             RaisedButton(
               onPressed: () => Modular.to.pushNamed('/mangas'),
               child: Text("Ler Mangás"),

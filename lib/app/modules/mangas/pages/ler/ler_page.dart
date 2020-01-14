@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/ler/ler_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pagina_manga/pagina_manga_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatelessWidget {
-  final Titulo manga;
   final Capitulo capitulo;
-  final LerBloc bloc;
+  final LerBloc bloc = MangasModule.to.get<LerBloc>();
 
-  LerPage({Key key, this.manga, this.capitulo, this.bloc}) : super(key: key);
+  LerPage({Key key, this.capitulo}) : super(key: key);
 
   @override
   StatelessElement createElement() {
@@ -46,7 +45,7 @@ class LerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("${capitulo.titulo}"),
+        title: Text(capitulo.titulo),
         actions: <Widget>[
           Center(
             child: mostrarPaginas(),

@@ -7,17 +7,17 @@ class AppBloc extends Disposable {
   Stream<bool> get tema => _tema$.stream;
 
   AppBloc() {
-    SharedPreferences.getInstance().then((data){
+    SharedPreferences.getInstance().then((data) {
       _tema$.add(data.getBool('dark'));
     });
   }
 
-  mudarTema(){
-    SharedPreferences.getInstance().then((data){
+  mudarTema() {
+    SharedPreferences.getInstance().then((data) {
       data.setBool('dark', !(data.getBool('dark') ?? true));
       _tema$.add(data.getBool('dark'));
     });
-  } 
+  }
 
   @override
   void dispose() {

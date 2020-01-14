@@ -9,14 +9,13 @@ class Titulo {
   static Titulo fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
     return Titulo(
-      imagem: json['imagem'],
-      link: json['link'],
-      nome: json['nome'],
-      descricao: json['descricao']
-    );
+        imagem: json['imagem'],
+        link: json['link'],
+        nome: json['nome'],
+        descricao: json['descricao']);
   }
 
-   static List<Titulo> fromJsonList(List json) {
+  static List<Titulo> fromJsonList(List json) {
     if (json == null) return null;
     return json.cast<Map<String, dynamic>>().map(fromJson).toList();
   }
@@ -38,5 +37,4 @@ class Titulo {
 
   @override
   int get hashCode => nome.hashCode ^ imagem.hashCode ^ link.hashCode;
-  
 }

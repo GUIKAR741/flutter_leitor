@@ -1,6 +1,7 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
@@ -9,8 +10,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class MangaPage extends StatelessWidget {
   final Titulo manga;
-  final MangaBloc bloc;
-  MangaPage({Key key, this.manga, this.bloc}) : super(key: key);
+  final MangaBloc bloc = MangasModule.to.get<MangaBloc>();
+  MangaPage({Key key, this.manga}) : super(key: key);
 
   @override
   StatelessElement createElement() {
@@ -84,8 +85,8 @@ class MangaPage extends StatelessWidget {
       title: Text(snapshot.data[index].titulo),
       subtitle: Text(snapshot.data[index].info),
       onTap: () {
-        Modular.to.pushNamed('/mangas/ler_manga',
-            arguments: {'manga': manga, 'capitulo': snapshot.data[index]});
+        Modular.to
+            .pushNamed('/mangas/ler_manga', arguments: snapshot.data[index]);
       },
     );
   }

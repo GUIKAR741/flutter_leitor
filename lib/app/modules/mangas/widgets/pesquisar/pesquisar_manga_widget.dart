@@ -38,7 +38,7 @@ class PesquisarManga extends Pesquisar {
                 height: 100,
                 width: 50,
                 child: ExtendedImage.network(snapshot.data[index].imagem,
-                        cache: true, fit: BoxFit.fill),
+                    cache: true, fit: BoxFit.fill),
               ),
               title: Text(snapshot.data[index].nome),
               onTap: () {

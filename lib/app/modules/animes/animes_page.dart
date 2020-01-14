@@ -9,9 +9,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 class AnimesPage extends StatelessWidget {
   final String title;
   final AnimesBloc bloc = AnimesModule.to.get<AnimesBloc>();
-  
-  AnimesPage({Key key, this.title = "Animes"}) : super(key: key);
 
+  AnimesPage({Key key, this.title = "Animes"}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

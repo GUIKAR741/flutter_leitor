@@ -20,11 +20,12 @@ class AssistirPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: StreamBuilder(
-          stream: bloc.dados,
-          builder: (_, snapshot) {
-            return snapshot.hasData? Text(episodio.titulo): Text('Carregando...');
-          }
-        ),
+            stream: bloc.dados,
+            builder: (_, snapshot) {
+              return snapshot.hasData
+                  ? Text(episodio.titulo)
+                  : Text('Carregando...');
+            }),
       ),
       body: Column(
         children: <Widget>[

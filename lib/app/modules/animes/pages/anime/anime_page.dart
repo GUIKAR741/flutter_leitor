@@ -6,10 +6,12 @@ import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_ep
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 
+import '../../animes_module.dart';
+
 class AnimePage extends StatelessWidget {
   final Titulo anime;
-  final AnimeBloc bloc;
-  const AnimePage({Key key, this.anime, this.bloc}) : super(key: key);
+  final AnimeBloc bloc = AnimesModule.to.get<AnimeBloc>();
+  AnimePage({Key key, this.anime}) : super(key: key);
 
   @override
   StatelessElement createElement() {

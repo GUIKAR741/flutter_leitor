@@ -21,11 +21,7 @@ class AnimesModule extends ChildModule {
   @override
   List<Router> get routers => [
         Router('/', child: (_, args) => AnimesPage()),
-        Router('/anime',
-            child: (_, args) => AnimePage(
-                  anime: args.data,
-                  bloc: this.get<AnimeBloc>(),
-                )),
+        Router('/anime', child: (_, args) => AnimePage(anime: args.data)),
       ];
 
   static Inject get to => Inject<AnimesModule>.of();

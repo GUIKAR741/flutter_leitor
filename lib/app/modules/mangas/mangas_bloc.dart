@@ -13,16 +13,18 @@ class MangasBloc extends Disposable {
     listar();
   }
 
-  void listar({bool refresh=false}){
+  void listar({bool refresh = false}) {
     this.dados.add(null);
     this.repo.pegarMangas(refresh).then((mangas) {
       titulos = mangas;
       this.dados.add(mangas);
     });
-  } 
+  }
 
-  void pesquisar(res){
-    List<Titulo> pesquisa = titulos.where((t) => t.nome.toLowerCase().contains(res.toLowerCase())).toList();
+  void pesquisar(res) {
+    List<Titulo> pesquisa = titulos
+        .where((t) => t.nome.toLowerCase().contains(res.toLowerCase()))
+        .toList();
     dados.add(pesquisa.length > 0 ? pesquisa : titulos);
   }
 

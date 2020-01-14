@@ -1,6 +1,7 @@
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_module.dart';
 import 'package:flutter_leitor/app/modules/home/home_bloc.dart';
+import 'package:flutter_leitor/app/modules/hqs/hqs_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_leitor/app/modules/home/home_page.dart';
@@ -17,6 +18,7 @@ class HomeModule extends ChildModule {
         Router('/mangas', module: MangasModule()),
         Router('/animes', module: AnimesModule()),
         Router('/assistir', module: AssistirModule()),
+        Router('/hqs', module: HqsModule()),
       ];
 
   static Inject get to => Inject<HomeModule>.of();
