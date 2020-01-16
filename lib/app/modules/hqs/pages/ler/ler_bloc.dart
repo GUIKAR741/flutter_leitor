@@ -1,25 +1,27 @@
-import 'dart:async';
-
 import 'package:flutter_leitor/app/modules/hqs/repositories/hq_repository.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:rxdart/rxdart.dart';
 
 class LerBloc extends Disposable {
-  Capitulo capitulo;
   final HqRepository repo;
+  final BehaviorSubject<List<PaginaImagemWidget>> _dados =
+      BehaviorSubject<List<PaginaImagemWidget>>();
+  final BehaviorSubject<String> _pagina = BehaviorSubject<String>();
+
+  Capitulo capitulo;
   List<String> imagens;
   int index = 0;
-  final StreamController<List<PaginaImagemWidget>> _dados =
-      StreamController<List<PaginaImagemWidget>>.broadcast();
-  Stream<List<PaginaImagemWidget>> get dados => _dados.stream;
-
-  final StreamController<String> _pagina = StreamController<String>.broadcast();
-  Stream<String> get pagina => _pagina.stream;
 
   LerBloc(this.repo);
 
-  listarImagens() {
+  Stream<List<PaginaImagemWidget>> get dados => _dados.stream;
+  Stream<String> get pagina => _pagina.stream;
+
+  void listarImagens() {
+    _pagina.add(null);
+    _dados.add(null);
     repo.imagens(capitulo.link).then((data) {
       index = 0;
       imagens = data;
@@ -28,23 +30,18 @@ class LerBloc extends Disposable {
     });
   }
 
-  mudar(int pagina) {
-    if (pagina > index)
-      proximo();
-    else
-      anterior();
+  void mudar(int pagina) {
+    (pagina > index) ? proximo() : anterior();
   }
 
-  anterior() {
-    if (index - 1 >= 0) {
-      --index;
+  void anterior() {
+    if ((index--) - 1 >= 0) {
       _pagina.add("${index + 1}/${imagens.length}");
     }
   }
 
   proximo() {
-    if (index + 1 < imagens.length) {
-      ++index;
+    if ((index++) + 1 < imagens.length) {
       _pagina.add("${index + 1}/${imagens.length}");
     }
   }

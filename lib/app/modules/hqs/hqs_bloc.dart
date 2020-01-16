@@ -6,18 +6,22 @@ import 'package:rxdart/rxdart.dart';
 
 class HqsBloc extends Disposable {
   final HqsRepository repo;
-  List<Titulo> titulos = [];
-  BehaviorSubject<List<Titulo>> dados = BehaviorSubject<List<Titulo>>();
+  final BehaviorSubject<List<Titulo>> _dados = BehaviorSubject<List<Titulo>>();
   final ScrollController scroll = ScrollController();
+
+  List<Titulo> titulos = [];
+
   HqsBloc(this.repo) {
     listar();
   }
 
+  Stream<List<Titulo>> get dados => _dados.stream;
+
   void listar({bool refresh = false}) {
-    this.dados.add(null);
+    this._dados.add(null);
     this.repo.pegarHQS(refresh).then((hqs) {
       titulos = hqs;
-      this.dados.add(hqs);
+      this._dados.add(hqs);
     });
   }
 
@@ -25,12 +29,12 @@ class HqsBloc extends Disposable {
     List<Titulo> pesquisa = titulos
         .where((t) => t.nome.toLowerCase().contains(res.toLowerCase()))
         .toList();
-    dados.add(pesquisa.length > 0 ? pesquisa : titulos);
+    _dados.add(pesquisa.length > 0 ? pesquisa : titulos);
   }
 
   @override
   void dispose() {
     scroll.dispose();
-    dados.close();
+    _dados.close();
   }
 }

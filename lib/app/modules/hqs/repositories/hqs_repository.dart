@@ -9,7 +9,7 @@ class HqsRepository extends Disposable {
 
   HqsRepository(this.dio);
 
-  Future verificaData() async {
+  Future<String> verificaData() async {
     final response = await dio.client.get(
         "https://leitor-mangas-flutter.firebaseio.com/dados/atualizacao.json");
     return response.data[response.data.keys.elementAt(0)]['data'];

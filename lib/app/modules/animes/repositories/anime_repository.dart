@@ -12,12 +12,12 @@ class AnimeRepository extends Disposable {
 
   AnimeRepository(this.dio);
 
-  Future _getLink(String link) async {
+  Future<dynamic> _getLink(String link) async {
     final response = await dio.client.get(link);
     return response.data;
   }
 
-  Future _postLink(String link, Map<String, dynamic> data) async {
+  Future<dynamic> _postLink(String link, Map<String, dynamic> data) async {
     final response = await dio.client.post(link, data: FormData.fromMap(data));
     return json.decode(response.data);
   }
@@ -53,7 +53,6 @@ class AnimeRepository extends Disposable {
           String tempoEp =
               soup.querySelector('div.epsBoxImg > div.tempoEps').innerHtml;
           Element ep = soup.querySelector('div.epsBoxSobre');
-          // print(ep.parent.querySelector('div.epsBoxImg').querySelector('img').attributes['src']);
           String imagem = ep.parent
               .querySelector('div.epsBoxImg')
               .querySelector('img')

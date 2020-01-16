@@ -3,46 +3,50 @@ import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:rxdart/subjects.dart';
+import 'package:rxdart/rxdart.dart';
 
 class MangaBloc extends Disposable {
-  Titulo manga;
   final MangaRepository repo;
-  List<Capitulo> capitulos = [];
-  final BehaviorSubject<List<Capitulo>> dados =
+  final BehaviorSubject<List<Capitulo>> _dados =
       BehaviorSubject<List<Capitulo>>();
-  bool _isReversed = false;
   final ScrollController scroll = ScrollController();
+
+  Titulo manga;
+  List<Capitulo> capitulos = [];
+  bool _isReversed = false;
+
   MangaBloc(this.repo);
 
-  listarCapitulos() {
-    dados.add(null);
+  Stream<List<Capitulo>> get dados => _dados.stream;
+
+  void listarCapitulos() {
+    _dados.add(null);
     repo.capitulos(manga).then((data) {
       capitulos = data;
-      dados.add(data);
+      _dados.add(data);
     });
   }
 
-  inverterCapitulos() {
-    dados.add(null);
+  void inverterCapitulos() {
+    _dados.add(null);
     repo.capitulos(manga).then((data) {
-      dados.add(_isReversed ? data : data.reversed.toList());
+      _dados.add(_isReversed ? data : data.reversed.toList());
       capitulos = data;
       _isReversed = !_isReversed;
     });
   }
 
   void pesquisar(res) {
-    dados.add(null);
+    _dados.add(null);
     List<Capitulo> pesquisa = capitulos
         .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
         .toList();
-    dados.add(pesquisa.length > 0 ? pesquisa : capitulos);
+    _dados.add(pesquisa.length > 0 ? pesquisa : capitulos);
   }
 
   @override
   void dispose() {
-    dados.close();
+    _dados.close();
     scroll.dispose();
   }
 }

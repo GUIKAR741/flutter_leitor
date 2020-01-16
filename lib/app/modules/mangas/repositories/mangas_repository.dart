@@ -9,13 +9,13 @@ class MangasRepository extends Disposable {
 
   MangasRepository(this.dio);
 
-  Future verificaData() async {
+  Future<String> verificaData() async {
     final response = await dio.client.get(
         "https://leitor-mangas-flutter.firebaseio.com/dados/atualizacao.json");
     return response.data[response.data.keys.elementAt(0)]['data'];
   }
 
-  Future pegarMangas(bool refresh) async {
+  Future<List<Titulo>> pegarMangas(bool refresh) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> extra = {};
     if (prefs.containsKey('data_atualizacao')) {

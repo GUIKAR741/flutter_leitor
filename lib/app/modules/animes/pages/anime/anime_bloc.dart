@@ -3,51 +3,54 @@ import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:rxdart/subjects.dart';
+import 'package:rxdart/rxdart.dart';
 
 class AnimeBloc extends Disposable {
-  Titulo anime;
   final AnimeRepository repo;
-  List<Episodio> episodios = [];
-  final BehaviorSubject<List<Episodio>> dados =
+  final BehaviorSubject<List<Episodio>> _dados =
       BehaviorSubject<List<Episodio>>();
+  final ScrollController scrollController = ScrollController();
+
+  Titulo anime;
+  List<Episodio> episodios = [];
   bool _isReversed = false;
 
   AnimeBloc(this.repo);
-  final ScrollController scrollController = ScrollController();
 
-  listarEpisodios() {
-    dados.add(null);
+  Stream<List<Episodio>> get dados => _dados.stream;
+
+  void listarEpisodios() {
+    _dados.add(null);
     repo.episodios(anime).then((data) {
       episodios = data;
-      dados.add(data);
+      _dados.add(data);
     });
   }
 
-  inverterEpisodios() {
-    dados.add(null);
+  void inverterEpisodios() {
+    _dados.add(null);
     repo.episodios(anime).then((data) {
-      dados.add(_isReversed ? data : data.reversed.toList());
+      _dados.add(_isReversed ? data : data.reversed.toList());
       episodios = data;
       _isReversed = !_isReversed;
     });
   }
 
   void pesquisar(res) {
-    dados.add(null);
+    _dados.add(null);
     List<Episodio> pesquisa = episodios
         .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
         .toList();
-    dados.add(pesquisa.length > 0 ? pesquisa : episodios);
+    _dados.add(pesquisa.length > 0 ? pesquisa : episodios);
   }
 
-  mudarPagina(Episodio episodio) async {
+  void mudarPagina(Episodio episodio) async {
     Modular.to.pushNamed('/assistir', arguments: episodio);
   }
 
   @override
   void dispose() {
-    dados.close();
+    _dados.close();
     scrollController.dispose();
   }
 }

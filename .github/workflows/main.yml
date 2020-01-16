@@ -24,9 +24,9 @@ jobs:
     - run: flutter test
     - run: flutter build apk --release
     # - run: flutter build appbundle --target-platform android-arm,android-arm64,android-x64
-    - name: Exportar Release
-      uses: actions/upload-artifact@v1
-      with:
-        name: release
-        path: build/app/outputs/apk/release/
+    # - name: Exportar Release
+    #   uses: actions/upload-artifact@v1
+    #   with:
+    #     name: release
+    #     path: build/app/outputs/apk/release/
 

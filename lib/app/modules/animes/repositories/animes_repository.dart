@@ -9,7 +9,7 @@ class AnimesRepository extends Disposable {
 
   AnimesRepository(this.dio);
 
-  Future verificaData() async {
+  Future<String> verificaData() async {
     final response = await dio.client.get(
         "https://leitor-mangas-flutter.firebaseio.com/dados/atualizacao.json");
     return response.data[response.data.keys.elementAt(0)]['data'];
@@ -42,7 +42,6 @@ class AnimesRepository extends Disposable {
     return Titulo.fromJsonList(response.data[response.data.keys.elementAt(0)]);
   }
 
-  //dispose will be called automatically
   @override
   void dispose() {}
 }

@@ -6,18 +6,22 @@ import 'package:rxdart/rxdart.dart';
 
 class MangasBloc extends Disposable {
   final MangasRepository repo;
-  List<Titulo> titulos = [];
-  BehaviorSubject<List<Titulo>> dados = BehaviorSubject<List<Titulo>>();
+  final BehaviorSubject<List<Titulo>> _dados = BehaviorSubject<List<Titulo>>();
   final ScrollController scroll = ScrollController();
+
+  List<Titulo> titulos = [];
+
   MangasBloc(this.repo) {
     listar();
   }
 
+  Stream<List<Titulo>> get dados => _dados.stream;
+
   void listar({bool refresh = false}) {
-    this.dados.add(null);
+    this._dados.add(null);
     this.repo.pegarMangas(refresh).then((mangas) {
       titulos = mangas;
-      this.dados.add(mangas);
+      this._dados.add(mangas);
     });
   }
 
@@ -25,12 +29,12 @@ class MangasBloc extends Disposable {
     List<Titulo> pesquisa = titulos
         .where((t) => t.nome.toLowerCase().contains(res.toLowerCase()))
         .toList();
-    dados.add(pesquisa.length > 0 ? pesquisa : titulos);
+    _dados.add(pesquisa.length > 0 ? pesquisa : titulos);
   }
 
   @override
   void dispose() {
-    dados.close();
+    _dados.close();
     scroll.dispose();
   }
 }

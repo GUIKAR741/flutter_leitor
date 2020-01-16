@@ -4,13 +4,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class AppBloc extends Disposable {
   final BehaviorSubject<bool> _tema$ = BehaviorSubject<bool>();
-  Stream<bool> get tema => _tema$.stream;
 
   AppBloc() {
     SharedPreferences.getInstance().then((data) {
       _tema$.add(data.getBool('dark'));
     });
   }
+
+  Stream<bool> get tema => _tema$.stream;
 
   mudarTema() {
     SharedPreferences.getInstance().then((data) {
