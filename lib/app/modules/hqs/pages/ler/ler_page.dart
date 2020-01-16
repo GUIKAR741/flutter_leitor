@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_module.dart';
 import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_bloc.dart';
-import 'package:flutter_leitor/app/modules/hqs/widgets/pagina_hq/pagina_hq_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatelessWidget {
@@ -54,7 +54,7 @@ class LerPage extends StatelessWidget {
       body: Center(
         child: StreamBuilder(
             stream: bloc.dados,
-            builder: (_, AsyncSnapshot<List<PaginaHqWidget>> snapshot) {
+            builder: (_, AsyncSnapshot<List<PaginaImagemWidget>> snapshot) {
               return snapshot.hasData
                   ? PreloadPageView(
                       onPageChanged: bloc.mudar,

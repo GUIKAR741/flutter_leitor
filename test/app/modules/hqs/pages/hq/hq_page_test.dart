@@ -9,12 +9,13 @@ import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_page.dart';
 
 main() {
   TestWidgetsFlutterBinding.ensureInitialized();
-  setUp((){
+  setUp(() {
     Modular.init(AppModule());
     Modular.bindModule(HqsModule());
   });
   testWidgets('HqPage has title', (WidgetTester tester) async {
-    await tester.pumpWidget(buildTestableWidget(HqPage(hq: Titulo(nome: 'HQ'))));
+    await tester
+        .pumpWidget(buildTestableWidget(HqPage(hq: Titulo(nome: 'HQ'))));
     await tester.pump(Duration(minutes: 1));
     final titleFinder = find.text('HQ');
     expect(titleFinder, findsOneWidget);

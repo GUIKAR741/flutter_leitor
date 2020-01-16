@@ -8,12 +8,13 @@ import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_page.dart';
 
 main() {
-  setUp((){
+  setUp(() {
     Modular.init(AppModule());
     Modular.bindModule(HqsModule());
   });
   testWidgets('LerPage has title', (WidgetTester tester) async {
-    await tester.pumpWidget(buildTestableWidget(LerPage(capitulo: Capitulo(titulo: 'Ler'))));
+    await tester.pumpWidget(
+        buildTestableWidget(LerPage(capitulo: Capitulo(titulo: 'Ler'))));
     await tester.pump(Duration(minutes: 1));
     final titleFinder = find.text('Ler');
     expect(titleFinder, findsOneWidget);

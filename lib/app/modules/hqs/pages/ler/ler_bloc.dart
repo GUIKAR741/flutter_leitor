@@ -1,8 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter_leitor/app/modules/hqs/repositories/hq_repository.dart';
-import 'package:flutter_leitor/app/modules/hqs/widgets/pagina_hq/pagina_hq_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class LerBloc extends Disposable {
@@ -10,9 +10,9 @@ class LerBloc extends Disposable {
   final HqRepository repo;
   List<String> imagens;
   int index = 0;
-  final StreamController<List<PaginaHqWidget>> _dados =
-      StreamController<List<PaginaHqWidget>>.broadcast();
-  Stream<List<PaginaHqWidget>> get dados => _dados.stream;
+  final StreamController<List<PaginaImagemWidget>> _dados =
+      StreamController<List<PaginaImagemWidget>>.broadcast();
+  Stream<List<PaginaImagemWidget>> get dados => _dados.stream;
 
   final StreamController<String> _pagina = StreamController<String>.broadcast();
   Stream<String> get pagina => _pagina.stream;
@@ -24,7 +24,7 @@ class LerBloc extends Disposable {
       index = 0;
       imagens = data;
       _pagina.add("${index + 1}/${imagens.length}");
-      _dados.add(data.map((String i) => PaginaHqWidget(url: i)).toList());
+      _dados.add(data.map((String i) => PaginaImagemWidget(url: i)).toList());
     });
   }
 

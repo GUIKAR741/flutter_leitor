@@ -1,10 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 
-class PaginaHqWidget extends StatelessWidget {
+class PaginaImagemWidget extends StatelessWidget {
   final String url;
 
-  const PaginaHqWidget({Key key, this.url}) : super(key: key);
+  const PaginaImagemWidget({Key key, this.url}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +46,7 @@ class PaginaHqWidget extends StatelessWidget {
                           onTap: () {
                             state.reLoadImage();
                           },
-                          child: Text('Erro ao carregar')),
+                          child: Center(child: Text('Erro ao carregar'))),
                     ),
                   ],
                 ));

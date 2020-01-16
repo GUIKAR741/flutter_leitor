@@ -11,7 +11,8 @@ main() {
   Modular.bindModule(MangasModule());
 
   testWidgets('MangaPage has title', (WidgetTester tester) async {
-    await tester.pumpWidget(buildTestableWidget(MangaPage(manga: Titulo(nome: 'ABC'))));
+    await tester
+        .pumpWidget(buildTestableWidget(MangaPage(manga: Titulo(nome: 'ABC'))));
     await tester.pump(Duration(minutes: 1));
     final titleFinder = find.text('ABC');
     expect(titleFinder, findsOneWidget);

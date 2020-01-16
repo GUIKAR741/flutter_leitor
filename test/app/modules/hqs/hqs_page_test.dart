@@ -7,7 +7,7 @@ import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_page.dart';
 
 main() {
-  setUp((){
+  setUp(() {
     Modular.init(AppModule());
     Modular.bindModule(HqsModule());
   });
