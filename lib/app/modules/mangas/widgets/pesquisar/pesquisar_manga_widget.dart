@@ -1,13 +1,12 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_bloc.dart';
-import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PesquisarManga extends Pesquisar {
-  MangasBloc bloc = MangasModule.to.get<MangasBloc>();
+  MangasBloc bloc = Modular.get<MangasBloc>();
 
   @override
   Widget buildLeading(BuildContext context) {

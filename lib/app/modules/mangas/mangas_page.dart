@@ -1,14 +1,13 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_bloc.dart';
-import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_manga_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MangasPage extends StatelessWidget {
   final String title;
-  final MangasBloc bloc = MangasModule.to.get<MangasBloc>();
+  final MangasBloc bloc = Modular.get<MangasBloc>();
 
   MangasPage({Key key, this.title = "Mangas"}) : super(key: key);
 
@@ -19,12 +18,14 @@ class MangasPage extends StatelessWidget {
           title: Text(title),
           actions: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  showSearch(context: context, delegate: PesquisarManga());
-                })
+              icon: Icon(
+                Icons.search,
+              ),
+              onPressed: () {
+                showSearch(context: context, delegate: PesquisarManga());
+              },
+              tooltip: "Pesquisar",
+            )
           ],
         ),
         body: StreamBuilder(

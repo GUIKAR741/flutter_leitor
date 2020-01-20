@@ -11,7 +11,7 @@ void main() {
   HqsBloc bloc;
 
   setUp(() {
-    bloc = HqsModule.to.get<HqsBloc>();
+    bloc = Modular.get<HqsBloc>();
   });
 
   group('HqsBloc Test', () {

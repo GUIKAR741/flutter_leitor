@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/hqs/hqs_module.dart';
 import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_bloc.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
@@ -13,7 +12,7 @@ class PesquisarCapitulo extends Pesquisar {
     @required this.hq,
   });
 
-  HqBloc bloc = HqsModule.to.get<HqBloc>();
+  HqBloc bloc = Modular.get<HqBloc>();
 
   @override
   Widget buildLeading(BuildContext context) {

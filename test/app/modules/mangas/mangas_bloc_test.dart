@@ -11,7 +11,7 @@ void main() {
   MangasBloc bloc;
 
   setUp(() {
-    bloc = MangasModule.to.get<MangasBloc>();
+    bloc = Modular.get<MangasBloc>();
   });
 
   group('MangasBloc Test', () {

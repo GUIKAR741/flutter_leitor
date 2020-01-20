@@ -1,7 +1,6 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/hqs/hqs_module.dart';
 import 'package:flutter_leitor/app/modules/hqs/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
@@ -11,7 +10,7 @@ import 'hq_bloc.dart';
 
 class HqPage extends StatelessWidget {
   final Titulo hq;
-  final HqBloc bloc = HqsModule.to.get<HqBloc>();
+  final HqBloc bloc = Modular.get<HqBloc>();
   HqPage({Key key, this.hq}) : super(key: key);
 
   @override
@@ -28,16 +27,19 @@ class HqPage extends StatelessWidget {
           title: Text(hq.nome),
           actions: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  showSearch(
-                      context: context, delegate: PesquisarCapitulo(hq: hq));
-                }),
+              icon: Icon(
+                Icons.search,
+              ),
+              onPressed: () {
+                showSearch(
+                    context: context, delegate: PesquisarCapitulo(hq: hq));
+              },
+              tooltip: "Pesquisar",
+            ),
             IconButton(
               onPressed: bloc.inverterCapitulos,
               icon: Icon(Icons.swap_vert),
+              tooltip: 'Inverter',
             )
           ],
         ),

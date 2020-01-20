@@ -9,15 +9,13 @@ import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_page.dart';
 
-import '../../app_module.dart';
-
 class HqsModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => LerBloc(i.get<HqRepository>())),
-        Bind((i) => HqRepository(AppModule.to.get<CustomDio>())),
+        Bind((i) => HqRepository(Modular.get<CustomDio>())),
         Bind((i) => HqBloc(i.get<HqRepository>())),
-        Bind((i) => HqsRepository(AppModule.to.get<CustomDio>())),
+        Bind((i) => HqsRepository(Modular.get<CustomDio>())),
         Bind((i) => HqsBloc(i.get<HqsRepository>())),
       ];
 

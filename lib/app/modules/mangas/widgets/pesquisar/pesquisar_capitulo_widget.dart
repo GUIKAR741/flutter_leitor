@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
@@ -13,7 +12,7 @@ class PesquisarCapitulo extends Pesquisar {
     @required this.manga,
   });
 
-  MangaBloc bloc = MangasModule.to.get<MangaBloc>();
+  MangaBloc bloc = Modular.get<MangaBloc>();
 
   @override
   Widget buildLeading(BuildContext context) {

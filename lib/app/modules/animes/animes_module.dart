@@ -7,14 +7,12 @@ import 'package:flutter_leitor/app/modules/animes/animes_bloc.dart';
 import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../app_module.dart';
-
 class AnimesModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => AnimeRepository(AppModule.to.get<CustomDio>())),
+        Bind((i) => AnimeRepository(Modular.get<CustomDio>())),
         Bind((i) => AnimeBloc(i.get<AnimeRepository>())),
-        Bind((i) => AnimesRepository(AppModule.to.get<CustomDio>())),
+        Bind((i) => AnimesRepository(Modular.get<CustomDio>())),
         Bind((i) => AnimesBloc(i.get<AnimesRepository>())),
       ];
 

@@ -1,7 +1,6 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_bloc.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
@@ -10,7 +9,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class MangaPage extends StatelessWidget {
   final Titulo manga;
-  final MangaBloc bloc = MangasModule.to.get<MangaBloc>();
+  final MangaBloc bloc = Modular.get<MangaBloc>();
   MangaPage({Key key, this.manga}) : super(key: key);
 
   @override
@@ -27,17 +26,20 @@ class MangaPage extends StatelessWidget {
           title: Text(manga.nome),
           actions: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  showSearch(
-                      context: context,
-                      delegate: PesquisarCapitulo(manga: manga));
-                }),
+              icon: Icon(
+                Icons.search,
+              ),
+              onPressed: () {
+                showSearch(
+                    context: context,
+                    delegate: PesquisarCapitulo(manga: manga));
+              },
+              tooltip: "Pesquisar",
+            ),
             IconButton(
               onPressed: bloc.inverterCapitulos,
               icon: Icon(Icons.swap_vert),
+              tooltip: 'Inverter',
             )
           ],
         ),

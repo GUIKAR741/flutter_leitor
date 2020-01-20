@@ -1,13 +1,12 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_bloc.dart';
-import 'package:flutter_leitor/app/modules/hqs/hqs_module.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PesquisarHq extends Pesquisar {
-  HqsBloc bloc = HqsModule.to.get<HqsBloc>();
+  HqsBloc bloc = Modular.get<HqsBloc>();
 
   @override
   Widget buildLeading(BuildContext context) {

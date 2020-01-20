@@ -11,7 +11,7 @@ void main() {
   AssistirBloc bloc;
 
   setUp(() {
-    bloc = AssistirModule.to.get<AssistirBloc>();
+    bloc = Modular.get<AssistirBloc>();
   });
 
   group('AssistirBloc Test', () {

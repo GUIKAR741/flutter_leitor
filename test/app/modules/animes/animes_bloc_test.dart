@@ -11,7 +11,7 @@ void main() {
   AnimesBloc bloc;
 
   setUp(() {
-    bloc = AnimesModule.to.get<AnimesBloc>();
+    bloc = Modular.get<AnimesBloc>();
   });
 
   group('AnimesBloc Test', () {

@@ -10,7 +10,7 @@ void main() {
   LerBloc bloc;
 
   setUp(() {
-    bloc = HqsModule.to.get<LerBloc>();
+    bloc = Modular.get<LerBloc>();
   });
 
   group('LerBloc Test', () {

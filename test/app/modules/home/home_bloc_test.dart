@@ -10,7 +10,7 @@ void main() {
   HomeBloc bloc;
 
   setUp(() {
-    bloc = HomeModule.to.get<HomeBloc>();
+    bloc = Modular.get<HomeBloc>();
   });
 
   group('HomeBloc Test', () {

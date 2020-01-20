@@ -9,6 +9,18 @@
             "request": "launch",
             "type": "dart",
             // "args": ["-v"]
+        },
+        {
+            "name": "Flutter Verbose",
+            "request": "launch",
+            "type": "dart",
+            "args": ["-v"]
+        },
+        {
+            "name": "Flutter Release",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--release"]
         }
     ]
 }

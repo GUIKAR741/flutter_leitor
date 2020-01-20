@@ -11,7 +11,7 @@ void main() {
   AnimeBloc bloc;
 
   setUp(() {
-    bloc = AnimesModule.to.get<AnimeBloc>({'anime': Titulo()});
+    bloc = Modular.get<AnimeBloc>(params: {'anime': Titulo()});
   });
 
   group('AnimeBloc Test', () {

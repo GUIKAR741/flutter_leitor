@@ -11,7 +11,7 @@ void main() {
   MangaBloc bloc;
 
   setUp(() {
-    bloc = MangasModule.to.get<MangaBloc>({'manga': Titulo()});
+    bloc = Modular.get<MangaBloc>(params: {'manga': Titulo()});
   });
 
   group('MangaBloc Test', () {

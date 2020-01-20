@@ -1,12 +1,12 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/assistir/assistir_module.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_bloc.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class AssistirPage extends StatelessWidget {
   final Episodio episodio;
-  final AssistirBloc bloc = AssistirModule.to.get<AssistirBloc>();
+  final AssistirBloc bloc = Modular.get<AssistirBloc>();
   AssistirPage({Key key, this.episodio}) : super(key: key);
 
   @override

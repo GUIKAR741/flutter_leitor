@@ -37,19 +37,18 @@ class PaginaImagemWidget extends StatelessWidget {
             return state.completedWidget;
             break;
           case LoadState.failed:
-            return Container(
-                alignment: Alignment.center,
-                child: Column(
-                  children: <Widget>[
-                    Expanded(
-                      child: GestureDetector(
-                          onTap: () {
-                            state.reLoadImage();
-                          },
-                          child: Center(child: Text('Erro ao carregar'))),
-                    ),
-                  ],
-                ));
+            return GestureDetector(
+                onTap: () {
+                  state.reLoadImage();
+                },
+                child: Container(
+                    alignment: Alignment.center,
+                    child: Column(
+                      children: <Widget>[
+                        Expanded(
+                            child: Center(child: Text('Erro ao carregar'))),
+                      ],
+                    )));
             break;
         }
         return null;

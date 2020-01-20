@@ -10,7 +10,7 @@ void main() {
   HqBloc bloc;
 
   setUp(() {
-    bloc = HqsModule.to.get<HqBloc>();
+    bloc = Modular.get<HqBloc>();
   });
 
   group('HqBloc Test', () {

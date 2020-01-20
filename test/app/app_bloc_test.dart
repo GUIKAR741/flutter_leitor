@@ -10,7 +10,7 @@ void main() {
   AppBloc bloc;
 
   setUp(() {
-    bloc = AppModule.to.get<AppBloc>();
+    bloc = Modular.get<AppBloc>();
   });
 
   group('AppBloc Test', () {

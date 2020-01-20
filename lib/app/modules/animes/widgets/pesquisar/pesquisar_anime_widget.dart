@@ -5,10 +5,9 @@ import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dar
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../animes_bloc.dart';
-import '../../animes_module.dart';
 
 class PesquisarAnime extends Pesquisar {
-  AnimesBloc bloc = AnimesModule.to.get<AnimesBloc>();
+  AnimesBloc bloc = Modular.get<AnimesBloc>();
 
   @override
   Widget buildLeading(BuildContext context) {

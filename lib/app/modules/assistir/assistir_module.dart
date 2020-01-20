@@ -1,4 +1,3 @@
-import 'package:flutter_leitor/app/app_module.dart';
 import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_bloc.dart';
 import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
@@ -9,7 +8,7 @@ class AssistirModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => AssistirBloc(i.get<AnimeRepository>())),
-        Bind((i) => AnimeRepository(AppModule.to.get<CustomDio>())),
+        Bind((i) => AnimeRepository(Modular.get<CustomDio>())),
       ];
 
   @override

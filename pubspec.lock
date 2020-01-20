@@ -91,7 +91,7 @@ packages:
       name: extended_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.8"
+    version: "0.6.9"
   extended_image_library:
     dependency: transitive
     description:
@@ -110,7 +110,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.1"
+    version: "0.3.3+1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -342,7 +342,7 @@ packages:
       name: video_player
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.10.5+1"
+    version: "0.10.5+2"
   video_player_platform_interface:
     dependency: transitive
     description:

@@ -2,6 +2,7 @@ import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:preload_page_view/preload_page_view.dart';
 import 'package:rxdart/rxdart.dart';
 
 class LerBloc extends Disposable {
@@ -9,10 +10,12 @@ class LerBloc extends Disposable {
   final BehaviorSubject<List<PaginaImagemWidget>> _dados =
       BehaviorSubject<List<PaginaImagemWidget>>();
   final BehaviorSubject<String> _pagina = BehaviorSubject<String>();
+  final PreloadPageController pageController = PreloadPageController();
 
   Capitulo capitulo;
   List<String> imagens;
   int index = 0;
+  int paginaIndex;
 
   LerBloc(this.repo);
 
@@ -32,6 +35,19 @@ class LerBloc extends Disposable {
 
   void mudar(int pagina) {
     (pagina > index) ? proximo() : anterior();
+  }
+
+  void escrever(String valor) {
+    if (int.tryParse(valor) != null) paginaIndex = int.parse(valor);
+  }
+
+  void irPara() {
+    if (paginaIndex >= 1 && paginaIndex <= imagens.length) {
+      _pagina.add("$paginaIndex/${imagens.length}");
+      index = paginaIndex;
+      pageController.jumpToPage(index - 1);
+    }
+    Modular.to.pop();
   }
 
   void anterior() {

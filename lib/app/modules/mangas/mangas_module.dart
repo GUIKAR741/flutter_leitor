@@ -9,15 +9,13 @@ import 'package:flutter_leitor/app/modules/mangas/mangas_bloc.dart';
 import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../app_module.dart';
-
 class MangasModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind((i) => LerBloc(i.get<MangaRepository>())),
-        Bind((i) => MangaRepository(AppModule.to.get<CustomDio>())),
+        Bind((i) => MangaRepository(Modular.get<CustomDio>())),
         Bind((i) => MangasBloc(i.get<MangasRepository>())),
-        Bind((i) => MangasRepository(AppModule.to.get<CustomDio>())),
+        Bind((i) => MangasRepository(Modular.get<CustomDio>())),
         Bind((i) => MangaBloc(i.get<MangaRepository>())),
       ];
 

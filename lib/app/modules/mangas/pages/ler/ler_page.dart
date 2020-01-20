@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/ler/ler_bloc.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/mudar_pagina/mudar_pagina_widget.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatelessWidget {
   final Capitulo capitulo;
-  final LerBloc bloc = MangasModule.to.get<LerBloc>();
+  final LerBloc bloc = Modular.get<LerBloc>();
 
   LerPage({Key key, this.capitulo}) : super(key: key);
 
@@ -23,18 +24,22 @@ class LerPage extends StatelessWidget {
       stream: bloc.pagina,
       builder: (_, snapshot) {
         return snapshot.hasData
-            ? Padding(
-                padding: EdgeInsets.symmetric(horizontal: 10),
-                child: Text(
-                  snapshot.data,
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+            ? MudarPaginaWidget(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 10),
+                  child: Text(
+                    snapshot.data,
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
+                onChanged: bloc.escrever,
+                onPressed: bloc.irPara,
               )
             : Padding(
-                padding: EdgeInsets.only(right: 10),
+                padding: EdgeInsets.only(right: 20),
                 child: CircularProgressIndicator(),
               );
       },
@@ -58,6 +63,7 @@ class LerPage extends StatelessWidget {
             builder: (_, AsyncSnapshot<List<PaginaImagemWidget>> snapshot) {
               return snapshot.hasData
                   ? PreloadPageView(
+                      controller: bloc.pageController,
                       onPageChanged: bloc.mudar,
                       children: snapshot.data,
                       preloadPagesCount: 5,

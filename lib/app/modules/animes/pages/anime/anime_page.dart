@@ -5,12 +5,11 @@ import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-
-import '../../animes_module.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class AnimePage extends StatelessWidget {
   final Titulo anime;
-  final AnimeBloc bloc = AnimesModule.to.get<AnimeBloc>();
+  final AnimeBloc bloc = Modular.get<AnimeBloc>();
   AnimePage({Key key, this.anime}) : super(key: key);
 
   @override
@@ -27,15 +26,18 @@ class AnimePage extends StatelessWidget {
           title: Text(anime.nome),
           actions: <Widget>[
             IconButton(
-                icon: Icon(
-                  Icons.search,
-                ),
-                onPressed: () {
-                  showSearch(context: context, delegate: PesquisarEpisodio());
-                }),
+              icon: Icon(
+                Icons.search,
+              ),
+              onPressed: () {
+                showSearch(context: context, delegate: PesquisarEpisodio());
+              },
+              tooltip: "Pesquisar",
+            ),
             IconButton(
               onPressed: bloc.inverterEpisodios,
               icon: Icon(Icons.swap_vert),
+              tooltip: 'Inverter',
             )
           ],
         ),

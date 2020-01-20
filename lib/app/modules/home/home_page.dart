@@ -1,11 +1,11 @@
+import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/app_bloc.dart';
-import 'package:flutter_leitor/app/app_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatelessWidget {
   final String title;
-  final AppBloc bloc = AppModule.to.get<AppBloc>();
+  final AppBloc bloc = Modular.get<AppBloc>();
 
   HomePage({Key key, this.title = "Leitor"}) : super(key: key);
 
@@ -15,6 +15,14 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         title: Text(title),
         actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.clear),
+            tooltip: "Limpar Imagens",
+            onPressed: () {
+              clearDiskCachedImages();
+              clearMemoryImageCache();
+            },
+          ),
           StreamBuilder(
               stream: bloc.tema,
               builder: (context, snapshot) {
@@ -22,6 +30,7 @@ class HomePage extends StatelessWidget {
                     ? (snapshot.data ? Icons.brightness_7 : Icons.brightness_3)
                     : Icons.brightness_7;
                 return IconButton(
+                  tooltip: "Mudar Tema",
                   icon: Icon(icone),
                   onPressed: bloc.mudarTema,
                 );

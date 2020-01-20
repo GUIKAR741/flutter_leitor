@@ -1,14 +1,13 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/animes_bloc.dart';
-import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_anime_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AnimesPage extends StatelessWidget {
   final String title;
-  final AnimesBloc bloc = AnimesModule.to.get<AnimesBloc>();
+  final AnimesBloc bloc = Modular.get<AnimesBloc>();
 
   AnimesPage({Key key, this.title = "Animes"}) : super(key: key);
 
@@ -17,12 +16,14 @@ class AnimesPage extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(title: Text(title), actions: <Widget>[
           IconButton(
-              icon: Icon(
-                Icons.search,
-              ),
-              onPressed: () {
-                showSearch(context: context, delegate: PesquisarAnime());
-              })
+            icon: Icon(
+              Icons.search,
+            ),
+            onPressed: () {
+              showSearch(context: context, delegate: PesquisarAnime());
+            },
+            tooltip: "Pesquisar",
+          )
         ]),
         body: StreamBuilder(
           stream: bloc.dados,
