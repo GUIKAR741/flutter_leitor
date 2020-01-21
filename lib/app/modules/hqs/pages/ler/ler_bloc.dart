@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/hqs/repositories/hq_repository.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
@@ -11,26 +12,43 @@ class LerBloc extends Disposable {
       BehaviorSubject<List<PaginaImagemWidget>>();
   final BehaviorSubject<String> _pagina = BehaviorSubject<String>();
   final PreloadPageController pageController = PreloadPageController();
+  final BehaviorSubject<IconData> _icon =
+      BehaviorSubject<IconData>.seeded(Icons.pause);
 
   Capitulo capitulo;
-  List<String> imagens;
+  List<PaginaImagemWidget> imagens;
   int index = 0;
+  bool paginacao = true;
   int paginaIndex;
 
   LerBloc(this.repo);
 
   Stream<List<PaginaImagemWidget>> get dados => _dados.stream;
   Stream<String> get pagina => _pagina.stream;
+  Stream<IconData> get icon => _icon.stream;
 
   void listarImagens() {
     _pagina.add(null);
     _dados.add(null);
     repo.imagens(capitulo.link).then((data) {
       index = 0;
-      imagens = data;
+      imagens = data.map((String i) => PaginaImagemWidget(url: i)).toList();
       _pagina.add("${index + 1}/${imagens.length}");
-      _dados.add(data.map((String i) => PaginaImagemWidget(url: i)).toList());
+      _dados.add(imagens);
     });
+  }
+
+  void pausar() {
+    if (paginacao) {
+      _pagina.add("${index + 1}/${imagens.length}");
+      _dados.add([imagens[index]]);
+      _icon.add(Icons.play_arrow);
+    } else {
+      _dados.add(imagens);
+      pageController.jumpToPage(index);
+      _icon.add(Icons.pause);
+    }
+    paginacao = !paginacao;
   }
 
   void mudar(int pagina) {

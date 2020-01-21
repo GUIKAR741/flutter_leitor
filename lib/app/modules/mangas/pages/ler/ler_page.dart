@@ -55,6 +55,16 @@ class LerPage extends StatelessWidget {
           Center(
             child: mostrarPaginas(),
           ),
+          StreamBuilder<Object>(
+            stream: bloc.icon,
+            builder: (context, snapshot) {
+              return IconButton(
+                icon: Icon(snapshot.data),
+                onPressed: bloc.pausar,
+                tooltip: "Play/Pause",
+              );
+            }
+          ),
         ],
       ),
       body: Center(
@@ -64,7 +74,7 @@ class LerPage extends StatelessWidget {
               return snapshot.hasData
                   ? PreloadPageView(
                       controller: bloc.pageController,
-                      onPageChanged: bloc.mudar,
+                      onPageChanged: bloc.paginacao ? bloc.mudar : null,
                       children: snapshot.data,
                       preloadPagesCount: 5,
                     )
