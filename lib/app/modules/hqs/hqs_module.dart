@@ -1,22 +1,23 @@
-import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_bloc.dart';
-import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_page.dart';
-import 'package:flutter_leitor/app/modules/hqs/repositories/hq_repository.dart';
-import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_bloc.dart';
-import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_page.dart';
+import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_controller.dart';
+import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_controller.dart';
 import 'package:flutter_leitor/app/modules/hqs/repositories/hqs_repository.dart';
-import 'package:flutter_leitor/app/modules/hqs/hqs_bloc.dart';
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
+import 'package:flutter_leitor/app/modules/hqs/repositories/hq_repository.dart';
+import 'package:flutter_leitor/app/modules/hqs/hqs_controller.dart';
+import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_page.dart';
+
+import 'pages/hq/hq_page.dart';
+import 'pages/ler/ler_page.dart';
 
 class HqsModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => LerBloc(i.get<HqRepository>())),
-        Bind((i) => HqRepository(Modular.get<CustomDio>())),
-        Bind((i) => HqBloc(i.get<HqRepository>())),
-        Bind((i) => HqsRepository(Modular.get<CustomDio>())),
-        Bind((i) => HqsBloc(i.get<HqsRepository>())),
+        Bind((i) => LerController(i.get<HqRepository>())),
+        Bind((i) => HqController(i.get<HqRepository>())),
+        Bind((i) => HqsRepository(Modular.get<DioService>())),
+        Bind((i) => HqRepository(Modular.get<DioService>())),
+        Bind((i) => HqsController(i.get<HqsRepository>())),
       ];
 
   @override

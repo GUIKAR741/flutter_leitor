@@ -1,128 +1,101 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import 'anime_controller.dart';
+
 class AnimePage extends StatelessWidget {
-  final Titulo anime;
-  final AnimeBloc bloc = Modular.get<AnimeBloc>();
+  final TituloModel anime;
+  final AnimeController controller = Modular.get<AnimeController>();
   AnimePage({Key key, this.anime}) : super(key: key);
 
   @override
   StatelessElement createElement() {
-    bloc.anime = anime;
-    bloc.listarEpisodios();
+    controller.anime = anime;
+    controller.listarEpisodios();
     return super.createElement();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(anime.nome),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.search,
-              ),
-              onPressed: () {
-                showSearch(context: context, delegate: PesquisarEpisodio());
-              },
-              tooltip: "Pesquisar",
+      appBar: AppBar(
+        title: Text(anime.nome),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
             ),
-            IconButton(
-              onPressed: bloc.inverterEpisodios,
-              icon: Icon(Icons.swap_vert),
-              tooltip: 'Inverter',
-            )
-          ],
-        ),
-        body: StreamBuilder(
-          stream: bloc.dados,
-          builder: (_, AsyncSnapshot<List<Episodio>> snapshot) {
-            if (!snapshot.hasData) {
-              return Center(child: CircularProgressIndicator());
-            }
-            return Column(
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () async => bloc.listarEpisodios(),
-                    child: DraggableScrollbar.semicircle(
-                      controller: bloc.scrollController,
-                      child: ListView.separated(
-                        controller: bloc.scrollController,
-                        itemCount: snapshot.data.length,
-                        itemBuilder: (_, index) {
-                          return index == 0
-                              ? Column(
-                                  children: <Widget>[
-                                    card(),
-                                    listTile(snapshot, index, context)
-                                  ],
-                                )
-                              : listTile(snapshot, index, context);
-                        },
-                        separatorBuilder: (_, index) => Divider(),
-                      ),
+            onPressed: () {
+              showSearch(context: context, delegate: PesquisarEpisodio());
+            },
+            tooltip: "Pesquisar",
+          ),
+          IconButton(
+            onPressed: controller.inverterEpisodios,
+            icon: Icon(Icons.swap_vert),
+            tooltip: 'Inverter',
+          )
+        ],
+      ),
+      body: Observer(
+        builder: (_) {
+          if (controller.episodios.value == null) {
+            return Center(child: CircularProgressIndicator());
+          }
+          List<EpisodioModel> episodios = controller.episodios.value;
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async => controller.listarEpisodios(),
+                  child: DraggableScrollbar.semicircle(
+                    controller: controller.scrollController,
+                    child: ListView.separated(
+                      controller: controller.scrollController,
+                      itemCount: episodios.length,
+                      itemBuilder: (_, index) {
+                        return index == 0
+                            ? Column(
+                                children: <Widget>[
+                                  CardWidget(
+                                    titulo: anime,
+                                  ),
+                                  listTile(episodios[index])
+                                ],
+                              )
+                            : listTile(episodios[index]);
+                      },
+                      separatorBuilder: (_, index) => Divider(),
                     ),
                   ),
                 ),
-              ],
-            );
-          },
-        ));
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
-  Widget listTile(snapshot, index, context) {
+  Widget listTile(EpisodioModel episodio) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10),
       leading: Container(
         height: 100,
         width: 70,
-        child: ExtendedImage.network(snapshot.data[index].imagem,
+        child: ExtendedImage.network(episodio.imagem,
             cache: true, fit: BoxFit.fill),
       ),
-      title: Text(snapshot.data[index].titulo),
-      subtitle: Text(snapshot.data[index].info),
-      onTap: () => bloc.mudarPagina(snapshot.data[index]),
-    );
-  }
-
-  Widget card() {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: ExtendedImage.network(
-                  anime.imagem,
-                  height: 300,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          color: Colors.blueGrey[700],
-          padding: EdgeInsets.all(5),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            anime.descricao,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
+      title: Text(episodio.titulo),
+      subtitle: Text(episodio.info),
+      onTap: () => Modular.to.pushNamed('/assistir', arguments: episodio),
     );
   }
 }

@@ -1,17 +1,17 @@
-import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/assistir/assistir_bloc.dart';
+import 'package:flutter_leitor/app/modules/assistir/assistir_controller.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AssistirPage extends StatelessWidget {
-  final Episodio episodio;
-  final AssistirBloc bloc = Modular.get<AssistirBloc>();
+  final EpisodioModel episodio;
+  final AssistirController controller = Modular.get<AssistirController>();
   AssistirPage({Key key, this.episodio}) : super(key: key);
 
   @override
   StatelessElement createElement() {
-    bloc.iniciarLink(episodio);
+    controller.iniciarLink(episodio);
     return super.createElement();
   }
 
@@ -19,23 +19,20 @@ class AssistirPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: StreamBuilder(
-            stream: bloc.dados,
-            builder: (_, snapshot) {
-              return snapshot.hasData
-                  ? Text(episodio.titulo)
-                  : Text('Carregando...');
-            }),
+        title: Observer(builder: (_) {
+          return controller.chewie.value != null
+              ? Text(episodio.titulo)
+              : Text('Carregando...');
+        }),
       ),
       body: Column(
         children: <Widget>[
           Expanded(
             child: Center(
-              child: StreamBuilder(
-                stream: bloc.dados,
-                builder: (_, AsyncSnapshot<Chewie> snapshot) {
-                  return snapshot.hasData
-                      ? snapshot.data
+              child: Observer(
+                builder: (_) {
+                  return controller.chewie.value != null
+                      ? controller.chewie.value
                       : CircularProgressIndicator();
                 },
               ),

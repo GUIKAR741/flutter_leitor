@@ -1,37 +1,48 @@
-// To parse this JSON data, do
-//
-//     final capitulo = capituloFromJson(jsonString);
-
 import 'dart:convert';
 
-class Capitulo {
-  String titulo;
-  String link;
-  String info;
+import 'package:mobx/mobx.dart';
+part 'capitulo_model.g.dart';
 
-  Capitulo({
-    this.titulo,
-    this.link,
-    this.info,
-  });
+class CapituloModel extends _CapituloModelBase with _$CapituloModel {
+  CapituloModel({String titulo, String link, String info})
+      : super(titulo: titulo, link: link, info: info);
 
-  factory Capitulo.fromRawJson(String str) =>
-      Capitulo.fromJson(json.decode(str));
+  factory CapituloModel.fromJson(Map<String, dynamic> json) {
+    return CapituloModel(
+      titulo: json['titulo'],
+      link: json['link'],
+      info: json['info'],
+    );
+  }
+
+  Map<String, dynamic> toJson() => {
+        'titulo': this.titulo,
+        'link': this.link,
+        'info': this.info,
+      };
+
+  factory CapituloModel.fromRawJson(String str) =>
+      CapituloModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
+}
+
+abstract class _CapituloModelBase with Store {
+  @observable
+  String titulo;
+  @observable
+  String link;
+  @observable
+  String info;
+
+  _CapituloModelBase({this.titulo, this.link, this.info});
 
   @override
   String toString() => titulo;
 
-  factory Capitulo.fromJson(Map<String, dynamic> json) => Capitulo(
-        titulo: json["titulo"],
-        link: json["link"],
-        info: json["info"],
-      );
+  @override
+  operator ==(o) => o.titulo == titulo && o.link == link;
 
-  Map<String, dynamic> toJson() => {
-        "titulo": titulo,
-        "link": link,
-        "info": info,
-      };
+  @override
+  int get hashCode => titulo.hashCode ^ link.hashCode ^ info.hashCode;
 }

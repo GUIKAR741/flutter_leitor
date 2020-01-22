@@ -1,14 +1,15 @@
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
+import 'dart:convert';
+
+import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
-import 'dart:convert';
 
 class AnimeRepository extends Disposable {
-  final CustomDio dio;
+  final DioService dio;
 
   AnimeRepository(this.dio);
 
@@ -22,7 +23,7 @@ class AnimeRepository extends Disposable {
     return json.decode(response.data);
   }
 
-  Future<List<Episodio>> episodios(Titulo anime) async {
+  Future<List<EpisodioModel>> episodios(TituloModel anime) async {
     String data = await _getLink(anime.link);
     Document soup = parse(data), soupOriginal = parse(data);
     anime.descricao = soup.querySelector('p#sinopse').text.replaceAll('\n', '');
@@ -34,7 +35,7 @@ class AnimeRepository extends Disposable {
         .toList()[0];
     int inicio = 1, fim = 20;
     Map<String, dynamic> pagina;
-    List<Episodio> episodios = List();
+    List<EpisodioModel> episodios = List();
     while (inicio <= fim) {
       Map<String, dynamic> data = {
         'id_cat': idCategoria.toString(),
@@ -64,7 +65,7 @@ class AnimeRepository extends Disposable {
               .toList()
               .reversed
               .toList();
-          episodios.add(Episodio(
+          episodios.add(EpisodioModel(
               titulo: ep.querySelector('a').text,
               link: ep.querySelector('a').attributes['href'],
               info:
@@ -93,7 +94,7 @@ class AnimeRepository extends Disposable {
                 .toList()
                 .reversed
                 .toList();
-            episodios.add(Episodio(
+            episodios.add(EpisodioModel(
                 titulo:
                     "OVA: ${ep.querySelector('div.epsBoxSobre').querySelector('a').text}",
                 link: ep.querySelector('a').attributes['href'],
@@ -102,35 +103,12 @@ class AnimeRepository extends Disposable {
                 imagem: imagem));
           }
         }
-        // List<Element> filme = parent.querySelectorAll('div.epsBoxFilme');
-        // if (filme.isNotEmpty) {
-        //   for (Element ep in filme) {
-        //     String imagem = ep
-        //         .querySelector('div.epsBoxImgFilme')
-        //         .querySelector('img')
-        //         .attributes['data-src'];
-        //     String tempoEp = ep.querySelector('div.tempoEps').innerHtml;
-        //     List<String> info = ep
-        //         .querySelectorAll('img')
-        //         .where((d) => d.attributes['alt']?.isNotEmpty ?? false)
-        //         .map((e) => e.attributes['alt'])
-        //         .toList()
-        //         .reversed
-        //         .toList();
-        //     episodios.add(Episodio(
-        //         titulo: "Filme: ${ep.querySelector('h4').text}",
-        //         link: ep.querySelector('a').attributes['href'],
-        //         info:
-        //             'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'} Duração: $tempoEp',
-        //         imagem: imagem));
-        //   }
-        // }
       }
     }
     return episodios;
   }
 
-  Future<String> linkVideo(Episodio ep) async {
+  Future<String> linkVideo(EpisodioModel ep) async {
     String data = await _getLink(ep.link);
     Document soup = parse(data);
     ep.titulo = soup

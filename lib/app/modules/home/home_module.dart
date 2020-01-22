@@ -1,6 +1,6 @@
 import 'package:flutter_leitor/app/modules/animes/animes_module.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_module.dart';
-import 'package:flutter_leitor/app/modules/home/home_bloc.dart';
+import 'package:flutter_leitor/app/modules/home/home_controller.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_module.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -9,7 +9,7 @@ import 'package:flutter_leitor/app/modules/home/home_page.dart';
 class HomeModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => HomeBloc()),
+        Bind((i) => HomeController()),
       ];
 
   @override

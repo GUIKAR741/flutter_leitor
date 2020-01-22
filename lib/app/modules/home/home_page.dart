@@ -1,13 +1,20 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/app_bloc.dart';
+import 'package:flutter_leitor/app/app_controller.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HomePage extends StatelessWidget {
   final String title;
-  final AppBloc bloc = Modular.get<AppBloc>();
+  final AppController controller = Modular.get<AppController>();
 
   HomePage({Key key, this.title = "Leitor"}) : super(key: key);
+
+  @override
+  StatelessElement createElement() {
+    // controller.iniciar();
+    return super.createElement();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -23,18 +30,15 @@ class HomePage extends StatelessWidget {
               clearMemoryImageCache();
             },
           ),
-          StreamBuilder(
-              stream: bloc.tema,
-              builder: (context, snapshot) {
-                IconData icone = snapshot.hasData
-                    ? (snapshot.data ? Icons.brightness_7 : Icons.brightness_3)
-                    : Icons.brightness_7;
-                return IconButton(
-                  tooltip: "Mudar Tema",
-                  icon: Icon(icone),
-                  onPressed: bloc.mudarTema,
-                );
-              })
+          Observer(builder: (_) {
+            IconData icone =
+                (controller.tema ? Icons.brightness_7 : Icons.brightness_3);
+            return IconButton(
+              tooltip: "Mudar Tema",
+              icon: Icon(icone),
+              onPressed: controller.mudarTema,
+            );
+          })
         ],
       ),
       body: Center(

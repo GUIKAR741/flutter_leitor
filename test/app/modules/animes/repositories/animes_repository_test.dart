@@ -1,12 +1,10 @@
-// import 'package:dio/dio.dart';
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
-// import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:flutter_leitor/app/modules/animes/repositories/animes_repository.dart';
 
-class MockClient extends Mock implements CustomDio {}
+class MockClient extends Mock implements DioService {}
 
 void main() {
   AnimesRepository repository;
@@ -22,12 +20,12 @@ void main() {
       expect(repository, isInstanceOf<AnimesRepository>());
     });
 
-    test('returns a Post if the http call completes successfully', () async {
-      // when(client.client.get("https://leitor-mangas-flutter.firebaseio.com/dados/animes.json"))
-      //     .thenAnswer(
-      //         (_) async => Response(data: {"id": [{"nome": "", "link": "", "imagem": ""}]}, statusCode: 200));
-      // List<Titulo> data = await repository.pegarAnimes(true);
-      // expect(data, [Titulo(nome: "", link: "", imagem: "")]);
-    });
+    // test('returns a Post if the http call completes successfully', () async {
+    //   when(client.get('https://jsonplaceholder.typicode.com/posts/1'))
+    //       .thenAnswer(
+    //           (_) async => Response(data: {'title': 'Test'}, statusCode: 200));
+    //   Map<String, dynamic> data = await repository.fetchPost(client);
+    //   expect(data['title'], 'Test');
+    // });
   });
 }

@@ -1,55 +1,55 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_bloc.dart';
+import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_controller.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class PesquisarEpisodio extends Pesquisar {
-  AnimeBloc bloc = Modular.get<AnimeBloc>();
+  AnimeController controller = Modular.get<AnimeController>();
 
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          bloc.listarEpisodios();
+          controller.listarEpisodios();
           close(context, '');
         });
   }
 
-  @override
-  Widget buildResults(BuildContext context) {
-    // close(context, query);
-    bloc.pesquisar(query);
-    return StreamBuilder(
-      stream: bloc.dados,
-      builder: (_, AsyncSnapshot<List<Episodio>> snapshot) {
-        if (!snapshot.hasData) {
-          return Center(child: CircularProgressIndicator());
-        }
-        return ListView.separated(
-          itemCount: snapshot.data.length,
-          itemBuilder: (_, index) {
-            return ListTile(
-              contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-              leading: Container(
-                height: 100,
-                width: 50,
-                child: ExtendedImage.network(snapshot.data[index].imagem,
-                    cache: true, fit: BoxFit.fill),
-              ),
-              title: Text(snapshot.data[index].titulo),
-              onTap: () {
-                // print(snapshot.data[index]);
-                Modular.to.pushNamed('/animes/anime',
-                    arguments: snapshot.data[index]);
-              },
-            );
+  Widget listEpisodios() {
+    List<EpisodioModel> episodios = controller.pesquisar(query);
+    return ListView.separated(
+      itemCount: episodios.length,
+      itemBuilder: (_, index) {
+        return ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+          leading: Container(
+            height: 100,
+            width: 50,
+            child: ExtendedImage.network(episodios[index].imagem,
+                cache: true, fit: BoxFit.fill),
+          ),
+          title: Text(episodios[index].titulo),
+          onTap: () {
+            // print(episodios[index]);
+            Modular.to.pushNamed('/animes/anime', arguments: episodios[index]);
           },
-          separatorBuilder: (_, index) => Divider(),
         );
       },
+      separatorBuilder: (_, index) => Divider(),
     );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return listEpisodios();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    if (query.isEmpty) return super.buildSuggestions(context);
+    return listEpisodios();
   }
 }

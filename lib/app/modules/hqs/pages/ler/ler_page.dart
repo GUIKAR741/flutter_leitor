@@ -1,46 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_bloc.dart';
+import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_controller.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/mudar_pagina/mudar_pagina_widget.dart';
-import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatelessWidget {
-  final Capitulo capitulo;
-  final LerBloc bloc = Modular.get<LerBloc>();
+  final CapituloModel capitulo;
+  final LerController controller = Modular.get<LerController>();
+
   LerPage({Key key, this.capitulo}) : super(key: key);
 
   @override
   StatelessElement createElement() {
-    bloc.capitulo = capitulo;
-    bloc.listarImagens();
+    controller.capitulo = capitulo;
+    controller.listarImagens();
     return super.createElement();
   }
 
   Widget mostrarPaginas() {
-    return StreamBuilder(
-      stream: bloc.pagina,
-      builder: (_, snapshot) {
-        return snapshot.hasData
+    return Observer(
+      builder: (_) {
+        return controller.pagina.isNotEmpty
             ? MudarPaginaWidget(
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10),
-                  child: Text(
-                    snapshot.data,
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
+                child: Text(
+                  controller.pagina,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
-                onChanged: bloc.escrever,
-                onPressed: bloc.irPara,
+                onChanged: controller.escrever,
+                onPressed: controller.irPara,
               )
-            : Padding(
-                padding: EdgeInsets.only(right: 10),
-                child: CircularProgressIndicator(),
-              );
+            : CircularProgressIndicator();
       },
     );
   }
@@ -54,31 +48,26 @@ class LerPage extends StatelessWidget {
           Center(
             child: mostrarPaginas(),
           ),
-          StreamBuilder<Object>(
-            stream: bloc.icon,
-            builder: (context, snapshot) {
-              return IconButton(
-                icon: Icon(snapshot.data),
-                onPressed: bloc.pausar,
-                tooltip: "Play/Pause",
-              );
-            }
-          ),
+          Observer(builder: (_) {
+            return IconButton(
+              icon: Icon(controller.icone),
+              onPressed: controller.pausar,
+              tooltip: "Play/Pause",
+            );
+          }),
         ],
       ),
       body: Center(
-        child: StreamBuilder(
-            stream: bloc.dados,
-            builder: (_, AsyncSnapshot<List<PaginaImagemWidget>> snapshot) {
-              return snapshot.hasData
-                  ? PreloadPageView(
-                      controller: bloc.pageController,
-                      onPageChanged: bloc.paginacao ? bloc.mudar : null,
-                      children: snapshot.data,
-                      preloadPagesCount: 5,
-                    )
-                  : CircularProgressIndicator();
-            }),
+        child: Observer(builder: (_) {
+          return controller.imagens != null
+              ? PreloadPageView(
+                  controller: controller.pageController,
+                  onPageChanged: controller.paginacao ? controller.mudar : null,
+                  children: controller.imagens,
+                  preloadPagesCount: 5,
+                )
+              : CircularProgressIndicator();
+        }),
       ),
     );
   }

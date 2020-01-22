@@ -1,11 +1,11 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
+import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class AnimesRepository extends Disposable {
-  final CustomDio dio;
+  final DioService dio;
 
   AnimesRepository(this.dio);
 
@@ -15,7 +15,7 @@ class AnimesRepository extends Disposable {
     return response.data[response.data.keys.elementAt(0)]['data'];
   }
 
-  Future<List<Titulo>> pegarAnimes(bool refresh) async {
+  Future<List<TituloModel>> pegarAnimes(bool refresh) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> extra = {};
     if (prefs.containsKey('data_atualizacao')) {
@@ -39,7 +39,8 @@ class AnimesRepository extends Disposable {
     final response = await dio.client.get(
         "https://leitor-mangas-flutter.firebaseio.com/dados/animes.json",
         options: Options(extra: extra));
-    return Titulo.fromJsonList(response.data[response.data.keys.elementAt(0)]);
+    return TituloModel.fromJsonList(
+        response.data[response.data.keys.elementAt(0)]);
   }
 
   @override

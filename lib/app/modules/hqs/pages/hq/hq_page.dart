@@ -1,22 +1,23 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_controller.dart';
 import 'package:flutter_leitor/app/modules/hqs/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
+import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import 'hq_bloc.dart';
-
 class HqPage extends StatelessWidget {
-  final Titulo hq;
-  final HqBloc bloc = Modular.get<HqBloc>();
+  final TituloModel hq;
+  final HqController controller = Modular.get<HqController>();
+
   HqPage({Key key, this.hq}) : super(key: key);
 
   @override
   StatelessElement createElement() {
-    bloc.hq = hq;
-    bloc.listarCapitulos();
+    controller.hq = hq;
+    controller.listarCapitulos();
     return super.createElement();
   }
 
@@ -31,44 +32,45 @@ class HqPage extends StatelessWidget {
                 Icons.search,
               ),
               onPressed: () {
-                showSearch(
-                    context: context, delegate: PesquisarCapitulo(hq: hq));
+                showSearch(context: context, delegate: PesquisarCapitulo());
               },
               tooltip: "Pesquisar",
             ),
             IconButton(
-              onPressed: bloc.inverterCapitulos,
+              onPressed: controller.inverterCapitulos,
               icon: Icon(Icons.swap_vert),
               tooltip: 'Inverter',
             )
           ],
         ),
-        body: StreamBuilder(
-          stream: bloc.dados,
-          builder: (_, AsyncSnapshot<List<Capitulo>> snapshot) {
-            if (!snapshot.hasData) {
+        body: Observer(
+          builder: (_) {
+            if (controller.capitulos.value == null) {
               return Center(child: CircularProgressIndicator());
             }
+            List<CapituloModel> capitulos = controller.capitulos.value;
             return Column(
               children: <Widget>[
                 Expanded(
                   child: RefreshIndicator(
-                    onRefresh: () async => bloc.listarCapitulos(),
+                    onRefresh: () async => controller.listarCapitulos(),
                     child: DraggableScrollbar.semicircle(
-                      controller: bloc.scroll,
+                      controller: controller.scroll,
                       child: ListView.separated(
-                        controller: bloc.scroll,
-                        itemCount: snapshot.data.length,
+                        controller: controller.scroll,
+                        itemCount: capitulos.length,
                         itemBuilder: (_, index) {
                           return index == 0
                               ? Column(
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
-                                    card(),
-                                    listTile(snapshot, index)
+                                    CardWidget(
+                                      titulo: hq,
+                                    ),
+                                    listTile(capitulos[index])
                                   ],
                                 )
-                              : listTile(snapshot, index);
+                              : listTile(capitulos[index]);
                         },
                         separatorBuilder: (_, index) => Divider(),
                       ),
@@ -81,46 +83,13 @@ class HqPage extends StatelessWidget {
         ));
   }
 
-  Widget listTile(snapshot, index) {
+  Widget listTile(capitulo) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 15),
-      title: Text(snapshot.data[index].titulo),
+      title: Text(capitulo.titulo),
       onTap: () {
-        Modular.to.pushNamed('/hqs/ler_hq', arguments: snapshot.data[index]);
+        Modular.to.pushNamed('/hqs/ler_hq', arguments: capitulo);
       },
-    );
-  }
-
-  Widget card() {
-    return Column(
-      children: <Widget>[
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: ExtendedImage.network(
-                  hq.imagem,
-                  height: 300,
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Container(
-          color: Colors.blueGrey[700],
-          padding: EdgeInsets.all(5),
-          alignment: Alignment.centerLeft,
-          child: Text(
-            hq.descricao,
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-        ),
-      ],
     );
   }
 }

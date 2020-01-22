@@ -1,4 +1,4 @@
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
+import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -6,7 +6,7 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 class HqRepository extends Disposable {
-  final CustomDio dio;
+  final DioService dio;
 
   HqRepository(this.dio);
 
@@ -15,7 +15,7 @@ class HqRepository extends Disposable {
     return response.data;
   }
 
-  Future<List<Capitulo>> capitulos(Titulo hq) async {
+  Future<List<CapituloModel>> capitulos(TituloModel hq) async {
     String data = await _getLink(hq.link);
     Document soup = parse(data);
     hq.descricao = soup
@@ -25,9 +25,9 @@ class HqRepository extends Disposable {
         .replaceAll('Sinopse:', '')
         .trim();
     List<Element> td = soup.querySelectorAll("td");
-    List<Capitulo> capitulos = List();
+    List<CapituloModel> capitulos = List();
     td.forEach((data) {
-      capitulos.add(Capitulo(
+      capitulos.add(CapituloModel(
           titulo: data.querySelector('a').text,
           link: data.querySelector('a').attributes['href']));
     });

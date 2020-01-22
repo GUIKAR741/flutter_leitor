@@ -1,11 +1,11 @@
-import 'package:dio/dio.dart';
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
+import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:dio/dio.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HqsRepository extends Disposable {
-  final CustomDio dio;
+  final DioService dio;
 
   HqsRepository(this.dio);
 
@@ -15,7 +15,7 @@ class HqsRepository extends Disposable {
     return response.data[response.data.keys.elementAt(0)]['data'];
   }
 
-  Future<List<Titulo>> pegarHQS(bool refresh) async {
+  Future<List<TituloModel>> pegarHQS(bool refresh) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> extra = {};
     if (prefs.containsKey('data_atualizacao')) {
@@ -39,7 +39,8 @@ class HqsRepository extends Disposable {
     final response = await dio.client.get(
         "https://leitor-mangas-flutter.firebaseio.com/dados/hqs.json",
         options: Options(extra: extra));
-    return Titulo.fromJsonList(response.data[response.data.keys.elementAt(0)]);
+    return TituloModel.fromJsonList(
+        response.data[response.data.keys.elementAt(0)]);
   }
 
   @override

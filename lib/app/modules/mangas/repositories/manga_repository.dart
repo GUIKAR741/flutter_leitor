@@ -1,4 +1,4 @@
-import 'package:flutter_leitor/app/shared/dio/custom_dio.dart';
+import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -6,7 +6,7 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 class MangaRepository extends Disposable {
-  final CustomDio dio;
+  final DioService dio;
 
   MangaRepository(this.dio);
 
@@ -15,15 +15,15 @@ class MangaRepository extends Disposable {
     return response.data;
   }
 
-  Future<List<Capitulo>> capitulos(Titulo manga) async {
+  Future<List<CapituloModel>> capitulos(TituloModel manga) async {
     String data = await _getLink(manga.link);
     Document soup = parse(data);
     manga.descricao =
         soup.querySelector('div.panel-body').text.trim().replaceAll('\n', '');
     List<Element> divs = soup.querySelectorAll("div.row.lancamento-linha");
-    List<Capitulo> capitulos = List();
+    List<CapituloModel> capitulos = List();
     divs.forEach((data) {
-      capitulos.add(Capitulo(
+      capitulos.add(CapituloModel(
           titulo: data.querySelector('a').text,
           link: data.querySelector('a').attributes['href'],
           info: data.querySelector('a').nextElementSibling.innerHtml));
