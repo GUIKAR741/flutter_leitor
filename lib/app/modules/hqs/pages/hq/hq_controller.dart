@@ -28,18 +28,13 @@ abstract class _HqBase extends Disposable with Store {
   bool _isReversed = false;
 
   set hq(TituloModel value) => _hq = value;
+  bool get isReversed => _isReversed;
 
   @action
-  void listarCapitulos() {
-    capitulos = null;
-    capitulos = _repo.capitulos(_hq).asObservable();
-  }
-
-  @action
-  void inverterCapitulos() {
+  void listarCapitulos({bool reversed = false}) {
     capitulos = null;
     capitulos = _repo.capitulos(_hq).then((List<CapituloModel> data) {
-      _isReversed = !_isReversed;
+      if (reversed) _isReversed = !_isReversed;
       return !_isReversed ? data : data.reversed.toList();
     }).asObservable();
   }

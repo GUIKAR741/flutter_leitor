@@ -38,9 +38,9 @@ class AnimesPage extends StatelessWidget {
                 controller.listar(refresh: true);
               },
               child: Scrollbar(
-                controller: controller.scrollController,
+                controller: controller.scroll,
                 child: ListView.separated(
-                  controller: controller.scrollController,
+                  controller: controller.scroll,
                   itemCount: titulos.length,
                   itemBuilder: (_, index) {
                     return ListTile(

@@ -12,7 +12,7 @@ import 'package:flutter_leitor/app/modules/mangas/mangas_page.dart';
 class MangasModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => LerController(i.get<MangaRepository>())),
+        Bind((i) => LerController(i.get<MangaRepository>()), singleton: false),
         Bind((i) => MangaController(i.get<MangaRepository>())),
         Bind((i) => MangasRepository(Modular.get<DioService>())),
         Bind((i) => MangaRepository(Modular.get<DioService>())),

@@ -48,7 +48,7 @@ class MangaPage extends StatelessWidget {
             tooltip: "Pesquisar",
           ),
           IconButton(
-            onPressed: controller.inverterCapitulos,
+            onPressed: () => controller.listarCapitulos(reversed: true),
             icon: Icon(Icons.swap_vert),
             tooltip: 'Inverter',
           )

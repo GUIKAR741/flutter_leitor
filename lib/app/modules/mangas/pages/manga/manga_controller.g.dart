@@ -29,20 +29,10 @@ mixin _$MangaController on _MangaBase, Store {
   final _$_MangaBaseActionController = ActionController(name: '_MangaBase');
 
   @override
-  void listarCapitulos() {
+  void listarCapitulos({bool reversed = false}) {
     final _$actionInfo = _$_MangaBaseActionController.startAction();
     try {
-      return super.listarCapitulos();
-    } finally {
-      _$_MangaBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void inverterCapitulos() {
-    final _$actionInfo = _$_MangaBaseActionController.startAction();
-    try {
-      return super.inverterCapitulos();
+      return super.listarCapitulos(reversed: reversed);
     } finally {
       _$_MangaBaseActionController.endAction(_$actionInfo);
     }

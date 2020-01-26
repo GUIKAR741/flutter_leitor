@@ -29,20 +29,10 @@ mixin _$HqController on _HqBase, Store {
   final _$_HqBaseActionController = ActionController(name: '_HqBase');
 
   @override
-  void listarCapitulos() {
+  void listarCapitulos({bool reversed = false}) {
     final _$actionInfo = _$_HqBaseActionController.startAction();
     try {
-      return super.listarCapitulos();
-    } finally {
-      _$_HqBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void inverterCapitulos() {
-    final _$actionInfo = _$_HqBaseActionController.startAction();
-    try {
-      return super.inverterCapitulos();
+      return super.listarCapitulos(reversed: reversed);
     } finally {
       _$_HqBaseActionController.endAction(_$actionInfo);
     }

@@ -13,7 +13,7 @@ import 'pages/ler/ler_page.dart';
 class HqsModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => LerController(i.get<HqRepository>())),
+        Bind((i) => LerController(i.get<HqRepository>()), singleton: false),
         Bind((i) => HqController(i.get<HqRepository>())),
         Bind((i) => HqsRepository(Modular.get<DioService>())),
         Bind((i) => HqRepository(Modular.get<DioService>())),

@@ -28,18 +28,13 @@ abstract class _MangaBase extends Disposable with Store {
   _MangaBase(this._repo);
 
   set manga(TituloModel value) => _manga = value;
+  bool get isReversed => _isReversed;
 
   @action
-  void listarCapitulos() {
-    capitulos = null;
-    capitulos = _repo.capitulos(_manga).asObservable();
-  }
-
-  @action
-  void inverterCapitulos() {
+  void listarCapitulos({bool reversed = false}) {
     capitulos = null;
     capitulos = _repo.capitulos(_manga).then((List<CapituloModel> data) {
-      _isReversed = !_isReversed;
+      if (reversed) _isReversed = !_isReversed;
       return !_isReversed ? data : data.reversed.toList();
     }).asObservable();
   }

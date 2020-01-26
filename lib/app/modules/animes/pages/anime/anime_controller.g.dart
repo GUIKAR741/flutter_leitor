@@ -29,20 +29,10 @@ mixin _$AnimeController on _AnimeBase, Store {
   final _$_AnimeBaseActionController = ActionController(name: '_AnimeBase');
 
   @override
-  void listarEpisodios() {
+  void listarEpisodios({bool reversed = false}) {
     final _$actionInfo = _$_AnimeBaseActionController.startAction();
     try {
-      return super.listarEpisodios();
-    } finally {
-      _$_AnimeBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  void inverterEpisodios() {
-    final _$actionInfo = _$_AnimeBaseActionController.startAction();
-    try {
-      return super.inverterEpisodios();
+      return super.listarEpisodios(reversed: reversed);
     } finally {
       _$_AnimeBaseActionController.endAction(_$actionInfo);
     }

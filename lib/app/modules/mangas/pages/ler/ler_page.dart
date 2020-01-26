@@ -6,17 +6,34 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
-class LerPage extends StatelessWidget {
+class LerPage extends StatefulWidget {
   final CapituloModel capitulo;
-  final LerController controller = Modular.get<LerController>();
 
   LerPage({Key key, this.capitulo}) : super(key: key);
 
   @override
-  StatelessElement createElement() {
-    controller.capitulo = capitulo;
+  _LerPageState createState() => _LerPageState();
+}
+
+class _LerPageState extends State<LerPage> {
+  final LerController controller = Modular.get<LerController>();
+
+  @override
+  void initState() {
+    super.initState();
+    controller.capitulo = widget.capitulo;
     controller.listarImagens();
-    return super.createElement();
+    controller.pageController.addListener(
+      () => controller.listenerPage(context),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.pageController.removeListener(
+      () => controller.listenerPage(context),
+    );
   }
 
   Widget mostrarPaginas() {
@@ -31,6 +48,7 @@ class LerPage extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
+                paginas: controller.imagens.length,
                 onChanged: controller.escrever,
                 onPressed: controller.irPara,
               )
@@ -43,14 +61,22 @@ class LerPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(capitulo.titulo),
+        title: Observer(
+          builder: (_) {
+            return Text(
+              controller.capitulo != null ? controller.capitulo.titulo : '',
+            );
+          },
+        ),
         actions: <Widget>[
           Center(
             child: mostrarPaginas(),
           ),
           Observer(builder: (_) {
             return IconButton(
-              icon: Icon(controller.icone),
+              icon: Icon(
+                controller.icone,
+              ),
               onPressed: controller.pausar,
               tooltip: "Play/Pause",
             );

@@ -5,7 +5,10 @@ import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 class CardWidget extends StatelessWidget {
   final TituloModel titulo;
 
-  const CardWidget({Key key, this.titulo}) : super(key: key);
+  const CardWidget({
+    Key key,
+    @required this.titulo,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

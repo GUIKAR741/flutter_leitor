@@ -38,7 +38,7 @@ class AnimePage extends StatelessWidget {
             tooltip: "Pesquisar",
           ),
           IconButton(
-            onPressed: controller.inverterEpisodios,
+            onPressed: () => controller.listarEpisodios(reversed: true),
             icon: Icon(Icons.swap_vert),
             tooltip: 'Inverter',
           )
@@ -56,9 +56,9 @@ class AnimePage extends StatelessWidget {
                 child: RefreshIndicator(
                   onRefresh: () async => controller.listarEpisodios(),
                   child: DraggableScrollbar.semicircle(
-                    controller: controller.scrollController,
+                    controller: controller.scroll,
                     child: ListView.separated(
-                      controller: controller.scrollController,
+                      controller: controller.scroll,
                       itemCount: episodios.length,
                       itemBuilder: (_, index) {
                         return index == 0

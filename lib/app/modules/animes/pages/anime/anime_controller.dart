@@ -11,12 +11,14 @@ class AnimeController extends _AnimeBase with _$AnimeController {
   AnimeController(AnimeRepository _repo) : super(_repo);
 
   @override
-  void dispose() {}
+  void dispose() {
+    scroll.dispose();
+  }
 }
 
 abstract class _AnimeBase extends Disposable with Store {
   final AnimeRepository _repo;
-  final ScrollController scrollController = ScrollController();
+  final ScrollController scroll = ScrollController();
 
   _AnimeBase(this._repo);
 
@@ -26,16 +28,10 @@ abstract class _AnimeBase extends Disposable with Store {
   bool _isReversed = false;
 
   @action
-  void listarEpisodios() {
-    episodios = null;
-    episodios = _repo.episodios(anime).asObservable();
-  }
-
-  @action
-  void inverterEpisodios() {
+  void listarEpisodios({bool reversed = false}) {
     episodios = null;
     episodios = _repo.episodios(anime).then((List<EpisodioModel> data) {
-      _isReversed = !_isReversed;
+      if (reversed) _isReversed = !_isReversed;
       return !_isReversed ? data : data.reversed.toList();
     }).asObservable();
   }
