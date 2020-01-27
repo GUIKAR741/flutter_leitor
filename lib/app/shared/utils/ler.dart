@@ -53,10 +53,10 @@ abstract class _LerBase extends Disposable with Store {
     if (_paginacao) {
       pagina = "${_index + 1}/${imagens.value.length}";
       _imagens = imagens.value;
-      imagens = Future<List<PaginaImagemWidget>>(()=>[imagens.value[_index]]).asObservable();
+      imagens = Future<List<PaginaImagemWidget>>.value([imagens.value[_index]]).asObservable();
       icone = Icons.play_arrow;
     } else {
-      imagens = Future<List<PaginaImagemWidget>>(()=>_imagens).asObservable();
+      imagens = Future<List<PaginaImagemWidget>>.value(_imagens).asObservable();
       pageController.jumpToPage(_index);
       icone = Icons.pause;
     }
