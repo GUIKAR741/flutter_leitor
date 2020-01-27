@@ -47,7 +47,8 @@ class _LerPageState extends State<LerPage> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                paginas: controller.imagens.length,
+                ativarBotao: controller.paginacao,
+                paginas: controller.imagens.value.length,
                 onChanged: controller.escrever,
                 onPressed: controller.irPara,
               )
@@ -84,11 +85,11 @@ class _LerPageState extends State<LerPage> {
       ),
       body: Center(
         child: Observer(builder: (_) {
-          return controller.imagens != null
+          return controller.imagens.value != null
               ? PreloadPageView(
                   controller: controller.pageController,
                   onPageChanged: controller.paginacao ? controller.mudar : null,
-                  children: controller.imagens,
+                  children: controller.imagens.value,
                   preloadPagesCount: 5,
                 )
               : CircularProgressIndicator();

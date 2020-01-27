@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/utils/listagem_titulo.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -20,7 +21,7 @@ abstract class Ler extends _LerBase with _$Ler {
 abstract class _LerBase extends Disposable with Store {
   final PreloadPageController pageController = PreloadPageController();
 
-  final dynamic _controller;
+  final ListagemTitulo _controller;
 
   int _index = 0;
   bool _paginacao = true;
@@ -30,7 +31,7 @@ abstract class _LerBase extends Disposable with Store {
   @observable
   CapituloModel capitulo;
   @observable
-  ObservableList<PaginaImagemWidget> imagens;
+  ObservableFuture<List<PaginaImagemWidget>> imagens;
   @observable
   IconData icone;
   @observable
@@ -50,12 +51,12 @@ abstract class _LerBase extends Disposable with Store {
   @action
   void pausar() {
     if (_paginacao) {
-      pagina = "${_index + 1}/${imagens.length}";
-      _imagens = imagens;
-      imagens = [imagens[_index]].asObservable();
+      pagina = "${_index + 1}/${imagens.value.length}";
+      _imagens = imagens.value;
+      imagens = Future<List<PaginaImagemWidget>>(()=>[imagens.value[_index]]).asObservable();
       icone = Icons.play_arrow;
     } else {
-      imagens = _imagens;
+      imagens = Future<List<PaginaImagemWidget>>(()=>_imagens).asObservable();
       pageController.jumpToPage(_index);
       icone = Icons.pause;
     }
@@ -71,8 +72,8 @@ abstract class _LerBase extends Disposable with Store {
 
   @action
   void irPara() {
-    if (_paginaIndex >= 1 && _paginaIndex <= imagens.length) {
-      pagina = "$_paginaIndex/${imagens.length}";
+    if (_paginaIndex >= 1 && _paginaIndex <= imagens.value.length) {
+      pagina = "$_paginaIndex/${imagens.value.length}";
       _index = _paginaIndex;
       pageController.jumpToPage(_index - 1);
     }
@@ -80,24 +81,24 @@ abstract class _LerBase extends Disposable with Store {
 
   @action
   void anterior() {
-    if ((_index--) - 1 >= 0) pagina = "${_index + 1}/${imagens.length}";
+    if ((_index--) - 1 >= 0) pagina = "${_index + 1}/${imagens.value.length}";
   }
 
   @action
   void proximo() {
-    if ((_index++) + 1 < imagens.length)
-      pagina = "${_index + 1}/${imagens.length}";
+    if ((_index++) + 1 < imagens.value.length)
+      pagina = "${_index + 1}/${imagens.value.length}";
   }
 
   void listarImagens();
 
   @action
   void listenerPage(context) {
-    if (pageController.position.atEdge) {
+    if (pageController.position.atEdge && paginacao) {
       if (pageController.position.extentBefore == 0) {
-        int len = _controller.capitulos.value.length;
+        int len = _controller.lista.value.length;
         bool rev = _controller.isReversed;
-        int indice = _controller.capitulos.value.indexOf(capitulo);
+        int indice = _controller.lista.value.indexOf(capitulo);
         if ((indice < len - 1 && !rev) || (indice > 0 && rev))
           showDialog(
               context: context,
@@ -113,9 +114,9 @@ abstract class _LerBase extends Disposable with Store {
                       child: Text("Sim"),
                       onPressed: () {
                         if (indice < len - 1 && !rev)
-                          capitulo = _controller.capitulos.value[indice + 1];
+                          capitulo = _controller.lista.value[indice + 1];
                         if (indice > 0 && rev)
-                          capitulo = _controller.capitulos.value[indice - 1];
+                          capitulo = _controller.lista.value[indice - 1];
                         listarImagens();
                         Modular.to.pop();
                       },
@@ -124,9 +125,9 @@ abstract class _LerBase extends Disposable with Store {
                 );
               });
       } else {
-        int len = _controller.capitulos.value.length;
+        int len = _controller.lista.value.length;
         bool rev = _controller.isReversed;
-        int indice = _controller.capitulos.value.indexOf(capitulo);
+        int indice = _controller.lista.value.indexOf(capitulo);
         if ((indice > 0 && !rev) || (indice < len - 1 && rev))
           showDialog(
             context: context,
@@ -142,9 +143,9 @@ abstract class _LerBase extends Disposable with Store {
                     child: Text("Sim"),
                     onPressed: () {
                       if (indice > 0 && !rev)
-                        capitulo = _controller.capitulos.value[indice - 1];
+                        capitulo = _controller.lista.value[indice - 1];
                       if (indice < len - 1 && rev)
-                        capitulo = _controller.capitulos.value[indice + 1];
+                        capitulo = _controller.lista.value[indice + 1];
                       listarImagens();
                       Modular.to.pop();
                     },

@@ -2,10 +2,9 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_controller.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_titulo_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import 'widgets/pesquisar/pesquisar_hq_widget.dart';
 
 class HqsPage extends StatelessWidget {
   final String title;
@@ -24,7 +23,10 @@ class HqsPage extends StatelessWidget {
               Icons.search,
             ),
             onPressed: () {
-              showSearch(context: context, delegate: PesquisarHq());
+              showSearch(
+                  context: context,
+                  delegate:
+                      PesquisarTitulo(path: '/hqs/hq', controller: controller));
             },
             tooltip: "Pesquisar",
           )

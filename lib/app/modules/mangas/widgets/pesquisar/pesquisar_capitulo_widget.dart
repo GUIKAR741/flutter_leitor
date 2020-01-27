@@ -12,7 +12,7 @@ class PesquisarCapitulo extends Pesquisar {
     return IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          controller.listarCapitulos();
+          controller.listarTitulo();
           close(context, '');
         });
   }

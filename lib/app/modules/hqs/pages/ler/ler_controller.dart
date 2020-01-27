@@ -24,13 +24,12 @@ abstract class _LerBase extends Ler with Store {
     pagina = '';
     imagens = null;
     paginacao = true;
-    _repo.imagens(capitulo.link).then((data) {
+    imagens = _repo.imagens(capitulo.link).then((data) {
       index = 0;
-      imagens = data
+      pagina = "${index + 1}/${data.length}";
+      return data
           .map((String i) => PaginaImagemWidget(url: i))
-          .toList()
-          .asObservable();
-      pagina = "${index + 1}/${imagens.length}";
-    });
+          .toList();
+    }).asObservable();
   }
 }

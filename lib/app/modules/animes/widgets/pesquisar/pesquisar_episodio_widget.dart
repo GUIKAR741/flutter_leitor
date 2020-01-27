@@ -13,7 +13,7 @@ class PesquisarEpisodio extends Pesquisar {
     return IconButton(
         icon: Icon(Icons.arrow_back),
         onPressed: () {
-          controller.listarEpisodios();
+          controller.listarTitulo();
           close(context, '');
         });
   }

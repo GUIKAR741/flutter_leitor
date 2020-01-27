@@ -29,14 +29,14 @@ mixin _$Ler on _LerBase, Store {
   final _$imagensAtom = Atom(name: '_LerBase.imagens');
 
   @override
-  ObservableList<PaginaImagemWidget> get imagens {
+  ObservableFuture<List<PaginaImagemWidget>> get imagens {
     _$imagensAtom.context.enforceReadPolicy(_$imagensAtom);
     _$imagensAtom.reportObserved();
     return super.imagens;
   }
 
   @override
-  set imagens(ObservableList<PaginaImagemWidget> value) {
+  set imagens(ObservableFuture<List<PaginaImagemWidget>> value) {
     _$imagensAtom.context.conditionallyRunInAction(() {
       super.imagens = value;
       _$imagensAtom.reportChanged();

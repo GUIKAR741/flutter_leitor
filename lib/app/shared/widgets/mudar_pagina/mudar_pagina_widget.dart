@@ -6,6 +6,7 @@ class MudarPaginaWidget extends StatelessWidget {
   final int paginas;
   final void Function(String) onChanged;
   final void Function() onPressed;
+  final bool ativarBotao;
 
   const MudarPaginaWidget({
     Key key,
@@ -13,6 +14,7 @@ class MudarPaginaWidget extends StatelessWidget {
     @required this.paginas,
     @required this.onChanged,
     @required this.onPressed,
+    @required this.ativarBotao,
   }) : super(key: key);
 
   @override
@@ -34,30 +36,32 @@ class MudarPaginaWidget extends StatelessWidget {
       ));
     }
     return FlatButton(
-        onPressed: () {
-          showDialog(
-              context: context,
-              builder: (_) {
-                return AlertDialog(
-                  title: Row(
-                    children: <Widget>[
-                      IconButton(
-                        icon: Icon(Icons.arrow_back),
-                        onPressed: () => Modular.to.pop(),
-                      ),
-                      Text('Mudar Página'),
-                    ],
-                  ),
-                  content: GridView.count(
-                    primary: false,
-                    crossAxisSpacing: 2,
-                    mainAxisSpacing: 2,
-                    crossAxisCount: 4,
-                    children: botoes,
-                  ),
-                );
-              });
-        },
+        onPressed: ativarBotao
+            ? () {
+                showDialog(
+                    context: context,
+                    builder: (_) {
+                      return AlertDialog(
+                        title: Row(
+                          children: <Widget>[
+                            IconButton(
+                              icon: Icon(Icons.arrow_back),
+                              onPressed: () => Modular.to.pop(),
+                            ),
+                            Text('Mudar Página'),
+                          ],
+                        ),
+                        content: GridView.count(
+                          primary: false,
+                          crossAxisSpacing: 2,
+                          mainAxisSpacing: 2,
+                          crossAxisCount: 4,
+                          children: botoes,
+                        ),
+                      );
+                    });
+              }
+            : null,
         child: child);
   }
 }

@@ -16,71 +16,77 @@ class HqPage extends StatelessWidget {
 
   @override
   StatelessElement createElement() {
-    controller.hq = hq;
-    controller.listarCapitulos();
+    controller.titulo = hq;
+    controller.listarTitulo();
     return super.createElement();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(hq.nome),
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(
-                Icons.search,
-              ),
-              onPressed: () {
-                showSearch(context: context, delegate: PesquisarCapitulo());
-              },
-              tooltip: "Pesquisar",
+      appBar: AppBar(
+        title: Text(hq.nome),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(
+              Icons.search,
             ),
-            IconButton(
-              onPressed: () => controller.listarCapitulos(reversed: true),
-              icon: Icon(Icons.swap_vert),
-              tooltip: 'Inverter',
-            )
-          ],
-        ),
-        body: Observer(
-          builder: (_) {
-            if (controller.capitulos.value == null) {
-              return Center(child: CircularProgressIndicator());
-            }
-            List<CapituloModel> capitulos = controller.capitulos.value;
-            return Column(
-              children: <Widget>[
-                Expanded(
-                  child: RefreshIndicator(
-                    onRefresh: () async => controller.listarCapitulos(),
-                    child: DraggableScrollbar.semicircle(
-                      controller: controller.scroll,
-                      child: ListView.separated(
-                        controller: controller.scroll,
-                        itemCount: capitulos.length,
-                        itemBuilder: (_, index) {
-                          return index == 0
-                              ? Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: <Widget>[
-                                    CardWidget(
-                                      titulo: hq,
-                                    ),
-                                    listTile(capitulos[index])
-                                  ],
-                                )
-                              : listTile(capitulos[index]);
-                        },
-                        separatorBuilder: (_, index) => Divider(),
-                      ),
-                    ),
-                  ),
+            onPressed: () {
+              showSearch(context: context, delegate: PesquisarCapitulo());
+            },
+            tooltip: "Pesquisar",
+          ),
+          IconButton(
+            onPressed: () => controller.listarTitulo(reversed: true),
+            icon: Icon(Icons.swap_vert),
+            tooltip: 'Inverter',
+          )
+        ],
+      ),
+      body: Observer(
+        builder: (_) {
+          if (controller.lista.value == null) {
+            return Center(child: CircularProgressIndicator());
+          }
+          List<CapituloModel> capitulos = controller.lista.value;
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async => controller.listarTitulo(),
+                  child: capitulos.length > 0
+                      ? DraggableScrollbar.semicircle(
+                          controller: controller.scroll,
+                          child: ListView.separated(
+                            controller: controller.scroll,
+                            itemCount: capitulos.length,
+                            itemBuilder: (_, index) {
+                              return index == 0
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        CardWidget(
+                                          titulo: hq,
+                                        ),
+                                        listTile(capitulos[index])
+                                      ],
+                                    )
+                                  : listTile(capitulos[index]);
+                            },
+                            separatorBuilder: (_, index) => Divider(),
+                          ),
+                        )
+                      : CardWidget(
+                          titulo: hq,
+                        ),
                 ),
-              ],
-            );
-          },
-        ));
+              ),
+            ],
+          );
+        },
+      ),
+    );
   }
 
   Widget listTile(capitulo) {

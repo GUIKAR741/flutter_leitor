@@ -1,6 +1,6 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.dart';
+import 'package:flutter_leitor/app/modules/assistir/repositories/assistir_anime_repository.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -9,7 +9,7 @@ import 'package:video_player/video_player.dart';
 part 'assistir_controller.g.dart';
 
 class AssistirController extends _AssistirBase with _$AssistirController {
-  AssistirController(AnimeRepository _repo) : super(_repo);
+  AssistirController(AssistirAnimeRepository repo) : super(repo);
 
   @override
   void dispose() {
@@ -22,7 +22,7 @@ abstract class _AssistirBase extends Disposable with Store {
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
-  final AnimeRepository _repo;
+  final AssistirAnimeRepository _repo;
 
   _AssistirBase(this._repo);
 

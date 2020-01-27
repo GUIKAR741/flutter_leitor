@@ -1,8 +1,8 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_controller.dart';
-import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_manga_widget.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_titulo_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -23,7 +23,10 @@ class MangasPage extends StatelessWidget {
               Icons.search,
             ),
             onPressed: () {
-              showSearch(context: context, delegate: PesquisarManga());
+              showSearch(
+                  context: context,
+                  delegate: PesquisarTitulo(
+                      path: '/mangas/manga', controller: controller));
             },
             tooltip: "Pesquisar",
           )

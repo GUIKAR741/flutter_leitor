@@ -1,4 +1,4 @@
-import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.dart';
+import 'package:flutter_leitor/app/modules/assistir/repositories/assistir_anime_repository.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_controller.dart';
 import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -7,8 +7,8 @@ import 'package:flutter_leitor/app/modules/assistir/assistir_page.dart';
 class AssistirModule extends ChildModule {
   @override
   List<Bind> get binds => [
-        Bind((i) => AssistirController(i.get<AnimeRepository>())),
-        Bind((i) => AnimeRepository(Modular.get<DioService>())),
+        Bind((i) => AssistirController(i.get<AssistirAnimeRepository>())),
+        Bind((i) => AssistirAnimeRepository(Modular.get<DioService>())),
       ];
 
   @override

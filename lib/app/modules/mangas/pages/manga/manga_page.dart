@@ -16,8 +16,8 @@ class MangaPage extends StatelessWidget {
 
   @override
   StatelessElement createElement() {
-    controller.manga = manga;
-    controller.listarCapitulos();
+    controller.titulo = manga;
+    controller.listarTitulo();
     return super.createElement();
   }
 
@@ -48,46 +48,53 @@ class MangaPage extends StatelessWidget {
             tooltip: "Pesquisar",
           ),
           IconButton(
-            onPressed: () => controller.listarCapitulos(reversed: true),
+            onPressed: () => controller.listarTitulo(reversed: true),
             icon: Icon(Icons.swap_vert),
             tooltip: 'Inverter',
           )
         ],
       ),
-      body: Column(
-        children: <Widget>[
-          Expanded(
-            child: RefreshIndicator(
-                onRefresh: () async => controller.listarCapitulos(),
-                child: Observer(builder: (_) {
-                  if (controller.capitulos.value == null) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  List<CapituloModel> capitulos = controller.capitulos.value;
-                  return DraggableScrollbar.semicircle(
-                    controller: controller.scroll,
-                    child: ListView.separated(
-                      controller: controller.scroll,
-                      itemCount: capitulos.length,
-                      itemBuilder: (_, index) {
-                        return index == 0
-                            ? Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  CardWidget(
-                                    titulo: manga,
-                                  ),
-                                  listTile(capitulos[index])
-                                ],
-                              )
-                            : listTile(capitulos[index]);
-                      },
-                      separatorBuilder: (_, index) => Divider(),
-                    ),
-                  );
-                })),
-          ),
-        ],
+      body: Observer(
+        builder: (_) {
+          if (controller.lista.value == null) {
+            return Center(child: CircularProgressIndicator());
+          }
+          List<CapituloModel> capitulos = controller.lista.value;
+          return Column(
+            children: <Widget>[
+              Expanded(
+                child: RefreshIndicator(
+                  onRefresh: () async => controller.listarTitulo(),
+                  child: capitulos.length > 0
+                      ? DraggableScrollbar.semicircle(
+                          controller: controller.scroll,
+                          child: ListView.separated(
+                            controller: controller.scroll,
+                            itemCount: capitulos.length,
+                            itemBuilder: (_, index) {
+                              return index == 0
+                                  ? Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: <Widget>[
+                                        CardWidget(
+                                          titulo: manga,
+                                        ),
+                                        listTile(capitulos[index])
+                                      ],
+                                    )
+                                  : listTile(capitulos[index]);
+                            },
+                            separatorBuilder: (_, index) => Divider(),
+                          ))
+                      : CardWidget(
+                          titulo: manga,
+                        ),
+                ),
+              ),
+            ],
+          );
+        },
       ),
     );
   }

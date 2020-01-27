@@ -10,6 +10,16 @@ class DioService extends Disposable {
     this.client.interceptors.add(CacheInterceptors());
   }
 
+  Future<dynamic> getLink(String link) async {
+    final response = await client.get(link);
+    return response.data;
+  }
+
+  Future<dynamic> postLink(String link, {dynamic data}) async {
+    final response = await client.post(link, data: data);
+    return response.data;
+  }
+
   @override
   void dispose() {
     client.close();

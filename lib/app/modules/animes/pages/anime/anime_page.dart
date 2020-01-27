@@ -17,8 +17,8 @@ class AnimePage extends StatelessWidget {
 
   @override
   StatelessElement createElement() {
-    controller.anime = anime;
-    controller.listarEpisodios();
+    controller.titulo = anime;
+    controller.listarTitulo();
     return super.createElement();
   }
 
@@ -38,7 +38,7 @@ class AnimePage extends StatelessWidget {
             tooltip: "Pesquisar",
           ),
           IconButton(
-            onPressed: () => controller.listarEpisodios(reversed: true),
+            onPressed: () => controller.listarTitulo(reversed: true),
             icon: Icon(Icons.swap_vert),
             tooltip: 'Inverter',
           )
@@ -46,35 +46,39 @@ class AnimePage extends StatelessWidget {
       ),
       body: Observer(
         builder: (_) {
-          if (controller.episodios.value == null) {
+          if (controller.lista.value == null) {
             return Center(child: CircularProgressIndicator());
           }
-          List<EpisodioModel> episodios = controller.episodios.value;
+          List<EpisodioModel> episodios = controller.lista.value;
           return Column(
             children: <Widget>[
               Expanded(
                 child: RefreshIndicator(
-                  onRefresh: () async => controller.listarEpisodios(),
-                  child: DraggableScrollbar.semicircle(
-                    controller: controller.scroll,
-                    child: ListView.separated(
-                      controller: controller.scroll,
-                      itemCount: episodios.length,
-                      itemBuilder: (_, index) {
-                        return index == 0
-                            ? Column(
-                                children: <Widget>[
-                                  CardWidget(
-                                    titulo: anime,
-                                  ),
-                                  listTile(episodios[index])
-                                ],
-                              )
-                            : listTile(episodios[index]);
-                      },
-                      separatorBuilder: (_, index) => Divider(),
-                    ),
-                  ),
+                  onRefresh: () async => controller.listarTitulo(),
+                  child: episodios.length > 0
+                      ? DraggableScrollbar.semicircle(
+                          controller: controller.scroll,
+                          child: ListView.separated(
+                            controller: controller.scroll,
+                            itemCount: episodios.length,
+                            itemBuilder: (_, index) {
+                              return index == 0
+                                  ? Column(
+                                      children: <Widget>[
+                                        CardWidget(
+                                          titulo: anime,
+                                        ),
+                                        listTile(episodios[index])
+                                      ],
+                                    )
+                                  : listTile(episodios[index]);
+                            },
+                            separatorBuilder: (_, index) => Divider(),
+                          ),
+                        )
+                      : CardWidget(
+                          titulo: anime,
+                        ),
                 ),
               ),
             ],

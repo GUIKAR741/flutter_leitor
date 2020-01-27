@@ -1,11 +1,11 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_titulo_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import 'animes_controller.dart';
-import 'widgets/pesquisar/pesquisar_anime_widget.dart';
 
 class AnimesPage extends StatelessWidget {
   final String title;
@@ -22,7 +22,10 @@ class AnimesPage extends StatelessWidget {
               Icons.search,
             ),
             onPressed: () {
-              showSearch(context: context, delegate: PesquisarAnime());
+              showSearch(
+                  context: context,
+                  delegate: PesquisarTitulo(
+                      path: '/animes/anime', controller: controller));
             },
             tooltip: "Pesquisar",
           )

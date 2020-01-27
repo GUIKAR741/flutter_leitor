@@ -1,22 +1,19 @@
 import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
+import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
-class MangaRepository extends Disposable {
+class MangaRepository extends Disposable implements RepositoryUnique {
   final DioService dio;
 
   MangaRepository(this.dio);
 
-  Future<dynamic> _getLink(String link) async {
-    final response = await dio.client.get(link);
-    return response.data;
-  }
-
-  Future<List<CapituloModel>> capitulos(TituloModel manga) async {
-    String data = await _getLink(manga.link);
+  @override
+  Future<List<CapituloModel>> listarTitulo(TituloModel manga) async {
+    String data = await dio.getLink(manga.link);
     Document soup = parse(data);
     manga.descricao =
         soup.querySelector('div.panel-body').text.trim().replaceAll('\n', '');
@@ -32,7 +29,7 @@ class MangaRepository extends Disposable {
   }
 
   Future<List<String>> imagens(String link) async {
-    String data = await _getLink(link);
+    String data = await dio.getLink(link);
     Document soup = parse(data);
     return soup
         .querySelectorAll('img')
