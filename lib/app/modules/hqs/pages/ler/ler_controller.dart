@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_controller.dart';
 import 'package:flutter_leitor/app/modules/hqs/repositories/hq_repository.dart';
-import 'package:flutter_leitor/app/shared/utils/ler.dart';
+import 'package:flutter_leitor/app/shared/controllers/ler.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';

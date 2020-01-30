@@ -28,14 +28,13 @@ class CardWidget extends StatelessWidget {
           ),
         ),
         Container(
-          color: Colors.blueGrey[700],
+          color: Theme.of(context).backgroundColor,
           padding: EdgeInsets.all(5),
           alignment: Alignment.centerLeft,
           child: Text(
             titulo.descricao,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: Colors.white,
               fontWeight: FontWeight.bold,
             ),
           ),

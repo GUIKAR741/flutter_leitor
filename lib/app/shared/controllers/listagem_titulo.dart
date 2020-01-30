@@ -32,6 +32,13 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   @action
   void listarTitulo({bool reversed = false}) {
     lista = null;
+    if (reversed && lista.value != null) {
+      if (reversed) _isReversed = !_isReversed;
+      lista = Future<List>.value(
+        !_isReversed ? lista.value : lista.value.reversed.toList(),
+      ).asObservable();
+      return;
+    }
     lista = _repo.listarTitulo(_titulo).then((List data) {
       if (reversed) _isReversed = !_isReversed;
       return !_isReversed ? data : data.reversed.toList();

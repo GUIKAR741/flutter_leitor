@@ -1,5 +1,5 @@
 import 'package:flutter_leitor/app/modules/mangas/repositories/mangas_repository.dart';
-import 'package:flutter_leitor/app/shared/utils/listagem_principal.dart';
+import 'package:flutter_leitor/app/shared/controllers/listagem_principal.dart';
 import 'package:mobx/mobx.dart';
 
 part 'mangas_controller.g.dart';

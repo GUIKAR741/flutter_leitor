@@ -1,6 +1,57 @@
-# flutter_leitor
+# Flutter Leitor
 
-&#x27;A new Flutter project. Created by Slidy&#x27;
+Aplicativo para Leitura de HQs, Mangás e Assistir Animes
+<img src="screenshots/flutter_01.png" width="49.5%" />
+<img src="screenshots/flutter_11.png" width="49.5%" />
+
+
+## HQs
+Varias HQs Disponiveis
+
+<img src="screenshots/flutter_02.png" width="49.5%" />
+
+Lista de Capitulos Disponiveis para Leitura
+
+<img src="screenshots/flutter_06.png" width="49.5%" />
+
+## Mangás
+
+Varios Mangás Disponiveis
+
+<img src="screenshots/flutter_04.png" width="49.5%" />
+
+Lista de Capitulos Disponiveis para Leitura
+
+<img src="screenshots/flutter_07.png" width="49.5%" />
+
+Leitura no Aplicativo
+
+<img src="screenshots/flutter_09.png" width="49.5%" />
+
+## Animes
+
+Varios Animes Disponiveis
+
+<img src="screenshots/flutter_05.png" width="49.5%" />
+
+Lista de Episodios Disponiveis para assistir
+
+<img src="screenshots/flutter_08.png" width="49.5%" />
+
+Player do Aplicativo
+
+<img src="screenshots/flutter_10.png"/>
+
+### Funcionalidades Adicionais
+
+Pesquisa por Titulos
+
+<img src="screenshots/flutter_03.png" width="49.5%" />
+
+Mudar de Pagina ná Leitura a qualquer momento
+
+<img src="screenshots/flutter_12.png" width="49.5%" />
+
 
 ## Getting Started
 

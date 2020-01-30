@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
-import 'package:flutter_leitor/app/shared/utils/listagem_titulo.dart';
+import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
