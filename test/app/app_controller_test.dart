@@ -8,14 +8,14 @@ import 'package:mockito/mockito.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:mobx/mobx.dart';
 
-class Shared extends Mock implements SharedPreferences{
+class Shared extends Mock implements SharedPreferences {
   Map<String, dynamic> data = {};
 
-  void iniciaData(){
+  void iniciaData() {
     data['dark'] = false;
   }
 
-  void limpaData(){
+  void limpaData() {
     data.clear();
   }
 
@@ -47,12 +47,12 @@ void main() {
       expect(app, isInstanceOf<AppController>());
     });
 
-    test('Tema muda para false', (){
+    test('Tema muda para false', () {
       app.mudarTema();
       expect(app.tema, false);
     });
 
-    test('Tema muda para true', (){
+    test('Tema muda para true', () {
       shared.iniciaData();
       app.mudarTema();
       expect(app.tema, true);

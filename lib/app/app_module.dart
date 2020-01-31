@@ -6,6 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/app_widget.dart';
 import 'package:flutter_leitor/app/modules/home/home_module.dart';
 
+import 'modules/animes/animes_module.dart';
+import 'modules/assistir/assistir_module.dart';
+import 'modules/hqs/hqs_module.dart';
+import 'modules/mangas/mangas_module.dart';
+
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
@@ -16,7 +21,26 @@ class AppModule extends MainModule {
 
   @override
   List<Router> get routers => [
-        Router(Modular.initialRoute, module: HomeModule()),
+        Router(
+          Modular.initialRoute,
+          module: HomeModule(),
+        ),
+        Router(
+          '/mangas',
+          module: MangasModule(),
+        ),
+        Router(
+          '/animes',
+          module: AnimesModule(),
+        ),
+        Router(
+          '/assistir',
+          module: AssistirModule(),
+        ),
+        Router(
+          '/hqs',
+          module: HqsModule(),
+        ),
       ];
 
   @override

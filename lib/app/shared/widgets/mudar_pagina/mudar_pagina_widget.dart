@@ -2,19 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MudarPaginaWidget extends StatelessWidget {
-  final Widget child;
   final int paginas;
-  final void Function(String) onChanged;
-  final void Function() onPressed;
-  final bool ativarBotao;
+  final void Function(String) onPressed;
 
   const MudarPaginaWidget({
     Key key,
-    @required this.child,
     @required this.paginas,
-    @required this.onChanged,
     @required this.onPressed,
-    @required this.ativarBotao,
   }) : super(key: key);
 
   @override
@@ -29,39 +23,28 @@ class MudarPaginaWidget extends StatelessWidget {
           ),
         ),
         onPressed: () {
-          onChanged(i.toString());
           Modular.to.pop();
-          onPressed();
+          onPressed(i.toString());
         },
       ));
     }
-    return FlatButton(
-        onPressed: ativarBotao
-            ? () {
-                showDialog(
-                    context: context,
-                    builder: (_) {
-                      return AlertDialog(
-                        title: Row(
-                          children: <Widget>[
-                            IconButton(
-                              icon: Icon(Icons.arrow_back),
-                              onPressed: () => Modular.to.pop(),
-                            ),
-                            Text('Mudar Página'),
-                          ],
-                        ),
-                        content: GridView.count(
-                          primary: false,
-                          crossAxisSpacing: 2,
-                          mainAxisSpacing: 2,
-                          crossAxisCount: 4,
-                          children: botoes,
-                        ),
-                      );
-                    });
-              }
-            : null,
-        child: child);
+    return AlertDialog(
+      title: Row(
+        children: <Widget>[
+          IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () => Modular.to.pop(),
+          ),
+          Text('Mudar Página'),
+        ],
+      ),
+      content: GridView.count(
+        primary: false,
+        crossAxisSpacing: 2,
+        mainAxisSpacing: 2,
+        crossAxisCount: 4,
+        children: botoes,
+      ),
+    );
   }
 }

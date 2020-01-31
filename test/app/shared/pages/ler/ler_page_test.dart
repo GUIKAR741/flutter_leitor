@@ -1,8 +1,10 @@
 // import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/app_module.dart';
 import 'package:flutter_leitor/app/modules/hqs/hqs_module.dart';
-import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_controller.dart' as hqs;
-import 'package:flutter_leitor/app/modules/mangas/pages/ler/ler_controller.dart' as mangas;
+import 'package:flutter_leitor/app/modules/hqs/pages/ler/ler_controller.dart'
+    as hqs;
+import 'package:flutter_leitor/app/modules/mangas/pages/ler/ler_controller.dart'
+    as mangas;
 import 'package:flutter_leitor/app/modules/mangas/mangas_module.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -13,7 +15,7 @@ import 'package:flutter_leitor/app/shared/pages/ler/ler_page.dart';
 
 main() {
   group('HQs', () {
-    setUpAll((){
+    setUpAll(() {
       initModules([AppModule(), HqsModule()]);
     });
     testWidgets('LerPage has title', (WidgetTester tester) async {
@@ -27,7 +29,7 @@ main() {
     });
   });
   group('Mangas', () {
-    setUpAll((){
+    setUpAll(() {
       initModules([AppModule(), MangasModule()]);
     });
     testWidgets('LerPage has title', (WidgetTester tester) async {

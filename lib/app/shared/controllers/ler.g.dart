@@ -100,10 +100,10 @@ mixin _$Ler on _LerBase, Store {
   }
 
   @override
-  void irPara() {
+  void irPara(String valor) {
     final _$actionInfo = _$_LerBaseActionController.startAction();
     try {
-      return super.irPara();
+      return super.irPara(valor);
     } finally {
       _$_LerBaseActionController.endAction(_$actionInfo);
     }
@@ -130,10 +130,10 @@ mixin _$Ler on _LerBase, Store {
   }
 
   @override
-  void listenerPage(dynamic context) {
+  void listenerPage() {
     final _$actionInfo = _$_LerBaseActionController.startAction();
     try {
-      return super.listenerPage(context);
+      return super.listenerPage();
     } finally {
       _$_LerBaseActionController.endAction(_$actionInfo);
     }

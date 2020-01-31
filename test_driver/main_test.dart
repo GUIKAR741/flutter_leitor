@@ -8,7 +8,7 @@ void main() {
     // test suite. Note: the Strings provided to the `byValueKey` method must
     // be the same as the Strings we used for the Keys in step 1.
     final lerHqs = find.text('Ler HQs');
-    
+
     FlutterDriver driver;
 
     // Connect to the Flutter driver before running any tests.

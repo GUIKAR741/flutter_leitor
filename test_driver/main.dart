@@ -1,5 +1,5 @@
 import 'package:flutter_driver/driver_extension.dart';
-import 'package:flutter_leitor/main.dart' as app;
+import 'package:flutter_leitor/main_dev.dart' as app;
 
 void main() {
   // This line enables the extension.

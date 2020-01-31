@@ -3,6 +3,7 @@ import 'package:flutter_leitor/app/shared/controllers/ler.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/mudar_pagina/mudar_pagina_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:get/get.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatefulWidget {
@@ -28,9 +29,6 @@ class _LerPageState extends State<LerPage> {
     // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     controller.capitulo = widget.capitulo;
     controller.listarImagens();
-    controller.pageController.addListener(
-      () => controller.listenerPage(context),
-    );
   }
 
   @override
@@ -41,16 +39,13 @@ class _LerPageState extends State<LerPage> {
     //   DeviceOrientation.landscapeRight,
     //   DeviceOrientation.landscapeLeft,
     // ]);
-    controller.pageController.removeListener(
-      () => controller.listenerPage(context),
-    );
   }
 
   Widget mostrarPaginas() {
     return Observer(
       builder: (_) {
         return controller.pagina.isNotEmpty
-            ? MudarPaginaWidget(
+            ? FlatButton(
                 child: DefaultTextStyle(
                   child: Text(
                     controller.pagina,
@@ -61,10 +56,12 @@ class _LerPageState extends State<LerPage> {
                   ),
                   style: Theme.of(context).primaryTextTheme.title,
                 ),
-                ativarBotao: controller.paginacao,
-                paginas: controller.imagens.value.length,
-                onChanged: controller.escrever,
-                onPressed: controller.irPara,
+                onPressed: () {
+                  Get.dialog(MudarPaginaWidget(
+                    paginas: controller.imagens.value.length,
+                    onPressed: controller.irPara,
+                  ));
+                },
               )
             : CircularProgressIndicator();
       },

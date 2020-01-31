@@ -27,9 +27,7 @@ abstract class _LerBase extends Ler with Store {
     imagens = _repo.imagens(capitulo.link).then((data) {
       index = 0;
       pagina = "${index + 1}/${data.length}";
-      return data
-          .map((String i) => PaginaImagemWidget(url: i))
-          .toList();
+      return data.map((String i) => PaginaImagemWidget(url: i)).toList();
     }).asObservable();
   }
 }

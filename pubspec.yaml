@@ -11,7 +11,7 @@ description: Leitor em Flutter
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 2.3.1
+version: 2.3.7
 
 environment:
   sdk: ">=2.1.0 <3.0.0"
@@ -21,6 +21,7 @@ scripts:
   driver: flutter driver --target=test_driver/main.dart
 
 dependencies:
+  get: ^1.7.3
   rxdart: ^0.23.1
   preload_page_view: ^0.1.4
   draggable_scrollbar: ^0.0.4
