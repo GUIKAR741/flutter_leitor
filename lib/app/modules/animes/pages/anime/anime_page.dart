@@ -38,7 +38,7 @@ class AnimePage extends StatelessWidget {
             tooltip: "Pesquisar",
           ),
           IconButton(
-            onPressed: () => controller.listarTitulo(reversed: true),
+            onPressed: controller.reversed,
             icon: Icon(Icons.swap_vert),
             tooltip: 'Inverter',
           )
@@ -49,7 +49,7 @@ class AnimePage extends StatelessWidget {
           if (controller.lista.value == null) {
             return Center(child: CircularProgressIndicator());
           }
-          List<EpisodioModel> episodios = controller.lista.value;
+          List<EpisodioModel> episodios = controller.listagem;
           return Column(
             children: <Widget>[
               Expanded(

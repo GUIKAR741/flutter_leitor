@@ -1,6 +1,8 @@
 import 'package:chewie/chewie.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/modules/assistir/repositories/assistir_anime_repository.dart';
+import 'package:flutter_leitor/app/modules/assistir/widgets/controles/controles_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -42,9 +44,9 @@ abstract class _AssistirBase extends Disposable with Store {
       _videoPlayerController = VideoPlayerController.network(data);
       _chewieController = ChewieController(
         videoPlayerController: _videoPlayerController,
-        aspectRatio: 3 / 2,
+        // aspectRatio: 3 / 2,
         autoPlay: true,
-        // overlay: TituloOverlay(ep: ep),
+        customControls: ControlesWidget(title: ep.titulo),
         allowedScreenSleep: false,
         fullScreenByDefault: true,
         materialProgressColors: ChewieProgressColors(
@@ -53,6 +55,12 @@ abstract class _AssistirBase extends Disposable with Store {
           backgroundColor: Colors.grey,
           bufferedColor: Colors.green,
         ),
+        systemOverlaysAfterFullScreen: [],
+        deviceOrientationsAfterFullScreen: [
+          DeviceOrientation.portraitUp,
+          DeviceOrientation.landscapeLeft,
+          DeviceOrientation.landscapeRight,
+        ],
       );
       _videoPlayerController.addListener(() {
         if (_videoPlayerController.value.position ==

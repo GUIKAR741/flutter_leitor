@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle_controller.dart';
 import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
@@ -21,6 +22,7 @@ abstract class Ler extends _LerBase with _$Ler {
 
 abstract class _LerBase extends Disposable with Store {
   final PreloadPageController pageController = PreloadPageController();
+  final LerControleController lerController = LerControleController();
 
   final ListagemTitulo _controller;
 
@@ -43,6 +45,17 @@ abstract class _LerBase extends Disposable with Store {
       () => listenerPage(),
     );
   }
+
+  // @computed
+  // List<GestureDetector> get imagensGesture {
+  //   if (imagens.value == null) return null;
+  //   return imagens.value.map((PaginaImagemWidget data) {
+  //     return GestureDetector(
+  //       onTap: lerController.mudar,
+  //       child: data,
+  //     );
+  //   }).toList();
+  // }
 
   bool get paginacao => _paginacao;
   @protected
@@ -74,6 +87,7 @@ abstract class _LerBase extends Disposable with Store {
 
   @action
   void irPara(String valor) {
+    Modular.to.pop();
     if (int.tryParse(valor) != null) _paginaIndex = int.parse(valor);
     if (_paginaIndex >= 1 && _paginaIndex <= imagens.value.length) {
       pagina = "$_paginaIndex/${imagens.value.length}";
@@ -95,6 +109,7 @@ abstract class _LerBase extends Disposable with Store {
 
   void listarImagens();
 
+  //TODO corrigir erro do irpara ultima/primeira pagina mostrando dois dialogs
   @action
   void listenerPage() {
     if (pageController.position.atEdge && paginacao) {

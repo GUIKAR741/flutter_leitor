@@ -15,25 +15,24 @@ class MudarPaginaWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     List<RaisedButton> botoes = [];
     for (int i = 1; i <= paginas; i++) {
-      botoes.add(RaisedButton(
-        child: Text(
-          i.toString(),
-          style: TextStyle(
-            fontSize: 10,
+      botoes.add(
+        RaisedButton(
+          child: Text(
+            i.toString(),
+            style: TextStyle(
+              fontSize: 10,
+            ),
           ),
+          onPressed: () => onPressed(i.toString()),
         ),
-        onPressed: () {
-          Modular.to.pop();
-          onPressed(i.toString());
-        },
-      ));
+      );
     }
     return AlertDialog(
       title: Row(
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: () => Modular.to.pop(),
+            onPressed: Modular.to.pop,
           ),
           Text('Mudar Página'),
         ],

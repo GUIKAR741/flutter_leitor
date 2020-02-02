@@ -3,6 +3,7 @@ import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+
 part 'listagem_titulo.g.dart';
 
 class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
@@ -22,6 +23,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   TituloModel _titulo;
   @observable
   ObservableFuture<List> lista;
+  @observable
   bool _isReversed = false;
 
   _ListagemTituloBase(this._repo);
@@ -30,13 +32,18 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   bool get isReversed => _isReversed;
 
   @action
-  void listarTitulo({bool reversed = false}) {
+  void listarTitulo() {
     lista = null;
-    lista = _repo.listarTitulo(_titulo).then((List data) {
-      if (reversed) _isReversed = !_isReversed;
-      return !_isReversed ? data : data.reversed.toList();
-    }).asObservable();
+    _isReversed = false;
+    lista = _repo.listarTitulo(_titulo).asObservable();
   }
+
+  @computed
+  List get listagem =>
+      !isReversed ? lista.value : lista.value.reversed.toList();
+
+  @action
+  void reversed() => _isReversed = !_isReversed;
 
   @action
   List pesquisar(res) {

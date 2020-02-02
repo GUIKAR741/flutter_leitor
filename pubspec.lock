@@ -189,14 +189,14 @@ packages:
       name: extended_image
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.6.9"
+    version: "0.7.1"
   extended_image_library:
     dependency: transitive
     description:
       name: extended_image_library
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.1.9"
+    version: "0.2.0"
   file:
     dependency: transitive
     description:
@@ -234,7 +234,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.1"
+    version: "0.4.2"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -256,7 +256,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.3"
+    version: "1.7.4"
   glob:
     dependency: transitive
     description:

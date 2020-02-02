@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/shared/controllers/ler.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle.dart';
 import 'package:flutter_leitor/app/shared/widgets/mudar_pagina/mudar_pagina_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:get/get.dart';
@@ -26,7 +28,6 @@ class _LerPageState extends State<LerPage> {
   @override
   void initState() {
     super.initState();
-    // SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     controller.capitulo = widget.capitulo;
     controller.listarImagens();
   }
@@ -34,11 +35,7 @@ class _LerPageState extends State<LerPage> {
   @override
   void dispose() {
     super.dispose();
-    // SystemChrome.setPreferredOrientations([
-    //   DeviceOrientation.portraitUp,
-    //   DeviceOrientation.landscapeRight,
-    //   DeviceOrientation.landscapeLeft,
-    // ]);
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
 
   Widget mostrarPaginas() {
@@ -71,50 +68,54 @@ class _LerPageState extends State<LerPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Observer(
-          builder: (_) {
-            return Text(
-              controller.capitulo != null ? controller.capitulo.titulo : '',
-            );
-          },
-        ),
-        actions: <Widget>[
-          Center(
-            child: mostrarPaginas(),
-          ),
-          // IconButton(
-          //   icon: Icon(Icons.screen_rotation),
-          //   onPressed: (){
-          //     if(mudar){
-          //       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeRight, DeviceOrientation.landscapeLeft]);
-          //     }else{
-          //       SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
-          //     }
-          //     mudar = !mudar;
-          //   },
-          // ),
-          Observer(builder: (_) {
-            return IconButton(
-              icon: Icon(
-                controller.icone,
-              ),
-              onPressed: controller.pausar,
-              tooltip: "Play/Pause",
-            );
-          }),
-        ],
-      ),
-      body: Center(
+      body: Container(
         child: Observer(builder: (_) {
-          return controller.imagens?.value != null
-              ? PreloadPageView(
-                  controller: controller.pageController,
-                  onPageChanged: controller.paginacao ? controller.mudar : null,
-                  children: controller.imagens.value,
-                  preloadPagesCount: 5,
-                )
-              : CircularProgressIndicator();
+          return Stack(
+            children: <Widget>[
+              GestureDetector(
+                onTap: controller.lerController.mudar,
+                child: controller.imagens?.value != null
+                    ? PreloadPageView(
+                        controller: controller.pageController,
+                        onPageChanged:
+                            controller.paginacao ? controller.mudar : null,
+                        children: controller.imagens.value,
+                        preloadPagesCount: 5,
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(),
+                      ),
+              ),
+              LerControle(
+                controller: controller.lerController,
+                title: Observer(
+                  builder: (_) {
+                    return DefaultTextStyle(
+                      style: Theme.of(context).primaryTextTheme.title,
+                      child: Text(
+                        controller.capitulo != null
+                            ? controller.capitulo.titulo
+                            : '',
+                      ),
+                    );
+                  },
+                ),
+                actions: <Widget>[
+                  mostrarPaginas(),
+                  Observer(
+                    builder: (_) => IconButton(
+                      icon: Icon(
+                        controller.icone,
+                      ),
+                      onPressed: controller.pausar,
+                      tooltip: "Play/Pause",
+                      color: Theme.of(context).primaryIconTheme.color,
+                    ),
+                  ),
+                ],
+              )
+            ],
+          );
         }),
       ),
     );

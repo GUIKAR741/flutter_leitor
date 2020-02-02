@@ -4,6 +4,8 @@ on:
   push:
     tags:
       - '*'
+    branches-ignore:
+      - '*'
 
 jobs:
   build:
@@ -16,11 +18,11 @@ jobs:
         java-version: '12.x'
     - uses: subosito/flutter-action@v1
       with:
-        flutter-version: '1.12.13+hotfix.5'
+        flutter-version: '1.12.13+hotfix.7'
     - run: flutter pub get
     - run: flutter analyze
     - run: flutter test
-    - run: flutter build apk --release
+    - run: flutter build apk --release --target=lib/main_prod.dart
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
