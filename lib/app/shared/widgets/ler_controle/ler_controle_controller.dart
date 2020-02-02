@@ -7,12 +7,12 @@ class LerControleController = _LerControleBase with _$LerControleController;
 
 abstract class _LerControleBase with Store {
   @observable
-  bool mostrarControle = false;
+  bool esconderControle = false;
 
   @action
   void mudar() {
-    mostrarControle = !mostrarControle;
-    if (mostrarControle)
+    esconderControle = !esconderControle;
+    if (esconderControle)
       SystemChrome.setEnabledSystemUIOverlays([]);
     else
       SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);

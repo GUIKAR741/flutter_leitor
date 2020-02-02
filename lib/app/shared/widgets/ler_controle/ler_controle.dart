@@ -20,7 +20,7 @@ class LerControle extends StatelessWidget {
   Widget _buildBottomBar(context) {
     return Observer(
       builder: (_) => AnimatedOpacity(
-        opacity: controller.mostrarControle ? 0.0 : 1.0,
+        opacity: controller.esconderControle ? 0.0 : 1.0,
         duration: Duration(milliseconds: 300),
         child: Container(
           height: barHeight,
@@ -32,7 +32,9 @@ class LerControle extends StatelessWidget {
                 children: <Widget>[
                   IconButton(
                     icon: Icon(Icons.arrow_back),
-                    onPressed: Modular.to.maybePop,
+                    onPressed: controller.esconderControle
+                        ? null
+                        : Modular.to.maybePop,
                     tooltip: 'Voltar',
                     color: Theme.of(context).primaryIconTheme.color,
                   ),

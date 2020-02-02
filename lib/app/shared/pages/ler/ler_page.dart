@@ -53,12 +53,15 @@ class _LerPageState extends State<LerPage> {
                   ),
                   style: Theme.of(context).primaryTextTheme.title,
                 ),
-                onPressed: () {
-                  Get.dialog(MudarPaginaWidget(
-                    paginas: controller.imagens.value.length,
-                    onPressed: controller.irPara,
-                  ));
-                },
+                onPressed: controller.lerController.esconderControle ||
+                        controller.imagens.value.length <= 1
+                    ? null
+                    : () {
+                        Get.dialog(MudarPaginaWidget(
+                          paginas: controller.imagens.value.length,
+                          onPressed: controller.irPara,
+                        ));
+                      },
               )
             : CircularProgressIndicator();
       },
@@ -107,7 +110,9 @@ class _LerPageState extends State<LerPage> {
                       icon: Icon(
                         controller.icone,
                       ),
-                      onPressed: controller.pausar,
+                      onPressed: controller.lerController.esconderControle
+                          ? null
+                          : controller.pausar,
                       tooltip: "Play/Pause",
                       color: Theme.of(context).primaryIconTheme.color,
                     ),

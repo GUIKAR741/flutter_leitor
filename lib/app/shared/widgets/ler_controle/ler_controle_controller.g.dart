@@ -9,21 +9,22 @@ part of 'ler_controle_controller.dart';
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$LerControleController on _LerControleBase, Store {
-  final _$mostrarControleAtom = Atom(name: '_LerControleBase.mostrarControle');
+  final _$esconderControleAtom =
+      Atom(name: '_LerControleBase.esconderControle');
 
   @override
-  bool get mostrarControle {
-    _$mostrarControleAtom.context.enforceReadPolicy(_$mostrarControleAtom);
-    _$mostrarControleAtom.reportObserved();
-    return super.mostrarControle;
+  bool get esconderControle {
+    _$esconderControleAtom.context.enforceReadPolicy(_$esconderControleAtom);
+    _$esconderControleAtom.reportObserved();
+    return super.esconderControle;
   }
 
   @override
-  set mostrarControle(bool value) {
-    _$mostrarControleAtom.context.conditionallyRunInAction(() {
-      super.mostrarControle = value;
-      _$mostrarControleAtom.reportChanged();
-    }, _$mostrarControleAtom, name: '${_$mostrarControleAtom.name}_set');
+  set esconderControle(bool value) {
+    _$esconderControleAtom.context.conditionallyRunInAction(() {
+      super.esconderControle = value;
+      _$esconderControleAtom.reportChanged();
+    }, _$esconderControleAtom, name: '${_$esconderControleAtom.name}_set');
   }
 
   final _$_LerControleBaseActionController =
