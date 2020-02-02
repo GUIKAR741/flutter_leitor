@@ -42,20 +42,9 @@ abstract class _LerBase extends Disposable with Store {
 
   _LerBase(this._controller) {
     pageController.addListener(
-      () => listenerPage(),
+      listenerPage
     );
   }
-
-  // @computed
-  // List<GestureDetector> get imagensGesture {
-  //   if (imagens.value == null) return null;
-  //   return imagens.value.map((PaginaImagemWidget data) {
-  //     return GestureDetector(
-  //       onTap: lerController.mudar,
-  //       child: data,
-  //     );
-  //   }).toList();
-  // }
 
   bool get paginacao => _paginacao;
   @protected
@@ -92,7 +81,9 @@ abstract class _LerBase extends Disposable with Store {
     if (_paginaIndex >= 1 && _paginaIndex <= imagens.value.length) {
       pagina = "$_paginaIndex/${imagens.value.length}";
       _index = _paginaIndex;
+      pageController.removeListener(listenerPage);
       pageController.jumpToPage(_index - 1);
+      pageController.addListener(listenerPage);
     }
   }
 
@@ -109,14 +100,13 @@ abstract class _LerBase extends Disposable with Store {
 
   void listarImagens();
 
-  //TODO corrigir erro do irpara ultima/primeira pagina mostrando dois dialogs
   @action
   void listenerPage() {
     if (pageController.position.atEdge && paginacao) {
       if (pageController.position.extentBefore == 0) {
-        int len = _controller.lista.value.length;
+        int len = _controller.listagem.length;
         bool rev = _controller.isReversed;
-        int indice = _controller.lista.value.indexOf(capitulo);
+        int indice = _controller.listagem.indexOf(capitulo);
         if ((indice < len - 1 && !rev) || (indice > 0 && rev))
           Get.dialog(
             AlertDialog(
@@ -130,9 +120,9 @@ abstract class _LerBase extends Disposable with Store {
                   child: Text("Sim"),
                   onPressed: () {
                     if (indice < len - 1 && !rev)
-                      capitulo = _controller.lista.value[indice + 1];
+                      capitulo = _controller.listagem[indice + 1];
                     if (indice > 0 && rev)
-                      capitulo = _controller.lista.value[indice - 1];
+                      capitulo = _controller.listagem[indice - 1];
                     listarImagens();
                     Modular.to.pop();
                   },
@@ -141,9 +131,9 @@ abstract class _LerBase extends Disposable with Store {
             ),
           );
       } else {
-        int len = _controller.lista.value.length;
+        int len = _controller.listagem.length;
         bool rev = _controller.isReversed;
-        int indice = _controller.lista.value.indexOf(capitulo);
+        int indice = _controller.listagem.indexOf(capitulo);
         if ((indice > 0 && !rev) || (indice < len - 1 && rev))
           Get.dialog(
             AlertDialog(
@@ -157,9 +147,9 @@ abstract class _LerBase extends Disposable with Store {
                   child: Text("Sim"),
                   onPressed: () {
                     if (indice > 0 && !rev)
-                      capitulo = _controller.lista.value[indice - 1];
+                      capitulo = _controller.listagem[indice - 1];
                     if (indice < len - 1 && rev)
-                      capitulo = _controller.lista.value[indice + 1];
+                      capitulo = _controller.listagem[indice + 1];
                     listarImagens();
                     Modular.to.pop();
                   },
