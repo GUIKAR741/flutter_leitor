@@ -45,33 +45,3 @@ class _AssistirPageState
     );
   }
 }
-// class AssistirPage extends StatelessWidget {
-//   final EpisodioModel episodio;
-//   final AssistirController controller = Modular.get<AssistirController>();
-//   AssistirPage({Key key, this.episodio}) : super(key: key);
-
-//   @override
-//   StatelessElement createElement() {
-//     controller.iniciarLink(episodio);
-//     return super.createElement();
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       body: Column(children: <Widget>[
-//         Expanded(
-//           child: Center(
-//             child: Observer(
-//               builder: (_) {
-//                 return controller.chewie.value != null
-//                     ? controller.chewie.value
-//                     : CircularProgressIndicator();
-//               },
-//             ),
-//           ),
-//         ),
-//       ]),
-//     );
-//   }
-// }

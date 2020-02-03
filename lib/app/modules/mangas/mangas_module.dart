@@ -24,11 +24,7 @@ class MangasModule extends ChildModule {
   List<Router> get routers => [
         Router('/', child: (_, args) => MangasPage()),
         Router('/manga', child: (_, args) => MangaPage(manga: args.data)),
-        Router('/ler_manga',
-            child: (_, args) => LerPage(
-                  capitulo: args.data,
-                  controller: Modular.get<LerController>(),
-                )),
+        Router('/ler_manga', child: (_, args) => LerPage(capitulo: args.data)),
       ];
 
   static Inject get to => Inject<MangasModule>.of();

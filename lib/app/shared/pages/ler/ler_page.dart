@@ -5,36 +5,42 @@ import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle.dart';
 import 'package:flutter_leitor/app/shared/widgets/mudar_pagina/mudar_pagina_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatefulWidget {
   final CapituloModel capitulo;
-  final Ler controller;
 
   LerPage({
     Key key,
     @required this.capitulo,
-    @required this.controller,
   }) : super(key: key);
 
   @override
   _LerPageState createState() => _LerPageState();
 }
 
-class _LerPageState extends State<LerPage> {
-  Ler get controller => widget.controller;
+class _LerPageState extends ModularState<LerPage, Ler> {
 
   @override
   void initState() {
     super.initState();
     controller.capitulo = widget.capitulo;
     controller.listarImagens();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+    ]);
   }
 
   @override
   void dispose() {
     super.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.landscapeLeft,
+      DeviceOrientation.landscapeRight,
+    ]);
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
   }
 
@@ -105,6 +111,11 @@ class _LerPageState extends State<LerPage> {
                 ),
                 actions: <Widget>[
                   mostrarPaginas(),
+                  IconButton(
+                    icon: Icon(Icons.screen_rotation),
+                    onPressed: controller.virar,
+                    tooltip: 'Virar Tela',
+                  ),
                   Observer(
                     builder: (_) => IconButton(
                       icon: Icon(

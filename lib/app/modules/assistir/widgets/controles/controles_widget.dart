@@ -192,29 +192,25 @@ class _MaterialControlsState extends State<ControlesWidget> {
     return Expanded(
       child: GestureDetector(
         onTap: () {
-          if (_latestValue != null && _latestValue.isPlaying) {
-            if (_displayTapped) {
+          if (_latestValue != null) {
+            if (_displayTapped)
               setState(() {
                 _hideStuff = true;
               });
-            } else
+            else
               _cancelAndRestartTimer();
-          } else {
-            _playPause();
-
+          } else
             setState(() {
               _hideStuff = true;
             });
-          }
         },
         child: Container(
           color: Colors.transparent,
           child: Center(
             child: AnimatedOpacity(
-              opacity:
-                  _latestValue != null && !_latestValue.isPlaying && !_dragging
-                      ? 1.0
-                      : 0.0,
+              opacity: _latestValue != null && !_dragging && !_hideStuff
+                  ? 1.0
+                  : 0.0,
               duration: Duration(milliseconds: 300),
               child: GestureDetector(
                 child: Container(
@@ -224,7 +220,15 @@ class _MaterialControlsState extends State<ControlesWidget> {
                   ),
                   child: Padding(
                     padding: EdgeInsets.all(12.0),
-                    child: Icon(Icons.play_arrow, size: 32.0),
+                    child: InkWell(
+                      onTap: _playPause,
+                      child: Icon(
+                        !_latestValue.isPlaying
+                            ? Icons.play_arrow
+                            : Icons.pause,
+                        size: 32.0,
+                      ),
+                    ),
                   ),
                 ),
               ),

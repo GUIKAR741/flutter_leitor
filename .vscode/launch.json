@@ -23,6 +23,13 @@
             "type": "dart",
             "args": ["--release"],
             "program": "lib/main_prod.dart"
+        },
+        {
+            "name": "Flutter Prod Verbose",
+            "request": "launch",
+            "type": "dart",
+            "args": ["--release", "-v"],
+            "program": "lib/main_prod.dart"
         }
     ]
 }

@@ -1,3 +1,5 @@
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_analytics/observer.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/app_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -18,6 +20,9 @@ class AppWidget extends StatelessWidget {
         theme: controller.tema ? ThemeData.dark() : ThemeData.light(),
         initialRoute: '/',
         onGenerateRoute: Modular.generateRoute,
+        navigatorObservers: [
+          FirebaseAnalyticsObserver(analytics: Modular.get<FirebaseAnalytics>())
+        ],
       );
     });
   }

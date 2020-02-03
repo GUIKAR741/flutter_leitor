@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle_controller.dart';
@@ -30,6 +31,7 @@ abstract class _LerBase extends Disposable with Store {
   bool _paginacao = true;
   int _paginaIndex;
   List<PaginaImagemWidget> _imagens;
+  bool _tap = false;
 
   @observable
   CapituloModel capitulo;
@@ -41,9 +43,7 @@ abstract class _LerBase extends Disposable with Store {
   String pagina = '';
 
   _LerBase(this._controller) {
-    pageController.addListener(
-      listenerPage
-    );
+    pageController.addListener(listenerPage);
   }
 
   bool get paginacao => _paginacao;
@@ -159,5 +159,18 @@ abstract class _LerBase extends Disposable with Store {
           );
       }
     }
+  }
+
+  void virar() {
+    _tap = !_tap;
+    if (_tap)
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
+    else
+      SystemChrome.setPreferredOrientations([
+        DeviceOrientation.portraitUp,
+      ]);
   }
 }

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "83700052099",
+    "firebase_url": "https://leitor-mangas-flutter.firebaseio.com",
+    "project_id": "leitor-mangas-flutter",
+    "storage_bucket": "leitor-mangas-flutter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:83700052099:android:ad05fdc7e6ebe99d3babb6",
+        "android_client_info": {
+          "package_name": "com.guilherme.flutter_leitor"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "83700052099-0l47bbgr3v1k21i30un66b5l1hntnk47.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.guilherme.flutter_leitor",
+            "certificate_hash": "51fd148028cd96ab6700c8500c2ccca11f9432a3"
+          }
+        },
+        {
+          "client_id": "83700052099-m5uruak77v1uft7cp12lto3nl48jk675.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARO6WSZO_RWFcpSLcWVWYQ5iFKZvHsOh4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "83700052099-m5uruak77v1uft7cp12lto3nl48jk675.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

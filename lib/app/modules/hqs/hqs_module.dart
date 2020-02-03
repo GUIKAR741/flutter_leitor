@@ -24,11 +24,7 @@ class HqsModule extends ChildModule {
   List<Router> get routers => [
         Router('/', child: (_, args) => HqsPage()),
         Router('/hq', child: (_, args) => HqPage(hq: args.data)),
-        Router('/ler_hq',
-            child: (_, args) => LerPage(
-                  capitulo: args.data,
-                  controller: Modular.get<LerController>(),
-                )),
+        Router('/ler_hq', child: (_, args) => LerPage(capitulo: args.data)),
       ];
 
   static Inject get to => Inject<HqsModule>.of();

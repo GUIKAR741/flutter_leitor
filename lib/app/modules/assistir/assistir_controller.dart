@@ -44,7 +44,6 @@ abstract class _AssistirBase extends Disposable with Store {
       _videoPlayerController = VideoPlayerController.network(data);
       _chewieController = ChewieController(
         videoPlayerController: _videoPlayerController,
-        // aspectRatio: 3 / 2,
         autoPlay: true,
         customControls: ControlesWidget(title: ep.titulo),
         allowedScreenSleep: false,

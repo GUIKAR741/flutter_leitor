@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
 import 'package:flutter_leitor/app/app_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -12,11 +14,17 @@ import 'modules/hqs/hqs_module.dart';
 import 'modules/mangas/mangas_module.dart';
 
 class AppModule extends MainModule {
+
+  static FirebaseAnalytics analytics = FirebaseAnalytics();
+  static Crashlytics crashlytics = Crashlytics.instance;
+
   @override
   List<Bind> get binds => [
         Bind((i) => Dio()),
         Bind((i) => DioService(i.get<Dio>())),
         Bind((i) => AppController()),
+        Bind((i) => analytics),
+        Bind((i) => crashlytics),
       ];
 
   @override
