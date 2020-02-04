@@ -10,10 +10,13 @@ import './app/app_module.dart';
 void main() {
   Crashlytics crashlytics = Crashlytics.instance;
   crashlytics.enableInDevMode = true;
-  debugPrint = (String message, {int wrapWidth}) => debugPrintSynchronously(
-        "[${DateTime.now()}] : $message",
-        wrapWidth: wrapWidth,
-      );
+  debugPrint = (String message, {int wrapWidth}) {
+    debugPrintSynchronously(
+      "[${DateTime.now()}] : $message",
+      wrapWidth: wrapWidth,
+    );
+    crashlytics.log("[${DateTime.now()}] : $message");
+  };
   FlutterError.onError = (FlutterErrorDetails details) {
     FlutterError.dumpErrorToConsole(details);
     crashlytics.recordFlutterError(details);

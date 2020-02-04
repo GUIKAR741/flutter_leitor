@@ -34,7 +34,7 @@ class LerControle extends StatelessWidget {
                     icon: Icon(Icons.arrow_back),
                     onPressed: controller.esconderControle
                         ? null
-                        : Modular.to.maybePop,
+                        : () => Modular.to.maybePop(),
                     tooltip: 'Voltar',
                     color: Theme.of(context).primaryIconTheme.color,
                   ),

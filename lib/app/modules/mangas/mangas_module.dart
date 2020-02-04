@@ -5,7 +5,7 @@ import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_page.dart';
 import 'package:flutter_leitor/app/modules/mangas/repositories/mangas_repository.dart';
 import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_controller.dart';
-import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
+import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_leitor/app/shared/pages/ler/ler_page.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_leitor/app/modules/mangas/mangas_page.dart';

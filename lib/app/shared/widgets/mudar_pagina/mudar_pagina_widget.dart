@@ -32,7 +32,7 @@ class MudarPaginaWidget extends StatelessWidget {
         children: <Widget>[
           IconButton(
             icon: Icon(Icons.arrow_back),
-            onPressed: Modular.to.pop,
+            onPressed: () => Modular.to.pop(),
           ),
           Text('Mudar Página'),
         ],

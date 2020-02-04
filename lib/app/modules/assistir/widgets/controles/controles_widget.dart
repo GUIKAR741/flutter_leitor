@@ -208,9 +208,8 @@ class _MaterialControlsState extends State<ControlesWidget> {
           color: Colors.transparent,
           child: Center(
             child: AnimatedOpacity(
-              opacity: _latestValue != null && !_dragging && !_hideStuff
-                  ? 1.0
-                  : 0.0,
+              opacity:
+                  _latestValue != null && !_dragging && !_hideStuff ? 1.0 : 0.0,
               duration: Duration(milliseconds: 300),
               child: GestureDetector(
                 child: Container(

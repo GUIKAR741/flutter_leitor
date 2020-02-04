@@ -9,9 +9,13 @@ import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_page.dart';
 main() {
   initModules([AppModule(), AnimesModule()]);
   testWidgets('AnimePage has title', (WidgetTester tester) async {
-    await tester.pumpWidget(buildTestableWidget(AnimePage(
-      anime: TituloModel(nome: 'AnimeTeste'),
-    )));
+    await tester.pumpWidget(
+      buildTestableWidget(
+        AnimePage(
+          anime: TituloModel(nome: 'AnimeTeste'),
+        ),
+      ),
+    );
     await tester.pump(Duration(minutes: 1));
     final titleFinder = find.text('AnimeTeste');
     expect(titleFinder, findsOneWidget);

@@ -6,8 +6,14 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
 
-class AppWidget extends StatelessWidget {
+class App extends StatelessWidget {
+  final FirebaseAnalytics analytics;
   final AppController controller = Modular.get<AppController>();
+
+  App({
+    Key key,
+    @required this.analytics,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +27,9 @@ class AppWidget extends StatelessWidget {
         initialRoute: '/',
         onGenerateRoute: Modular.generateRoute,
         navigatorObservers: [
-          FirebaseAnalyticsObserver(analytics: Modular.get<FirebaseAnalytics>())
+          FirebaseAnalyticsObserver(
+            analytics: analytics,
+          )
         ],
       );
     });

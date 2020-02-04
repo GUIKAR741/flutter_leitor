@@ -1,6 +1,6 @@
 import 'package:flutter_leitor/app/modules/assistir/repositories/assistir_anime_repository.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_controller.dart';
-import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
+import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_page.dart';
 

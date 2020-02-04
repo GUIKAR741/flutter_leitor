@@ -1,5 +1,7 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 
 class PaginaImagemWidget extends StatelessWidget {
   final String url;
@@ -42,6 +44,7 @@ class PaginaImagemWidget extends StatelessWidget {
             return state.completedWidget;
             break;
           case LoadState.failed:
+            Modular.get<Crashlytics>().log('Erro ao Carregar Imagem $url');
             return Center(
               child: RaisedButton(
                 child: Text('Erro ao carregar'),

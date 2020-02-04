@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
+import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 // import 'package:mockito/mockito.dart';
 
 // class DioMock extends Mock implements Dio{}

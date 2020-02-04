@@ -22,7 +22,6 @@ class LerPage extends StatefulWidget {
 }
 
 class _LerPageState extends ModularState<LerPage, Ler> {
-
   @override
   void initState() {
     super.initState();
@@ -113,7 +112,9 @@ class _LerPageState extends ModularState<LerPage, Ler> {
                   mostrarPaginas(),
                   IconButton(
                     icon: Icon(Icons.screen_rotation),
-                    onPressed: controller.virar,
+                    onPressed: controller.lerController.esconderControle
+                        ? null
+                        : controller.virar,
                     tooltip: 'Virar Tela',
                   ),
                   Observer(

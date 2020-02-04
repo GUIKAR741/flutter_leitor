@@ -24,6 +24,13 @@ abstract class _AssistirBase extends Disposable with Store {
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
+  // @visibleForTesting
+  // VideoPlayerController get videoPlayerControllerTest => _videoPlayerController;
+  // @visibleForTesting
+  // set videoPlayerController(VideoPlayerController value) => _videoPlayerController= value;
+  // @visibleForTesting
+  // set chewieController(ChewieController value) => _chewieController = value;
+
   final AssistirAnimeRepository _repo;
 
   _AssistirBase(this._repo);
@@ -41,6 +48,7 @@ abstract class _AssistirBase extends Disposable with Store {
         _chewieController =
             ChewieController(videoPlayerController: _videoPlayerController);
       }
+      print(data);
       _videoPlayerController = VideoPlayerController.network(data);
       _chewieController = ChewieController(
         videoPlayerController: _videoPlayerController,

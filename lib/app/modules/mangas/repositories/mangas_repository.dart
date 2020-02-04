@@ -1,4 +1,4 @@
-import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
+import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';

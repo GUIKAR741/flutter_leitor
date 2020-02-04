@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_leitor/app/shared/dio/dio_service.dart';
+import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
