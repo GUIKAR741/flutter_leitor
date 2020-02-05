@@ -7,7 +7,7 @@ import 'package:html/dom.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 
-class MangaRepository extends Disposable implements RepositoryUnique {
+class MangaRepository extends Disposable implements IRepositoryUnique {
   final DioService dio;
 
   MangaRepository(this.dio);
@@ -20,9 +20,9 @@ class MangaRepository extends Disposable implements RepositoryUnique {
         manga.link,
         contextError: "Falha ao Listar Titulos",
       );
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       manga.descricao = 'Erro ao Carregar';
-      if (e.response == null) return [];
+      return [];
     }
     Document soup = parse(data);
     manga.descricao =
@@ -45,8 +45,8 @@ class MangaRepository extends Disposable implements RepositoryUnique {
         link,
         contextError: "Falha ao Pegar Imagens",
       );
-    } on DioError catch (e) {
-      if (e.response == null) return [];
+    } on DioError catch (_) {
+      return [];
     }
     Document soup = parse(data);
     return soup

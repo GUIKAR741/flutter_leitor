@@ -14,7 +14,7 @@ main() {
         MangaPage(
           manga: TituloModel(
             nome: 'MANGA',
-            link: '',
+            link: 'http://',
             imagem: '',
             descricao: ''
           ),

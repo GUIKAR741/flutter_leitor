@@ -7,7 +7,7 @@ import 'package:html/dom.dart';
 import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 
-class HqRepository extends Disposable implements RepositoryUnique {
+class HqRepository extends Disposable implements IRepositoryUnique {
   final DioService dio;
 
   HqRepository(this.dio);
@@ -20,8 +20,8 @@ class HqRepository extends Disposable implements RepositoryUnique {
         hq.link,
         contextError: "Falha ao Listar Titulo",
       );
-    } on DioError catch (e) {
-      if (e.response == null) return [];
+    } on DioError catch (_) {
+      return [];
     }
     Document soup = parse(data);
     hq.descricao = soup
@@ -47,8 +47,8 @@ class HqRepository extends Disposable implements RepositoryUnique {
         link,
         contextError: "Falha ao Pegar Imagens",
       );
-    } on DioError catch (e) {
-      if (e.response == null) return [];
+    } on DioError catch (_) {
+      return [];
     }
     Document soup = parse(data);
     return soup

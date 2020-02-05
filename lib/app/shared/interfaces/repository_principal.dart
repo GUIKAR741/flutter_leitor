@@ -14,8 +14,8 @@ abstract class IRepositoryPrincipal extends Disposable {
       response = await dio.getLink(
           "https://leitor-mangas-flutter.firebaseio.com/dados/atualizacao.json",
           contextError: "Falha ao Pegar Data");
-    } on DioError catch (e) {
-      if (e.response == null) return '';
+    } on DioError catch (_) {
+      return '';
     }
     return response[response.keys.elementAt(0)]['data'];
   }

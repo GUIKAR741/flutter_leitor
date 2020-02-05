@@ -13,9 +13,17 @@ main() {
       initModules([AppModule(), HqsModule()]);
     });
     testWidgets('LerPage has title', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget(LerPage(
-        capitulo: CapituloModel(titulo: 'Capitulo HQ'),
-      )));
+      await tester.pumpWidget(
+        buildTestableWidget(
+          LerPage(
+            capitulo: CapituloModel(
+              titulo: 'Capitulo HQ',
+              link: 'http://',
+              info: '',
+            ),
+          ),
+        ),
+      );
       await tester.pump(Duration(minutes: 1));
       final titleFinder = find.text('Capitulo HQ');
       expect(titleFinder, findsOneWidget);
@@ -26,9 +34,17 @@ main() {
       initModules([AppModule(), MangasModule()]);
     });
     testWidgets('LerPage has title', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget(LerPage(
-        capitulo: CapituloModel(titulo: 'Capitulo Manga'),
-      )));
+      await tester.pumpWidget(
+        buildTestableWidget(
+          LerPage(
+            capitulo: CapituloModel(
+              titulo: 'Capitulo Manga',
+              link: 'http://',
+              info: '',
+            ),
+          ),
+        ),
+      );
       await tester.pump(Duration(minutes: 1));
       final titleFinder = find.text('Capitulo Manga');
       expect(titleFinder, findsOneWidget);

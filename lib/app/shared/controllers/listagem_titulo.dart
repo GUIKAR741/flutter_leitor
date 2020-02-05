@@ -7,7 +7,7 @@ import 'package:mobx/mobx.dart';
 part 'listagem_titulo.g.dart';
 
 class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
-  ListagemTitulo(RepositoryUnique repo) : super(repo);
+  ListagemTitulo(IRepositoryUnique repo) : super(repo);
 
   @override
   @mustCallSuper
@@ -17,7 +17,7 @@ class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
 }
 
 abstract class _ListagemTituloBase extends Disposable with Store {
-  final RepositoryUnique _repo;
+  final IRepositoryUnique _repo;
   final ScrollController scroll = ScrollController();
 
   TituloModel _titulo;

@@ -34,8 +34,8 @@ class HqsRepository extends IRepositoryPrincipal {
         refresh: refresh,
         contextError: "Falha ao Listar HQS",
       );
-    } on DioError catch (e) {
-      if (e.response == null) return [];
+    } on DioError catch (_) {
+      return [];
     }
     return TituloModel.fromJsonList(response[response.keys.elementAt(0)]);
   }

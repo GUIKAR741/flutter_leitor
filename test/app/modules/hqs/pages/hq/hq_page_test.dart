@@ -7,6 +7,7 @@ import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_page.dart';
 
 main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   initModules([AppModule(), HqsModule()]);
   testWidgets('HqPage has title', (WidgetTester tester) async {
     await tester.pumpWidget(
@@ -14,7 +15,7 @@ main() {
         HqPage(
           hq: TituloModel(
             nome: 'HQ',
-            link: '',
+            link: 'http://',
             imagem: '',
             descricao: ''
           ),
@@ -22,6 +23,7 @@ main() {
       ),
     );
     await tester.pump(Duration(minutes: 1));
+    // await tester.pumpAndSettle();
     final titleFinder = find.text('HQ');
     expect(titleFinder, findsOneWidget);
   });

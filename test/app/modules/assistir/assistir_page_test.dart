@@ -18,7 +18,7 @@ main() {
             episodio: EpisodioModel(
               titulo: 'episodio',
               imagem: '',
-              link: 'jksdhfksd',
+              link: 'http://',
               info: '',
             ),
           ),

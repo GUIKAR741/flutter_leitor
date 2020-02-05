@@ -17,8 +17,8 @@ class AssistirAnimeRepository extends Disposable {
         ep.link,
         contextError: 'Falha ao Procurar Episodio',
       );
-    } on DioError catch (e) {
-      if (e.response == null) return 'link_invalido';
+    } on DioError catch (_) {
+      return 'link_invalido';
     }
     Document soup = parse(data);
     ep.titulo = soup
@@ -44,8 +44,8 @@ class AssistirAnimeRepository extends Disposable {
           returnResponse: true,
           contextError: "Falha ao Requisitar Video",
         );
-      } on DioError catch (e) {
-        if (e.response == null) return 'link_invalido';
+      } on DioError catch (_) {
+        return 'link_invalido';
       }
       video = responseVideo.headers.value('location');
     } else {
@@ -63,8 +63,8 @@ class AssistirAnimeRepository extends Disposable {
           linkVideo,
           contextError: "Falha ao Requisitar Video",
         );
-      } on DioError catch (e) {
-        if (e.response == null) return 'link_invalido';
+      } on DioError catch (_) {
+        return 'link_invalido';
       }
       soup = parse(data);
       linkVideo = soup.querySelector('a.bt-download').attributes['href'];
@@ -80,8 +80,8 @@ class AssistirAnimeRepository extends Disposable {
           returnResponse: true,
           contextError: "Falha ao Requisitar Video",
         );
-      } on DioError catch (e) {
-        if (e.response == null) return 'link_invalido';
+      } on DioError catch (_) {
+        return 'link_invalido';
       }
       video = responseVideo.headers.value('location');
     }

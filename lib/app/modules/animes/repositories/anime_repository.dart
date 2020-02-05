@@ -9,7 +9,7 @@ import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
-class AnimeRepository extends Disposable implements RepositoryUnique {
+class AnimeRepository extends Disposable implements IRepositoryUnique {
   final DioService dio;
 
   AnimeRepository(this.dio);
@@ -20,9 +20,9 @@ class AnimeRepository extends Disposable implements RepositoryUnique {
     try {
       data =
           await dio.getLink(anime.link, contextError: 'Titulos Não Carregaram');
-    } on DioError catch (e) {
+    } on DioError catch (_) {
       anime.descricao = 'Erro ao Carregar';
-      if (e.response == null) return [];
+      return [];
     }
     Document soup = parse(data), soupOriginal = parse(data);
     anime.descricao = soup.querySelector('p#sinopse').text.replaceAll('\n', '');
@@ -54,8 +54,8 @@ class AnimeRepository extends Disposable implements RepositoryUnique {
             .then((data) {
           return json.decode(data);
         });
-      } on DioError catch (e) {
-        if (e.response == null) return [];
+      } on DioError catch (_) {
+        return [];
       }
       fim = pagina['total_page'];
       inicio++;

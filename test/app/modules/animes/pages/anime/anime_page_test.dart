@@ -14,7 +14,7 @@ main() {
         AnimePage(
           anime: TituloModel(
             nome: 'AnimeTeste',
-            link: '',
+            link: 'http://',
             imagem: '',
             descricao: '',
           ),

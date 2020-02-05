@@ -9,11 +9,25 @@ main() {
   testWidgets('MudarPaginaWidget has message', (WidgetTester tester) async {
     // await tester.pumpWidget(
     //   buildTestableWidget(
-    //     Material(
-    //       child: await Get.dialog(
-    //         MudarPaginaWidget(
-    //           paginas: 1,
-    //           onPressed: (_) {},
+    //     MaterialApp(
+    //       theme: ThemeData.dark(),
+    //       navigatorKey: Get.key,
+    //       home: Material(
+    //         child: Container(
+    //           child: Column(
+    //             children: <Widget>[
+    //               RaisedButton(
+    //                 child: Text('ABC'),
+    //                 onPressed: () => Get.dialog(
+    //                   MudarPaginaWidget(
+    //                     paginas: 1,
+    //                     onPressed: (_) {},
+    //                   ),
+    //                   useRootNavigator: false,
+    //                 ),
+    //               ),
+    //             ],
+    //           ),
     //         ),
     //       ),
     //     ),
