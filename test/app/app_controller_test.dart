@@ -1,45 +1,19 @@
-import 'package:flutter_modular/flutter_modular_test.dart';
-import 'package:flutter_test/flutter_test.dart';
-import 'package:flutter_modular/flutter_modular.dart';
+import 'dart:io';
 
 import 'package:flutter_leitor/app/app_controller.dart';
 import 'package:flutter_leitor/app/app_module.dart';
-import 'package:mockito/mockito.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:mobx/mobx.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:flutter_modular/flutter_modular_test.dart';
+import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
 
-class Shared extends Mock implements SharedPreferences {
-  Map<String, dynamic> data = {};
-
-  void iniciaData() {
-    data['dark'] = false;
-  }
-
-  void limpaData() {
-    data.clear();
-  }
-
-  @override
-  Future<bool> setBool(String key, bool value) {
-    data[key] = value;
-    return Future.value(value);
-  }
-
-  @override
-  bool getBool(String key) {
-    return data[key];
-  }
-}
-
-void main() {
+void main() async{
+  Hive.init(Directory.current.path + "/hive");
   initModule(AppModule());
   AppController app;
-  Shared shared;
-
-  setUp(() {
+  
+  setUp(() async{
     app = Modular.get<AppController>();
-    shared = Shared();
-    app.prefsTest = Future.value(shared).asObservable();
   });
 
   group('AppController Test', () {
@@ -47,14 +21,13 @@ void main() {
       expect(app, isInstanceOf<AppController>());
     });
 
-    test('Tema muda para false', () {
-      app.mudarTema();
+    test('Tema muda para false', () async{
+      await app.mudarTema();
       expect(app.tema, false);
     });
 
-    test('Tema muda para true', () {
-      shared.iniciaData();
-      app.mudarTema();
+    test('Tema muda para true', () async{
+      await app.mudarTema();
       expect(app.tema, true);
     });
   });

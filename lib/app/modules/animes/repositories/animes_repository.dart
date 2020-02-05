@@ -2,30 +2,30 @@ import 'package:dio/dio.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/services/dio_service.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:hive/hive.dart';
 
 class AnimesRepository extends IRepositoryPrincipal {
   AnimesRepository(DioService dio) : super(dio);
 
   @override
   Future<List<TituloModel>> pegarListagem({bool refresh = false}) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    if (prefs.containsKey('data_atualizacao')) {
-      DateTime dataSalva = DateTime.parse(prefs.getString('data_atualizacao'));
+    Box<String> boxData = await box;
+    if (boxData.containsKey('data_atualizacao')) {
+      DateTime dataSalva = DateTime.parse(boxData.get('data_atualizacao'));
       DateTime dataAtual = DateTime.now();
       if (dataAtual.isBefore(dataSalva)) {
         String data = await verificaData();
-        prefs.setString('data_atualizacao', data);
+        boxData.put('data_atualizacao', data);
       }
       refresh = dataAtual.isBefore(dataSalva);
     } else {
       String data = await verificaData();
-      prefs.setString('data_atualizacao', data);
+      boxData.put('data_atualizacao', data);
       refresh = true;
     }
     if (refresh) {
       String data = await verificaData();
-      prefs.setString('data_atualizacao', data);
+      boxData.put('data_atualizacao', data);
     }
     dynamic response;
     try {
@@ -38,7 +38,4 @@ class AnimesRepository extends IRepositoryPrincipal {
     }
     return TituloModel.fromJsonList(response[response.keys.elementAt(0)]);
   }
-
-  @override
-  void dispose() {}
 }

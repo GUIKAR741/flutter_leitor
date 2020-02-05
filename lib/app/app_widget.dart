@@ -23,7 +23,8 @@ class App extends StatelessWidget {
         navigatorKey: Modular.navigatorKey,
         title: 'Flutter Leitor',
         debugShowCheckedModeBanner: false,
-        theme: controller.tema ? ThemeData.dark() : ThemeData.light(),
+        themeMode: controller.tema ? ThemeMode.dark : ThemeMode.light,
+        darkTheme: ThemeData.dark(),
         initialRoute: '/',
         onGenerateRoute: Modular.generateRoute,
         navigatorObservers: [

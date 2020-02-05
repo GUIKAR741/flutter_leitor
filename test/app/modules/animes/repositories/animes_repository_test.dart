@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:hive/hive.dart';
 import 'package:mockito/mockito.dart';
 
 import 'package:flutter_leitor/app/modules/animes/repositories/animes_repository.dart';
@@ -7,6 +10,7 @@ import 'package:flutter_leitor/app/modules/animes/repositories/animes_repository
 class MockClient extends Mock implements DioService {}
 
 void main() {
+  Hive.init(Directory.current.path + "/hive");
   AnimesRepository repository;
   MockClient client;
 

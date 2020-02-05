@@ -1,30 +1,34 @@
-import 'package:flutter/material.dart';
+import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 part 'app_controller.g.dart';
 
-class AppController = _AppBase with _$AppController;
+class AppController extends _AppBase with _$AppController{
+  @override
+  void dispose() async{
+    (await _box).close();
+  }
 
-abstract class _AppBase with Store {
+}
+
+abstract class _AppBase extends Disposable with Store {
   @observable
   bool tema = true;
 
-  ObservableFuture<SharedPreferences> _prefs;
-
-  @visibleForTesting
-  set prefsTest(ObservableFuture<SharedPreferences> value) => _prefs = value;
+  Future<Box<bool>> _box;
 
   _AppBase() {
-    _prefs = SharedPreferences.getInstance().asObservable();
-    _prefs.whenComplete(() {
-      tema = _prefs.value.getBool('dark') ?? true;
+    _box = Hive.openBox<bool>('theme');
+    _box.whenComplete(() async {
+      tema = (await _box).get('dark', defaultValue: true);
     });
   }
 
   @action
-  mudarTema() {
-    _prefs.value.setBool('dark', !(_prefs.value.getBool('dark') ?? true));
-    tema = _prefs.value.getBool('dark');
+  mudarTema() async {
+    Box<bool> box = await _box;
+    box.put('dark', !tema);
+    tema = box.get('dark');
   }
 }

@@ -26,15 +26,10 @@ mixin _$AppController on _AppBase, Store {
     }, _$temaAtom, name: '${_$temaAtom.name}_set');
   }
 
-  final _$_AppBaseActionController = ActionController(name: '_AppBase');
+  final _$mudarTemaAsyncAction = AsyncAction('mudarTema');
 
   @override
-  dynamic mudarTema() {
-    final _$actionInfo = _$_AppBaseActionController.startAction();
-    try {
-      return super.mudarTema();
-    } finally {
-      _$_AppBaseActionController.endAction(_$actionInfo);
-    }
+  Future mudarTema() {
+    return _$mudarTemaAsyncAction.run(() => super.mudarTema());
   }
 }
