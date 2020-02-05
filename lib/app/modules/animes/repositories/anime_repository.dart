@@ -16,7 +16,14 @@ class AnimeRepository extends Disposable implements RepositoryUnique {
 
   @override
   Future<List<EpisodioModel>> listarTitulo(TituloModel anime) async {
-    String data = await dio.getLink(anime.link);
+    String data;
+    try {
+      data =
+          await dio.getLink(anime.link, contextError: 'Titulos Não Carregaram');
+    } on DioError catch (e) {
+      anime.descricao = 'Erro ao Carregar';
+      if (e.response == null) return [];
+    }
     Document soup = parse(data), soupOriginal = parse(data);
     anime.descricao = soup.querySelector('p#sinopse').text.replaceAll('\n', '');
     String idCategoria = soup
@@ -36,14 +43,20 @@ class AnimeRepository extends Disposable implements RepositoryUnique {
         'total_page': fim.toString(),
         'order_video': 'asc'
       };
-      pagina = await dio
-          .postLink(
-        "https://www.superanimes.org/inc/paginatorVideo.inc.php",
-        data: FormData.fromMap(data),
-      )
-          .then((data) {
-        return json.decode(data);
-      });
+
+      try {
+        pagina = await dio
+            .postLink(
+          "https://www.superanimes.org/inc/paginatorVideo.inc.php",
+          data: FormData.fromMap(data),
+          contextError: "Falha ao Listar Episodios",
+        )
+            .then((data) {
+          return json.decode(data);
+        });
+      } on DioError catch (e) {
+        if (e.response == null) return [];
+      }
       fim = pagina['total_page'];
       inicio++;
       if (fim > 0) {

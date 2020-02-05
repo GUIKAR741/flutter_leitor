@@ -77,8 +77,18 @@ class HqPage extends StatelessWidget {
                             separatorBuilder: (_, index) => Divider(),
                           ),
                         )
-                      : CardWidget(
-                          titulo: hq,
+                      : Column(
+                          children: <Widget>[
+                            CardWidget(
+                              titulo: hq,
+                            ),
+                            Center(
+                              child: RaisedButton(
+                                child: Text("Recarregar"),
+                                onPressed: controller.listarTitulo,
+                              ),
+                            )
+                          ],
                         ),
                 ),
               ),

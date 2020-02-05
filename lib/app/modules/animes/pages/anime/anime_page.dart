@@ -76,8 +76,18 @@ class AnimePage extends StatelessWidget {
                             separatorBuilder: (_, index) => Divider(),
                           ),
                         )
-                      : CardWidget(
-                          titulo: anime,
+                      : Column(
+                          children: <Widget>[
+                            CardWidget(
+                              titulo: anime,
+                            ),
+                            Center(
+                              child: RaisedButton(
+                                child: Text("Recarregar"),
+                                onPressed: controller.listarTitulo,
+                              ),
+                            )
+                          ],
                         ),
                 ),
               ),

@@ -10,7 +10,17 @@ main() {
   initModules([AppModule(), MangasModule()]);
   testWidgets('MangaPage has title', (WidgetTester tester) async {
     await tester.pumpWidget(
-        buildTestableWidget(MangaPage(manga: TituloModel(nome: 'MANGA'))));
+      buildTestableWidget(
+        MangaPage(
+          manga: TituloModel(
+            nome: 'MANGA',
+            link: '',
+            imagem: '',
+            descricao: ''
+          ),
+        ),
+      ),
+    );
     await tester.pump(Duration(minutes: 1));
     final titleFinder = find.text('MANGA');
     expect(titleFinder, findsOneWidget);

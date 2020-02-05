@@ -34,39 +34,46 @@ class MangasPage extends StatelessWidget {
       ),
       body: Observer(
         builder: (_) {
-          List<TituloModel> titulos = controller.titulos.value;
           if (controller.titulos.value == null) {
             return Center(child: CircularProgressIndicator());
           }
+          List<TituloModel> titulos = controller.titulos.value;
           return RefreshIndicator(
             onRefresh: () async {
               controller.listar(refresh: true);
             },
-            child: Scrollbar(
-              controller: controller.scroll,
-              child: ListView.separated(
-                controller: controller.scroll,
-                itemCount: titulos.length,
-                itemBuilder: (_, index) {
-                  return ListTile(
-                    contentPadding:
-                        EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                    leading: Container(
-                      height: 100,
-                      width: 50,
-                      child: ExtendedImage.network(titulos[index].imagem,
-                          cache: true, fit: BoxFit.fill),
+            child: titulos.length > 0
+                ? Scrollbar(
+                    controller: controller.scroll,
+                    child: ListView.separated(
+                      controller: controller.scroll,
+                      itemCount: titulos.length,
+                      itemBuilder: (_, index) {
+                        return ListTile(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                          leading: Container(
+                            height: 100,
+                            width: 50,
+                            child: ExtendedImage.network(titulos[index].imagem,
+                                cache: true, fit: BoxFit.fill),
+                          ),
+                          title: Text(titulos[index].nome),
+                          onTap: () {
+                            Modular.to.pushNamed('/mangas/manga',
+                                arguments: titulos[index]);
+                          },
+                        );
+                      },
+                      separatorBuilder: (_, index) => Divider(),
                     ),
-                    title: Text(titulos[index].nome),
-                    onTap: () {
-                      Modular.to.pushNamed('/mangas/manga',
-                          arguments: titulos[index]);
-                    },
-                  );
-                },
-                separatorBuilder: (_, index) => Divider(),
-              ),
-            ),
+                  )
+                : Center(
+                    child: RaisedButton(
+                      child: Text("Recarregar Titulos"),
+                      onPressed: () => controller.listar(refresh: true),
+                    ),
+                  ),
           );
         },
       ),

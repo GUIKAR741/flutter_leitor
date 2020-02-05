@@ -25,8 +25,18 @@ abstract class _LerBase extends Ler with Store {
     imagens = null;
     paginacao = true;
     imagens = _repo.imagens(capitulo.link).then((data) {
-      index = 0;
+      index = data.length > 0 ? 0 : -1;
       pagina = "${index + 1}/${data.length}";
+      if (index == -1) {
+        return [
+          Center(
+            child: RaisedButton(
+              child: Text("Recarregar Imagens"),
+              onPressed: listarImagens,
+            ),
+          )
+        ];
+      }
       return data.map((String i) => PaginaImagemWidget(url: i)).toList();
     }).asObservable();
   }

@@ -12,7 +12,12 @@ main() {
     await tester.pumpWidget(
       buildTestableWidget(
         AnimePage(
-          anime: TituloModel(nome: 'AnimeTeste'),
+          anime: TituloModel(
+            nome: 'AnimeTeste',
+            link: '',
+            imagem: '',
+            descricao: '',
+          ),
         ),
       ),
     );

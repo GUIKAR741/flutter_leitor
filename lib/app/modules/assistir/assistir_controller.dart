@@ -45,10 +45,14 @@ abstract class _AssistirBase extends Disposable with Store {
       if (data == 'link_invalido') {
         ep.titulo = 'Indisponivel';
         _videoPlayerController = VideoPlayerController.network(null);
-        _chewieController =
-            ChewieController(videoPlayerController: _videoPlayerController);
+        _chewieController = ChewieController(
+          customControls: ControlesWidget(title: ep.titulo),
+          videoPlayerController: _videoPlayerController,
+        );
+        return Chewie(
+          controller: _chewieController,
+        );
       }
-      print(data);
       _videoPlayerController = VideoPlayerController.network(data);
       _chewieController = ChewieController(
         videoPlayerController: _videoPlayerController,

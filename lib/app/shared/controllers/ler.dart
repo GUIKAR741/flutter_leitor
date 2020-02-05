@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle_controller.dart';
-import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
 import 'package:mobx/mobx.dart';
@@ -30,13 +29,13 @@ abstract class _LerBase extends Disposable with Store {
   int _index = 0;
   bool _paginacao = true;
   int _paginaIndex;
-  List<PaginaImagemWidget> _imagens;
+  List<Widget> _imagens;
   bool _tap = false;
 
   @observable
   CapituloModel capitulo;
   @observable
-  ObservableFuture<List<PaginaImagemWidget>> imagens;
+  ObservableFuture<List<Widget>> imagens;
   @observable
   IconData icone;
   @observable
@@ -57,14 +56,15 @@ abstract class _LerBase extends Disposable with Store {
 
   @action
   void pausar() {
+    if (index == -1) return;
     if (_paginacao) {
       pagina = "${_index + 1}/${imagens.value.length}";
       _imagens = imagens.value;
-      imagens = Future<List<PaginaImagemWidget>>.value([imagens.value[_index]])
-          .asObservable();
+      imagens =
+          Future<List<Widget>>.value([imagens.value[_index]]).asObservable();
       icone = Icons.play_arrow;
     } else {
-      imagens = Future<List<PaginaImagemWidget>>.value(_imagens).asObservable();
+      imagens = Future<List<Widget>>.value(_imagens).asObservable();
       pageController.jumpToPage(_index);
       icone = Icons.pause;
     }

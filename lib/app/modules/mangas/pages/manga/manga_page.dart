@@ -87,8 +87,18 @@ class MangaPage extends StatelessWidget {
                             },
                             separatorBuilder: (_, index) => Divider(),
                           ))
-                      : CardWidget(
-                          titulo: manga,
+                      : Column(
+                          children: <Widget>[
+                            CardWidget(
+                              titulo: manga,
+                            ),
+                            Center(
+                              child: RaisedButton(
+                                child: Text("Recarregar"),
+                                onPressed: controller.listarTitulo,
+                              ),
+                            )
+                          ],
                         ),
                 ),
               ),

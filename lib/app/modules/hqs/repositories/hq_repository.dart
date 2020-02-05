@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:html/dom.dart';
+import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 
 class HqRepository extends Disposable implements RepositoryUnique {
@@ -13,7 +14,15 @@ class HqRepository extends Disposable implements RepositoryUnique {
 
   @override
   Future<List<CapituloModel>> listarTitulo(TituloModel hq) async {
-    String data = await dio.getLink(hq.link);
+    String data;
+    try {
+      data = await dio.getLink(
+        hq.link,
+        contextError: "Falha ao Listar Titulo",
+      );
+    } on DioError catch (e) {
+      if (e.response == null) return [];
+    }
     Document soup = parse(data);
     hq.descricao = soup
         .querySelectorAll('div.col-md-8>p')
@@ -32,7 +41,15 @@ class HqRepository extends Disposable implements RepositoryUnique {
   }
 
   Future<List<String>> imagens(String link) async {
-    String data = await dio.getLink(link);
+    String data;
+    try {
+      data = await dio.getLink(
+        link,
+        contextError: "Falha ao Pegar Imagens",
+      );
+    } on DioError catch (e) {
+      if (e.response == null) return [];
+    }
     Document soup = parse(data);
     return soup
         .querySelectorAll('img')

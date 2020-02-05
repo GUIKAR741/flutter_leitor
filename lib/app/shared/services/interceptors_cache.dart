@@ -23,19 +23,17 @@ class CacheInterceptors extends InterceptorsWrapper {
 
   @override
   Future onResponse(Response response) async {
-    // return super.onResponse(response);
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(
         "${response.request.uri}",
         response.request.uri.toString().contains('.json')
             ? json.encode(response.data)
             : response.data.toString());
-    return response;
+    return super.onResponse(response);
   }
 
   @override
   Future onError(DioError err) async {
-    // return super.onError(err);
     if (err.type == DioErrorType.CONNECT_TIMEOUT ||
         err.type == DioErrorType.DEFAULT) {
       SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -44,7 +42,7 @@ class CacheInterceptors extends InterceptorsWrapper {
             data: prefs.getString('${err.request.uri}'), statusCode: 200);
       }
     } else {
-      return err;
+      return super.onError(err);
     }
   }
 }

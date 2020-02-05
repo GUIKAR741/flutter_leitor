@@ -7,7 +7,7 @@ part 'listagem_principal.g.dart';
 
 abstract class ListagemPrincipal extends _ListagemPrincipalBase
     with _$ListagemPrincipal {
-  ListagemPrincipal(RepositoryPrincipal repo) : super(repo);
+  ListagemPrincipal(IRepositoryPrincipal repo) : super(repo);
 
   @override
   @mustCallSuper
@@ -17,7 +17,7 @@ abstract class ListagemPrincipal extends _ListagemPrincipalBase
 }
 
 abstract class _ListagemPrincipalBase extends Disposable with Store {
-  final RepositoryPrincipal _repo;
+  final IRepositoryPrincipal _repo;
   final ScrollController scroll = ScrollController();
 
   @observable

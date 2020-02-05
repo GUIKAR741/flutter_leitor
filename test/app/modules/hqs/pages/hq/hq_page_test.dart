@@ -9,8 +9,18 @@ import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_page.dart';
 main() {
   initModules([AppModule(), HqsModule()]);
   testWidgets('HqPage has title', (WidgetTester tester) async {
-    await tester
-        .pumpWidget(buildTestableWidget(HqPage(hq: TituloModel(nome: 'HQ'))));
+    await tester.pumpWidget(
+      buildTestableWidget(
+        HqPage(
+          hq: TituloModel(
+            nome: 'HQ',
+            link: '',
+            imagem: '',
+            descricao: ''
+          ),
+        ),
+      ),
+    );
     await tester.pump(Duration(minutes: 1));
     final titleFinder = find.text('HQ');
     expect(titleFinder, findsOneWidget);

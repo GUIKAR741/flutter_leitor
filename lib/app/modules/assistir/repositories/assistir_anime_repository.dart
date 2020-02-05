@@ -11,7 +11,15 @@ class AssistirAnimeRepository extends Disposable {
   AssistirAnimeRepository(this.dio);
 
   Future<String> linkVideo(EpisodioModel ep) async {
-    String data = await dio.getLink(ep.link);
+    String data;
+    try {
+      data = await dio.getLink(
+        ep.link,
+        contextError: 'Falha ao Procurar Episodio',
+      );
+    } on DioError catch (e) {
+      if (e.response == null) return 'link_invalido';
+    }
     Document soup = parse(data);
     ep.titulo = soup
         .querySelectorAll('h2')
@@ -22,15 +30,24 @@ class AssistirAnimeRepository extends Disposable {
         .text;
     dynamic linkVideo = soup.querySelector('source');
     String video;
+    Response responseVideo;
     if (linkVideo != null) {
-      video = (await dio.client.get(linkVideo.attributes['src'],
-              options: Options(
-                  headers: {'Referer': ep.link},
-                  followRedirects: false,
-                  receiveDataWhenStatusError: true,
-                  validateStatus: (i) => true)))
-          .headers
-          .value('location');
+      try {
+        responseVideo = await dio.getLink(
+          linkVideo,
+          options: Options(
+            headers: {'Referer': ep.link},
+            followRedirects: false,
+            receiveDataWhenStatusError: true,
+            validateStatus: (i) => true,
+          ),
+          returnResponse: true,
+          contextError: "Falha ao Requisitar Video",
+        );
+      } on DioError catch (e) {
+        if (e.response == null) return 'link_invalido';
+      }
+      video = responseVideo.headers.value('location');
     } else {
       List baixar = soup
           .querySelectorAll('a')
@@ -40,17 +57,33 @@ class AssistirAnimeRepository extends Disposable {
         return 'link_invalido';
       }
       linkVideo = baixar[0].attributes['href'];
-      data = await dio.getLink(linkVideo);
+      String data;
+      try {
+        data = await dio.getLink(
+          linkVideo,
+          contextError: "Falha ao Requisitar Video",
+        );
+      } on DioError catch (e) {
+        if (e.response == null) return 'link_invalido';
+      }
       soup = parse(data);
       linkVideo = soup.querySelector('a.bt-download').attributes['href'];
-      video = (await dio.client.get(linkVideo,
-              options: Options(
-                  headers: {'Referer': ep.link},
-                  followRedirects: false,
-                  receiveDataWhenStatusError: true,
-                  validateStatus: (i) => true)))
-          .headers
-          .value('location');
+      try {
+        responseVideo = await dio.getLink(
+          linkVideo,
+          options: Options(
+            headers: {'Referer': ep.link},
+            followRedirects: false,
+            receiveDataWhenStatusError: true,
+            validateStatus: (i) => true,
+          ),
+          returnResponse: true,
+          contextError: "Falha ao Requisitar Video",
+        );
+      } on DioError catch (e) {
+        if (e.response == null) return 'link_invalido';
+      }
+      video = responseVideo.headers.value('location');
     }
     return video;
   }

@@ -40,30 +40,38 @@ class AnimesPage extends StatelessWidget {
               onRefresh: () async {
                 controller.listar(refresh: true);
               },
-              child: Scrollbar(
-                controller: controller.scroll,
-                child: ListView.separated(
-                  controller: controller.scroll,
-                  itemCount: titulos.length,
-                  itemBuilder: (_, index) {
-                    return ListTile(
-                      contentPadding:
-                          EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                      leading: ExtendedImage.network(titulos[index].imagem,
-                          width: 50,
-                          cache: true,
-                          enableMemoryCache: true,
-                          fit: BoxFit.fill),
-                      title: Text(titulos[index].nome),
-                      onTap: () {
-                        Modular.to.pushNamed('/animes/anime',
-                            arguments: titulos[index]);
-                      },
-                    );
-                  },
-                  separatorBuilder: (_, index) => Divider(),
-                ),
-              ),
+              child: titulos.length > 0
+                  ? Scrollbar(
+                      controller: controller.scroll,
+                      child: ListView.separated(
+                        controller: controller.scroll,
+                        itemCount: titulos.length,
+                        itemBuilder: (_, index) {
+                          return ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                                vertical: 2, horizontal: 5),
+                            leading: ExtendedImage.network(
+                                titulos[index].imagem,
+                                width: 50,
+                                cache: true,
+                                enableMemoryCache: true,
+                                fit: BoxFit.fill),
+                            title: Text(titulos[index].nome),
+                            onTap: () {
+                              Modular.to.pushNamed('/animes/anime',
+                                  arguments: titulos[index]);
+                            },
+                          );
+                        },
+                        separatorBuilder: (_, index) => Divider(),
+                      ),
+                    )
+                  : Center(
+                      child: RaisedButton(
+                        child: Text("Recarregar Titulos"),
+                        onPressed: () => controller.listar(refresh: true),
+                      ),
+                    ),
             );
           },
         ));

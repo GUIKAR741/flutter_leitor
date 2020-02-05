@@ -1,23 +1,73 @@
 import 'package:dio/dio.dart';
+import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import 'interceptors_cache.dart';
 
 class DioService extends Disposable {
   final Dio client;
 
   DioService(this.client) {
-    this.client.interceptors.add(CacheInterceptors());
+    this.client.interceptors.add(
+          DioCacheManager(
+            CacheConfig(),
+          ).interceptor,
+        );
   }
 
-  Future<dynamic> getLink(String link) async {
-    final response = await client.get(link);
-    return response.data;
+  Future getLink(String link,
+      {bool returnResponse = false,
+      bool refresh = false,
+      Options options,
+      String contextError}) async {
+    Response response;
+    try {
+      response = await client.get(
+        link,
+        options: buildCacheOptions(
+          Duration(days: 7),
+          maxStale: Duration(days: 10),
+          forceRefresh: refresh,
+          options: options,
+        ),
+      );
+    } on DioError catch (e, s) {
+      Modular.get<Crashlytics>().recordError(
+        e,
+        s,
+        context: contextError,
+      );
+      throw e;
+    }
+    return returnResponse ? response : response.data;
   }
 
-  Future<dynamic> postLink(String link, {dynamic data}) async {
-    final response = await client.post(link, data: data);
-    return response.data;
+  Future postLink(String link,
+      {dynamic data,
+      bool returnResponse = false,
+      bool refresh = false,
+      Options options,
+      String contextError}) async {
+    Response response;
+    try {
+      response = await client.post(
+        link,
+        data: data,
+        options: buildCacheOptions(
+          Duration(days: 7),
+          maxStale: Duration(days: 10),
+          forceRefresh: refresh,
+          options: options,
+        ),
+      );
+    } on DioError catch (e, s) {
+      Modular.get<Crashlytics>().recordError(
+        e,
+        s,
+        context: contextError,
+      );
+      throw e;
+    }
+    return returnResponse ? response : response.data;
   }
 
   @override

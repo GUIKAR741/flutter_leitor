@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:html/dom.dart';
+import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 
 class MangaRepository extends Disposable implements RepositoryUnique {
@@ -13,7 +14,16 @@ class MangaRepository extends Disposable implements RepositoryUnique {
 
   @override
   Future<List<CapituloModel>> listarTitulo(TituloModel manga) async {
-    String data = await dio.getLink(manga.link);
+    String data;
+    try {
+      data = await dio.getLink(
+        manga.link,
+        contextError: "Falha ao Listar Titulos",
+      );
+    } on DioError catch (e) {
+      manga.descricao = 'Erro ao Carregar';
+      if (e.response == null) return [];
+    }
     Document soup = parse(data);
     manga.descricao =
         soup.querySelector('div.panel-body').text.trim().replaceAll('\n', '');
@@ -29,7 +39,15 @@ class MangaRepository extends Disposable implements RepositoryUnique {
   }
 
   Future<List<String>> imagens(String link) async {
-    String data = await dio.getLink(link);
+    String data;
+    try {
+      data = await dio.getLink(
+        link,
+        contextError: "Falha ao Pegar Imagens",
+      );
+    } on DioError catch (e) {
+      if (e.response == null) return [];
+    }
     Document soup = parse(data);
     return soup
         .querySelectorAll('img')
