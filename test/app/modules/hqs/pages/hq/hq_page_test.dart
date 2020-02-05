@@ -14,11 +14,7 @@ main() {
       buildTestableWidget(
         HqPage(
           hq: TituloModel(
-            nome: 'HQ',
-            link: 'http://',
-            imagem: '',
-            descricao: ''
-          ),
+              nome: 'HQ', link: 'http://', imagem: '', descricao: ''),
         ),
       ),
     );

@@ -8,7 +8,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import './app/app_module.dart';
 
-void main() async{
+void main() async {
   Crashlytics crashlytics = Crashlytics.instance;
   debugPrint = (String message, {int wrapWidth}) =>
       crashlytics.log("[${DateTime.now()}] : $message");

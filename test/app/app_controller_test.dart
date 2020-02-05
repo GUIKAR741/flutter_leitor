@@ -7,12 +7,12 @@ import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 
-void main() async{
+void main() async {
   Hive.init(Directory.current.path + "/hive");
   initModule(AppModule());
   AppController app;
-  
-  setUp(() async{
+
+  setUp(() async {
     app = Modular.get<AppController>();
   });
 
@@ -21,12 +21,12 @@ void main() async{
       expect(app, isInstanceOf<AppController>());
     });
 
-    test('Tema muda para false', () async{
+    test('Tema muda para false', () async {
       await app.mudarTema();
       expect(app.tema, false);
     });
 
-    test('Tema muda para true', () async{
+    test('Tema muda para true', () async {
       await app.mudarTema();
       expect(app.tema, true);
     });

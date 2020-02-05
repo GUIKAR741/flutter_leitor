@@ -4,12 +4,11 @@ import 'package:mobx/mobx.dart';
 
 part 'app_controller.g.dart';
 
-class AppController extends _AppBase with _$AppController{
+class AppController extends _AppBase with _$AppController {
   @override
-  void dispose() async{
+  void dispose() async {
     (await _box).close();
   }
-
 }
 
 abstract class _AppBase extends Disposable with Store {

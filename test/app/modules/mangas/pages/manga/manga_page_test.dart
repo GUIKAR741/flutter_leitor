@@ -13,11 +13,7 @@ main() {
       buildTestableWidget(
         MangaPage(
           manga: TituloModel(
-            nome: 'MANGA',
-            link: 'http://',
-            imagem: '',
-            descricao: ''
-          ),
+              nome: 'MANGA', link: 'http://', imagem: '', descricao: ''),
         ),
       ),
     );

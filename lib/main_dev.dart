@@ -9,7 +9,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 
 import './app/app_module.dart';
 
-void main() async{
+void main() async {
   Crashlytics crashlytics = Crashlytics.instance;
   crashlytics.enableInDevMode = true;
   debugPrint = (String message, {int wrapWidth}) {

@@ -12,7 +12,7 @@ abstract class IRepositoryPrincipal extends Disposable {
   IRepositoryPrincipal(this.dio);
 
   @protected
-  Future<Box<String>> get box => _box; 
+  Future<Box<String>> get box => _box;
 
   Future<String> verificaData() async {
     dynamic response;
@@ -30,7 +30,7 @@ abstract class IRepositoryPrincipal extends Disposable {
 
   @override
   @mustCallSuper
-  void dispose() async{
+  void dispose() async {
     (await _box).close();
   }
 }

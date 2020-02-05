@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
             return IconButton(
               tooltip: "Mudar Tema",
               icon: Icon(icone),
-              onPressed:  controller.mudarTema,
+              onPressed: controller.mudarTema,
             );
           })
         ],
