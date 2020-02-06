@@ -125,6 +125,7 @@ abstract class _LerBase extends Disposable with Store {
                       capitulo = _controller.listagem[indice - 1];
                     listarImagens();
                     Modular.to.pop();
+                    _controller.addLista(capitulo.titulo, capitulo, add: true);
                   },
                 )
               ],
@@ -152,6 +153,7 @@ abstract class _LerBase extends Disposable with Store {
                       capitulo = _controller.listagem[indice + 1];
                     listarImagens();
                     Modular.to.pop();
+                    _controller.addLista(capitulo.titulo, capitulo, add: true);
                   },
                 )
               ],
