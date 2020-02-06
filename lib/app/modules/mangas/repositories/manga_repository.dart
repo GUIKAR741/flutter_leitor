@@ -18,11 +18,12 @@ class MangaRepository extends Disposable implements IRepositoryUnique {
     try {
       data = await dio.getLink(
         manga.link,
+        refresh: true,
         contextError: "Falha ao Listar Titulos",
       );
-    } on DioError catch (_) {
+    } on DioError catch (e) {
       manga.descricao = 'Erro ao Carregar';
-      return [];
+      if (e.request == null) return [];
     }
     Document soup = parse(data);
     manga.descricao =
@@ -43,10 +44,11 @@ class MangaRepository extends Disposable implements IRepositoryUnique {
     try {
       data = await dio.getLink(
         link,
+        refresh: true,
         contextError: "Falha ao Pegar Imagens",
       );
-    } on DioError catch (_) {
-      return [];
+    } on DioError catch (e) {
+      if (e.request == null) return [];
     }
     Document soup = parse(data);
     return soup

@@ -19,9 +19,10 @@ class HqRepository extends Disposable implements IRepositoryUnique {
       data = await dio.getLink(
         hq.link,
         contextError: "Falha ao Listar Titulo",
+        refresh: true,
       );
-    } on DioError catch (_) {
-      return [];
+    } on DioError catch (e) {
+      if (e.request == null) return [];
     }
     Document soup = parse(data);
     hq.descricao = soup
@@ -46,9 +47,10 @@ class HqRepository extends Disposable implements IRepositoryUnique {
       data = await dio.getLink(
         link,
         contextError: "Falha ao Pegar Imagens",
+        refresh: true,
       );
-    } on DioError catch (_) {
-      return [];
+    } on DioError catch (e) {
+      if (e.request == null) return [];
     }
     Document soup = parse(data);
     return soup

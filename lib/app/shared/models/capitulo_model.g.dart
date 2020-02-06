@@ -3,6 +3,39 @@
 part of 'capitulo_model.dart';
 
 // **************************************************************************
+// TypeAdapterGenerator
+// **************************************************************************
+
+class CapituloModelAdapter extends TypeAdapter<CapituloModel> {
+  @override
+  final typeId = 1;
+
+  @override
+  CapituloModel read(BinaryReader reader) {
+    var numOfFields = reader.readByte();
+    var fields = <int, dynamic>{
+      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    };
+    return CapituloModel()
+      ..titulo = fields[0] as String
+      ..link = fields[1] as String
+      ..status = fields[2] as bool;
+  }
+
+  @override
+  void write(BinaryWriter writer, CapituloModel obj) {
+    writer
+      ..writeByte(3)
+      ..writeByte(0)
+      ..write(obj.titulo)
+      ..writeByte(1)
+      ..write(obj.link)
+      ..writeByte(2)
+      ..write(obj.status);
+  }
+}
+
+// **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
@@ -58,5 +91,35 @@ mixin _$CapituloModel on _CapituloModelBase, Store {
       super.info = value;
       _$infoAtom.reportChanged();
     }, _$infoAtom, name: '${_$infoAtom.name}_set');
+  }
+
+  final _$statusAtom = Atom(name: '_CapituloModelBase.status');
+
+  @override
+  bool get status {
+    _$statusAtom.context.enforceReadPolicy(_$statusAtom);
+    _$statusAtom.reportObserved();
+    return super.status;
+  }
+
+  @override
+  set status(bool value) {
+    _$statusAtom.context.conditionallyRunInAction(() {
+      super.status = value;
+      _$statusAtom.reportChanged();
+    }, _$statusAtom, name: '${_$statusAtom.name}_set');
+  }
+
+  final _$_CapituloModelBaseActionController =
+      ActionController(name: '_CapituloModelBase');
+
+  @override
+  void mudarStatus() {
+    final _$actionInfo = _$_CapituloModelBaseActionController.startAction();
+    try {
+      return super.mudarStatus();
+    } finally {
+      _$_CapituloModelBaseActionController.endAction(_$actionInfo);
+    }
   }
 }

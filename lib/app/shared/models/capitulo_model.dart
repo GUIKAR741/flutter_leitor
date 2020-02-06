@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
+
 part 'capitulo_model.g.dart';
 
+@HiveType(typeId: 1)
 class CapituloModel extends _CapituloModelBase with _$CapituloModel {
   CapituloModel({String titulo, String link, String info})
       : super(titulo: titulo, link: link, info: info);
@@ -27,13 +30,24 @@ class CapituloModel extends _CapituloModelBase with _$CapituloModel {
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _CapituloModelBase with Store {
+abstract class _CapituloModelBase extends HiveObject with Store {
+  @HiveField(0)
   @observable
   String titulo;
+
+  @HiveField(1)
   @observable
   String link;
+
   @observable
   String info;
+
+  @HiveField(2)
+  @observable
+  bool status = false;
+
+  @action
+  void mudarStatus() => status = !status;
 
   _CapituloModelBase({this.titulo, this.link, this.info});
 

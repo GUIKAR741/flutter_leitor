@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+import 'package:flutter_leitor/app/shared/utils/constants.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
@@ -18,11 +19,14 @@ class AnimeRepository extends Disposable implements IRepositoryUnique {
   Future<List<EpisodioModel>> listarTitulo(TituloModel anime) async {
     String data;
     try {
-      data =
-          await dio.getLink(anime.link, contextError: 'Titulos Não Carregaram');
-    } on DioError catch (_) {
+      data = await dio.getLink(
+        anime.link,
+        contextError: 'Titulos Não Carregaram',
+        refresh: true,
+      );
+    } on DioError catch (e) {
       anime.descricao = 'Erro ao Carregar';
-      return [];
+      if (e.response == null) return [];
     }
     Document soup = parse(data), soupOriginal = parse(data);
     anime.descricao = soup.querySelector('p#sinopse').text.replaceAll('\n', '');
@@ -41,21 +45,23 @@ class AnimeRepository extends Disposable implements IRepositoryUnique {
         'page': inicio.toString(),
         'limit': 100.toString(),
         'total_page': fim.toString(),
-        'order_video': 'asc'
+        'order_video': 'asc',
       };
-
       try {
         pagina = await dio
             .postLink(
-          "https://www.superanimes.org/inc/paginatorVideo.inc.php",
+          ANIMEPOST,
           data: FormData.fromMap(data),
           contextError: "Falha ao Listar Episodios",
+          refresh: true,
         )
-            .then((data) {
-          return json.decode(data);
-        });
-      } on DioError catch (_) {
-        return [];
+            .then(
+          (data) {
+            return json.decode(data);
+          },
+        );
+      } on DioError catch (e) {
+        if (e.response == null) return [];
       }
       fim = pagina['total_page'];
       inicio++;
@@ -76,17 +82,21 @@ class AnimeRepository extends Disposable implements IRepositoryUnique {
               .toList()
               .reversed
               .toList();
-          episodios.add(EpisodioModel(
+          episodios.add(
+            EpisodioModel(
               titulo: ep.querySelector('a').text,
               link: ep.querySelector('a').attributes['href'],
               info:
                   'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'} Duração: $tempoEp',
-              imagem: imagem));
+              imagem: imagem,
+            ),
+          );
         }
       }
     }
-    List<Element> box =
-        soupOriginal.querySelectorAll("div.conteudoBox > div.js_dropDownView");
+    List<Element> box = soupOriginal.querySelectorAll(
+      "div.conteudoBox > div.js_dropDownView",
+    );
     if (box.isNotEmpty) {
       for (Element elemento in box) {
         Element parent = elemento.parent;
@@ -105,13 +115,16 @@ class AnimeRepository extends Disposable implements IRepositoryUnique {
                 .toList()
                 .reversed
                 .toList();
-            episodios.add(EpisodioModel(
+            episodios.add(
+              EpisodioModel(
                 titulo:
                     "OVA: ${ep.querySelector('div.epsBoxSobre').querySelector('a').text}",
                 link: ep.querySelector('a').attributes['href'],
                 info:
                     'Idioma: ${info[0]} Legenda: ${info.length > 1 ? info[1] : 'Sem Legenda'} Duração: $tempoEp',
-                imagem: imagem));
+                imagem: imagem,
+              ),
+            );
           }
         }
       }

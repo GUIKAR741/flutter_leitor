@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
+
 part 'episodio_model.g.dart';
 
+@HiveType(typeId: 2)
 class EpisodioModel extends _EpisodioModelBase with _$EpisodioModel {
   EpisodioModel({String titulo, String link, String info, String imagem})
       : super(titulo: titulo, link: link, info: info, imagem: imagem);
@@ -30,15 +33,27 @@ class EpisodioModel extends _EpisodioModelBase with _$EpisodioModel {
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _EpisodioModelBase with Store {
+abstract class _EpisodioModelBase extends HiveObject with Store {
+  @HiveField(0)
   @observable
   String titulo;
+
+  @HiveField(1)
   @observable
   String link;
+
   @observable
   String info;
+
   @observable
   String imagem;
+
+  @HiveField(2)
+  @observable
+  bool status = false;
+
+  @action
+  void mudarStatus() => status = !status;
 
   _EpisodioModelBase({this.titulo, this.link, this.info, this.imagem});
 

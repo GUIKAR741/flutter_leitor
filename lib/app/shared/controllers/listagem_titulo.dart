@@ -28,6 +28,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
 
   _ListagemTituloBase(this._repo);
 
+  // @protected
+  // TituloModel get titulo => _titulo;
   set titulo(TituloModel value) => _titulo = value;
   bool get isReversed => _isReversed;
 

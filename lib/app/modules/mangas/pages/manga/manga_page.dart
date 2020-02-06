@@ -26,6 +26,13 @@ class MangaPage extends StatelessWidget {
       contentPadding: EdgeInsets.symmetric(horizontal: 15),
       title: Text(capitulo.titulo),
       subtitle: Text(capitulo.info),
+      // trailing: IconButton(
+      //   icon: Icon(
+      //     capitulo.status ? Icons.check_box : Icons.check_box_outline_blank,
+      //   ),
+      //   tooltip: capitulo.status ? "Lido" : "Não Lido",
+      //   onPressed: null,
+      // ),
       onTap: () {
         Modular.to.pushNamed('/mangas/ler_manga', arguments: capitulo);
       },

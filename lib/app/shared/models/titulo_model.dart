@@ -1,8 +1,11 @@
 import 'dart:convert';
 
+import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
+
 part 'titulo_model.g.dart';
 
+@HiveType(typeId: 0)
 class TituloModel extends _TituloModelBase with _$TituloModel {
   TituloModel({String imagem, String link, String nome, String descricao = ''})
       : super(nome: nome, descricao: descricao, link: link, imagem: imagem);
@@ -37,15 +40,24 @@ class TituloModel extends _TituloModelBase with _$TituloModel {
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _TituloModelBase with Store {
-  @observable
-  String imagem;
-  @observable
-  String link;
+abstract class _TituloModelBase extends HiveObject with Store {
+  @HiveField(0)
   @observable
   String nome;
+
+  @HiveField(1)
+  @observable
+  String link;
+
   @observable
   String descricao;
+
+  @observable
+  String imagem;
+
+  @HiveField(2)
+  @observable
+  List lista;
 
   _TituloModelBase({this.imagem, this.link, this.nome, this.descricao = ''});
 
