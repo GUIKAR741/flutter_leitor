@@ -50,6 +50,21 @@ mixin _$ListagemTitulo on _ListagemTituloBase, Store {
     }, _$_isReversedAtom, name: '${_$_isReversedAtom.name}_set');
   }
 
+  final _$iniciaBoxAsyncAction = AsyncAction('iniciaBox');
+
+  @override
+  Future iniciaBox() {
+    return _$iniciaBoxAsyncAction.run(() => super.iniciaBox());
+  }
+
+  final _$addListaAsyncAction = AsyncAction('addLista');
+
+  @override
+  Future addLista(String key, IStatus value, {bool add = false}) {
+    return _$addListaAsyncAction
+        .run(() => super.addLista(key, value, add: add));
+  }
+
   final _$_ListagemTituloBaseActionController =
       ActionController(name: '_ListagemTituloBase');
 

@@ -19,7 +19,7 @@ class TituloModelAdapter extends TypeAdapter<TituloModel> {
     return TituloModel()
       ..nome = fields[0] as String
       ..link = fields[1] as String
-      ..lista = (fields[2] as List)?.cast<dynamic>();
+      ..lista = (fields[2] as Map)?.cast<String, dynamic>();
   }
 
   @override
@@ -108,22 +108,5 @@ mixin _$TituloModel on _TituloModelBase, Store {
       super.imagem = value;
       _$imagemAtom.reportChanged();
     }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
-  }
-
-  final _$listaAtom = Atom(name: '_TituloModelBase.lista');
-
-  @override
-  List<dynamic> get lista {
-    _$listaAtom.context.enforceReadPolicy(_$listaAtom);
-    _$listaAtom.reportObserved();
-    return super.lista;
-  }
-
-  @override
-  set lista(List<dynamic> value) {
-    _$listaAtom.context.conditionallyRunInAction(() {
-      super.lista = value;
-      _$listaAtom.reportChanged();
-    }, _$listaAtom, name: '${_$listaAtom.name}_set');
   }
 }

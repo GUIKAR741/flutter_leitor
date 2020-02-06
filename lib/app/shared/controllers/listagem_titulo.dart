@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
+import 'package:flutter_leitor/app/shared/interfaces/status.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 
 part 'listagem_titulo.g.dart';
@@ -20,7 +22,9 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   final IRepositoryUnique _repo;
   final ScrollController scroll = ScrollController();
 
+  Future<Box<TituloModel>> _box;
   TituloModel _titulo;
+
   @observable
   ObservableFuture<List> lista;
   @observable
@@ -28,16 +32,49 @@ abstract class _ListagemTituloBase extends Disposable with Store {
 
   _ListagemTituloBase(this._repo);
 
-  // @protected
-  // TituloModel get titulo => _titulo;
+  @protected
+  TituloModel get titulo => _titulo;
   set titulo(TituloModel value) => _titulo = value;
   bool get isReversed => _isReversed;
+
+  @protected
+  Future<Box<TituloModel>> get box => _box;
+  @protected
+  set box(Future<Box<TituloModel>> value) => _box = value;
 
   @action
   void listarTitulo() {
     lista = null;
     _isReversed = false;
     lista = _repo.listarTitulo(_titulo).asObservable();
+    iniciaBox();
+  }
+
+  @action
+  iniciaBox() async {
+    Box<TituloModel> boxHive = (await _box);
+    lista.whenComplete(
+      () {
+        if (!boxHive.containsKey(titulo.nome)) {
+          boxHive.put(titulo.nome, titulo);
+        } else {
+          titulo.lista = boxHive.get(titulo.nome).lista;
+          if (titulo.lista.isNotEmpty) {
+            for (IStatus i in lista.value) {
+              if (titulo.lista.containsKey(i.titulo)) i.status = true;
+            }
+          }
+        }
+      },
+    );
+  }
+
+  @action
+  addLista(String key, IStatus value, {bool add = false}) async {
+    value.mudarStatus(add: add);
+    titulo.addLista(key, value, add: add);
+    Box<TituloModel> boxHive = (await _box);
+    boxHive.put(titulo.nome, titulo);
   }
 
   @computed

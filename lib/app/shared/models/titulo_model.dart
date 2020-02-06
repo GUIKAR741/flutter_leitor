@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_leitor/app/shared/interfaces/status.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 
@@ -56,8 +57,15 @@ abstract class _TituloModelBase extends HiveObject with Store {
   String imagem;
 
   @HiveField(2)
-  @observable
-  List lista;
+  Map<String, dynamic> lista = <String, dynamic>{};
+
+  void addLista(String key, IStatus value, {bool add = false}) {
+    if (lista.containsKey(key) && !add) {
+      lista.remove(key);
+      return;
+    }
+    lista[key] = value;
+  }
 
   _TituloModelBase({this.imagem, this.link, this.nome, this.descricao = ''});
 

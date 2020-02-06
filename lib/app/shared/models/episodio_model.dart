@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_leitor/app/shared/interfaces/status.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 
@@ -33,7 +34,7 @@ class EpisodioModel extends _EpisodioModelBase with _$EpisodioModel {
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _EpisodioModelBase extends HiveObject with Store {
+abstract class _EpisodioModelBase extends IStatus with Store {
   @HiveField(0)
   @observable
   String titulo;
@@ -47,13 +48,6 @@ abstract class _EpisodioModelBase extends HiveObject with Store {
 
   @observable
   String imagem;
-
-  @HiveField(2)
-  @observable
-  bool status = false;
-
-  @action
-  void mudarStatus() => status = !status;
 
   _EpisodioModelBase({this.titulo, this.link, this.info, this.imagem});
 

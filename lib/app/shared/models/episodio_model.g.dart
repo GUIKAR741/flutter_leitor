@@ -18,20 +18,17 @@ class EpisodioModelAdapter extends TypeAdapter<EpisodioModel> {
     };
     return EpisodioModel()
       ..titulo = fields[0] as String
-      ..link = fields[1] as String
-      ..status = fields[2] as bool;
+      ..link = fields[1] as String;
   }
 
   @override
   void write(BinaryWriter writer, EpisodioModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(2)
       ..writeByte(0)
       ..write(obj.titulo)
       ..writeByte(1)
-      ..write(obj.link)
-      ..writeByte(2)
-      ..write(obj.status);
+      ..write(obj.link);
   }
 }
 
@@ -108,35 +105,5 @@ mixin _$EpisodioModel on _EpisodioModelBase, Store {
       super.imagem = value;
       _$imagemAtom.reportChanged();
     }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
-  }
-
-  final _$statusAtom = Atom(name: '_EpisodioModelBase.status');
-
-  @override
-  bool get status {
-    _$statusAtom.context.enforceReadPolicy(_$statusAtom);
-    _$statusAtom.reportObserved();
-    return super.status;
-  }
-
-  @override
-  set status(bool value) {
-    _$statusAtom.context.conditionallyRunInAction(() {
-      super.status = value;
-      _$statusAtom.reportChanged();
-    }, _$statusAtom, name: '${_$statusAtom.name}_set');
-  }
-
-  final _$_EpisodioModelBaseActionController =
-      ActionController(name: '_EpisodioModelBase');
-
-  @override
-  void mudarStatus() {
-    final _$actionInfo = _$_EpisodioModelBaseActionController.startAction();
-    try {
-      return super.mudarStatus();
-    } finally {
-      _$_EpisodioModelBaseActionController.endAction(_$actionInfo);
-    }
   }
 }

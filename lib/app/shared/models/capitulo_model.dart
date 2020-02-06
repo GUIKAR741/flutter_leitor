@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flutter_leitor/app/shared/interfaces/status.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 
@@ -30,7 +31,7 @@ class CapituloModel extends _CapituloModelBase with _$CapituloModel {
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _CapituloModelBase extends HiveObject with Store {
+abstract class _CapituloModelBase extends IStatus with Store {
   @HiveField(0)
   @observable
   String titulo;
@@ -41,13 +42,6 @@ abstract class _CapituloModelBase extends HiveObject with Store {
 
   @observable
   String info;
-
-  @HiveField(2)
-  @observable
-  bool status = false;
-
-  @action
-  void mudarStatus() => status = !status;
 
   _CapituloModelBase({this.titulo, this.link, this.info});
 

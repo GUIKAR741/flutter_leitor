@@ -100,16 +100,30 @@ class AnimePage extends StatelessWidget {
 
   Widget listTile(EpisodioModel episodio) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-      leading: Container(
-        height: 100,
-        width: 70,
-        child: ExtendedImage.network(episodio.imagem,
-            cache: true, fit: BoxFit.fill),
-      ),
-      title: Text(episodio.titulo),
-      subtitle: Text(episodio.info),
-      onTap: () => Modular.to.pushNamed('/assistir', arguments: episodio),
-    );
+        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+        leading: Container(
+          height: 100,
+          width: 70,
+          child: ExtendedImage.network(
+            episodio.imagem,
+            cache: true,
+            fit: BoxFit.fill,
+          ),
+        ),
+        title: Text(episodio.titulo),
+        subtitle: Text(episodio.info),
+        trailing: Observer(builder: (_) {
+          return IconButton(
+            icon: Icon(
+              episodio.status ? Icons.check_box : Icons.check_box_outline_blank,
+            ),
+            tooltip: episodio.status ? "Lido" : "Não Lido",
+            onPressed: () => controller.addLista(episodio.titulo, episodio),
+          );
+        }),
+        onTap: () {
+          controller.addLista(episodio.titulo, episodio, add: true);
+          Modular.to.pushNamed('/assistir', arguments: episodio);
+        });
   }
 }

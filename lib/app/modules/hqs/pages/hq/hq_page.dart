@@ -103,7 +103,17 @@ class HqPage extends StatelessWidget {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 15),
       title: Text(capitulo.titulo),
+      trailing: Observer(builder: (_) {
+        return IconButton(
+          icon: Icon(
+            capitulo.status ? Icons.check_box : Icons.check_box_outline_blank,
+          ),
+          tooltip: capitulo.status ? "Lido" : "Não Lido",
+          onPressed: () => controller.addLista(capitulo.titulo, capitulo),
+        );
+      }),
       onTap: () {
+        controller.addLista(capitulo.titulo, capitulo, add: true);
         Modular.to.pushNamed('/hqs/ler_hq', arguments: capitulo);
       },
     );
