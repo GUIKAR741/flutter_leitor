@@ -12,11 +12,11 @@ class MockClient extends Mock implements DioService {}
 void main() {
   Hive.init(Directory.current.path + "/hive");
   AnimesRepository repository;
-  MockClient client;
+  // MockClient client;
 
   setUp(() {
-    client = MockClient();
-    repository = AnimesRepository(client);
+    // client = MockClient();
+    repository = AnimesRepository();
   });
 
   group('AnimesRepository Test', () {

@@ -11,12 +11,6 @@ class HomePage extends StatelessWidget {
   HomePage({Key key, this.title = "Leitor"}) : super(key: key);
 
   @override
-  StatelessElement createElement() {
-    // controller.iniciar();
-    return super.createElement();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -30,15 +24,17 @@ class HomePage extends StatelessWidget {
               clearMemoryImageCache();
             },
           ),
-          Observer(builder: (_) {
-            IconData icone =
-                (controller.tema ? Icons.brightness_7 : Icons.brightness_3);
-            return IconButton(
-              tooltip: "Mudar Tema",
-              icon: Icon(icone),
-              onPressed: controller.mudarTema,
-            );
-          })
+          Observer(
+            builder: (_) {
+              IconData icone =
+                  (controller.tema ? Icons.brightness_7 : Icons.brightness_3);
+              return IconButton(
+                tooltip: "Mudar Tema",
+                icon: Icon(icone),
+                onPressed: controller.mudarTema,
+              );
+            },
+          )
         ],
       ),
       body: Center(

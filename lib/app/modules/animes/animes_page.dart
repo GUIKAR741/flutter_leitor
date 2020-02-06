@@ -16,7 +16,9 @@ class AnimesPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text(title), actions: <Widget>[
+      appBar: AppBar(
+        title: Text(title),
+        actions: <Widget>[
           IconButton(
             icon: Icon(
               Icons.search,
@@ -29,51 +31,52 @@ class AnimesPage extends StatelessWidget {
             },
             tooltip: "Pesquisar",
           )
-        ]),
-        body: Observer(
-          builder: (_) {
-            if (controller.titulos.value == null) {
-              return Center(child: CircularProgressIndicator());
-            }
-            List<TituloModel> titulos = controller.titulos.value;
-            return RefreshIndicator(
-              onRefresh: () async {
-                controller.listar(refresh: true);
-              },
-              child: titulos.length > 0
-                  ? Scrollbar(
+        ],
+      ),
+      body: Observer(
+        builder: (_) {
+          if (controller.titulos.value == null) {
+            return Center(child: CircularProgressIndicator());
+          }
+          List<TituloModel> titulos = controller.titulos.value;
+          return RefreshIndicator(
+            onRefresh: () async {
+              controller.listar(refresh: true);
+            },
+            child: titulos.length > 0
+                ? Scrollbar(
+                    controller: controller.scroll,
+                    child: ListView.separated(
                       controller: controller.scroll,
-                      child: ListView.separated(
-                        controller: controller.scroll,
-                        itemCount: titulos.length,
-                        itemBuilder: (_, index) {
-                          return ListTile(
-                            contentPadding: EdgeInsets.symmetric(
-                                vertical: 2, horizontal: 5),
-                            leading: ExtendedImage.network(
-                                titulos[index].imagem,
-                                width: 50,
-                                cache: true,
-                                enableMemoryCache: true,
-                                fit: BoxFit.fill),
-                            title: Text(titulos[index].nome),
-                            onTap: () {
-                              Modular.to.pushNamed('/animes/anime',
-                                  arguments: titulos[index]);
-                            },
-                          );
-                        },
-                        separatorBuilder: (_, index) => Divider(),
-                      ),
-                    )
-                  : Center(
-                      child: RaisedButton(
-                        child: Text("Recarregar Titulos"),
-                        onPressed: () => controller.listar(refresh: true),
-                      ),
+                      itemCount: titulos.length,
+                      itemBuilder: (_, index) {
+                        return ListTile(
+                          contentPadding:
+                              EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+                          leading: ExtendedImage.network(titulos[index].imagem,
+                              width: 50,
+                              cache: true,
+                              enableMemoryCache: true,
+                              fit: BoxFit.fill),
+                          title: Text(titulos[index].nome),
+                          onTap: () {
+                            Modular.to.pushNamed('/animes/anime',
+                                arguments: titulos[index]);
+                          },
+                        );
+                      },
+                      separatorBuilder: (_, index) => Divider(),
                     ),
-            );
-          },
-        ));
+                  )
+                : Center(
+                    child: RaisedButton(
+                      child: Text("Recarregar Titulos"),
+                      onPressed: () => controller.listar(refresh: true),
+                    ),
+                  ),
+          );
+        },
+      ),
+    );
   }
 }

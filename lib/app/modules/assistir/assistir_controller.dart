@@ -11,12 +11,10 @@ import 'package:video_player/video_player.dart';
 part 'assistir_controller.g.dart';
 
 class AssistirController extends _AssistirBase with _$AssistirController {
-  AssistirController(AssistirAnimeRepository repo) : super(repo);
-
   @override
   void dispose() {
-    if (_videoPlayerController != null) _videoPlayerController.dispose();
-    if (_chewieController != null) _chewieController.dispose();
+    if (_videoPlayerController != null) _videoPlayerController?.dispose();
+    if (_chewieController != null) _chewieController?.dispose();
   }
 }
 
@@ -24,16 +22,7 @@ abstract class _AssistirBase extends Disposable with Store {
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
-  // @visibleForTesting
-  // VideoPlayerController get videoPlayerControllerTest => _videoPlayerController;
-  // @visibleForTesting
-  // set videoPlayerController(VideoPlayerController value) => _videoPlayerController= value;
-  // @visibleForTesting
-  // set chewieController(ChewieController value) => _chewieController = value;
-
-  final AssistirAnimeRepository _repo;
-
-  _AssistirBase(this._repo);
+  final AssistirAnimeRepository _repo = Modular.get<AssistirAnimeRepository>();
 
   @observable
   ObservableFuture<Chewie> chewie;
@@ -73,12 +62,14 @@ abstract class _AssistirBase extends Disposable with Store {
           DeviceOrientation.landscapeRight,
         ],
       );
-      _videoPlayerController.addListener(() {
-        if (_videoPlayerController.value.position ==
-            _videoPlayerController.value.duration) {
-          Modular.to.popUntil(ModalRoute.withName('/animes/anime'));
-        }
-      });
+      _videoPlayerController.addListener(
+        () {
+          if (_videoPlayerController.value.position ==
+              _videoPlayerController.value.duration) {
+            Modular.to.popUntil(ModalRoute.withName('/animes/anime'));
+          }
+        },
+      );
       return Chewie(
         controller: _chewieController,
       );

@@ -18,21 +18,23 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.key = Modular.navigatorKey;
-    return Observer(builder: (_) {
-      return MaterialApp(
-        navigatorKey: Modular.navigatorKey,
-        title: 'Flutter Leitor',
-        debugShowCheckedModeBanner: false,
-        themeMode: controller.tema ? ThemeMode.dark : ThemeMode.light,
-        darkTheme: ThemeData.dark(),
-        initialRoute: '/',
-        onGenerateRoute: Modular.generateRoute,
-        navigatorObservers: [
-          FirebaseAnalyticsObserver(
-            analytics: analytics,
-          )
-        ],
-      );
-    });
+    return Observer(
+      builder: (_) {
+        return MaterialApp(
+          navigatorKey: Modular.navigatorKey,
+          title: 'Flutter Leitor',
+          debugShowCheckedModeBanner: false,
+          themeMode: controller.tema ? ThemeMode.dark : ThemeMode.light,
+          darkTheme: ThemeData.dark(),
+          initialRoute: '/',
+          onGenerateRoute: Modular.generateRoute,
+          navigatorObservers: [
+            FirebaseAnalyticsObserver(
+              analytics: analytics,
+            )
+          ],
+        );
+      },
+    );
   }
 }

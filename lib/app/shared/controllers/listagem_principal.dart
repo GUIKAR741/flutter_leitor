@@ -3,12 +3,11 @@ import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+
 part 'listagem_principal.g.dart';
 
 abstract class ListagemPrincipal extends _ListagemPrincipalBase
     with _$ListagemPrincipal {
-  ListagemPrincipal(IRepositoryPrincipal repo) : super(repo);
-
   @override
   @mustCallSuper
   void dispose() {
@@ -17,13 +16,13 @@ abstract class ListagemPrincipal extends _ListagemPrincipalBase
 }
 
 abstract class _ListagemPrincipalBase extends Disposable with Store {
-  final IRepositoryPrincipal _repo;
+  final IRepositoryPrincipal _repo = Modular.get<IRepositoryPrincipal>();
   final ScrollController scroll = ScrollController();
 
   @observable
   ObservableFuture<List<TituloModel>> titulos;
 
-  _ListagemPrincipalBase(this._repo) {
+  _ListagemPrincipalBase() {
     listar();
   }
 

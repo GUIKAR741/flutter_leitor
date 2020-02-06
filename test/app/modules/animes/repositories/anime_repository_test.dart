@@ -8,11 +8,11 @@ class MockClient extends Mock implements DioService {}
 
 void main() {
   AnimeRepository repository;
-  MockClient client;
+  // MockClient client;
 
   setUp(() {
-    client = MockClient();
-    repository = AnimeRepository(client);
+    // client = MockClient();
+    repository = AnimeRepository();
   });
 
   group('AnimeRepository Test', () {

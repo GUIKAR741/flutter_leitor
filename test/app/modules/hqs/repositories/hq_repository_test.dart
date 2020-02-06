@@ -8,11 +8,11 @@ class MockClient extends Mock implements DioService {}
 
 void main() {
   HqRepository repository;
-  MockClient client;
+  // MockClient client;
 
   setUp(() {
-    client = MockClient();
-    repository = HqRepository(client);
+    // client = MockClient();
+    repository = HqRepository();
   });
 
   group('HqRepository Test', () {

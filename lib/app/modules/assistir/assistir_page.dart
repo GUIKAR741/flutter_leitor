@@ -29,19 +29,21 @@ class _AssistirPageState
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(children: <Widget>[
-        Expanded(
-          child: Center(
-            child: Observer(
-              builder: (_) {
-                return controller.chewie.value != null
-                    ? controller.chewie.value
-                    : CircularProgressIndicator();
-              },
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Center(
+              child: Observer(
+                builder: (_) {
+                  return controller.chewie.value != null
+                      ? controller.chewie.value
+                      : CircularProgressIndicator();
+                },
+              ),
             ),
           ),
-        ),
-      ]),
+        ],
+      ),
     );
   }
 }

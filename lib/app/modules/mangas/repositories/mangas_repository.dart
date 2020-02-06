@@ -1,13 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_leitor/app/shared/utils/constants.dart';
 import 'package:hive/hive.dart';
 
 class MangasRepository extends IRepositoryPrincipal {
-  MangasRepository(DioService dio) : super(dio);
-
   @override
   Future<List<TituloModel>> pegarListagem({bool refresh = false}) async {
     Box<String> boxData = await box;

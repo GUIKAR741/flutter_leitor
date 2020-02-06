@@ -98,7 +98,8 @@ class MangaPage extends StatelessWidget {
                                   : listTile(capitulos[index]);
                             },
                             separatorBuilder: (_, index) => Divider(),
-                          ))
+                          ),
+                        )
                       : Column(
                           children: <Widget>[
                             CardWidget(

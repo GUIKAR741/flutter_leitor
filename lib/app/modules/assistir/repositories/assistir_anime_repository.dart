@@ -6,9 +6,9 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 class AssistirAnimeRepository extends Disposable {
-  final DioService dio;
+  final DioService dio = Modular.get<DioService>();
 
-  AssistirAnimeRepository(this.dio);
+  AssistirAnimeRepository();
 
   Future<String> linkVideo(EpisodioModel ep) async {
     String data;

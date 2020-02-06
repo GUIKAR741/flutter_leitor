@@ -10,11 +10,12 @@ class PesquisarCapitulo extends Pesquisar {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          controller.listarTitulo();
-          close(context, '');
-        });
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        controller.listarTitulo();
+        close(context, '');
+      },
+    );
   }
 
   Widget listCapitulos() {

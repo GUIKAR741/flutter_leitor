@@ -9,8 +9,6 @@ import 'package:mobx/mobx.dart';
 part 'listagem_titulo.g.dart';
 
 class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
-  ListagemTitulo(IRepositoryUnique repo) : super(repo);
-
   @override
   @mustCallSuper
   void dispose() {
@@ -19,7 +17,7 @@ class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
 }
 
 abstract class _ListagemTituloBase extends Disposable with Store {
-  final IRepositoryUnique _repo;
+  final IRepositoryUnique _repo = Modular.get<IRepositoryUnique>();
   final ScrollController scroll = ScrollController();
 
   Future<Box<TituloModel>> _box;
@@ -29,8 +27,6 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   ObservableFuture<List> lista;
   @observable
   bool _isReversed = false;
-
-  _ListagemTituloBase(this._repo);
 
   @protected
   TituloModel get titulo => _titulo;

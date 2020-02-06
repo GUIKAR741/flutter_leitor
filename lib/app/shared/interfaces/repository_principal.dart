@@ -6,10 +6,10 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 
 abstract class IRepositoryPrincipal extends Disposable {
-  final DioService dio;
+  final DioService dio = Modular.get<DioService>();
   final Future<Box<String>> _box = Hive.openBox<String>('data');
 
-  IRepositoryPrincipal(this.dio);
+  IRepositoryPrincipal();
 
   @protected
   Future<Box<String>> get box => _box;

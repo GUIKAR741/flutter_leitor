@@ -1,9 +1,9 @@
 import 'dart:async';
 
 import 'package:chewie/chewie.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:video_player/video_player.dart';
-import 'package:flutter/material.dart';
 
 class ControlesWidget extends StatefulWidget {
   final String title;

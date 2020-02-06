@@ -1,17 +1,11 @@
-import 'package:flutter_leitor/app/shared/services/dio_service.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:html/dom.dart';
-import 'package:dio/dio.dart';
 import 'package:html/parser.dart';
 
-class HqRepository extends Disposable implements IRepositoryUnique {
-  final DioService dio;
-
-  HqRepository(this.dio);
-
+class HqRepository extends IRepositoryUnique {
   @override
   Future<List<CapituloModel>> listarTitulo(TituloModel hq) async {
     String data;
