@@ -1,9 +1,11 @@
 # Flutter Leitor
+[![codecov](https://codecov.io/gh/GUIKAR741/flutter_leitor/branch/master/graph/badge.svg)](https://codecov.io/gh/GUIKAR741/flutter_leitor)
+![Release](https://github.com/GUIKAR741/flutter_leitor/workflows/Release/badge.svg)
+![Analizes e Testes](https://github.com/GUIKAR741/flutter_leitor/workflows/Analizes%20e%20Testes/badge.svg)
 
 Aplicativo para Leitura de HQs, Mangás e Assistir Animes
 
-<img src="screenshots/flutter_01.png" width="49.5%" />
-<img src="screenshots/flutter_11.png" width="49.5%" />
+<img src="screenshots/flutter_01.png" width="49.5%" /> <img src="screenshots/flutter_11.png" width="49.5%" />
 
 
 ## HQs
