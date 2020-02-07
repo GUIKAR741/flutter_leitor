@@ -11,6 +11,8 @@ import 'package:preload_page_view/preload_page_view.dart';
 part 'ler.g.dart';
 
 abstract class Ler extends _LerBase with _$Ler {
+  Ler(ListagemTitulo controller) : super(controller);
+
   @override
   @mustCallSuper
   void dispose() {
@@ -22,7 +24,7 @@ abstract class _LerBase extends Disposable with Store {
   final PreloadPageController pageController = PreloadPageController();
   final LerControleController lerController = LerControleController();
 
-  final ListagemTitulo _controller = Modular.get<ListagemTitulo>();
+  final ListagemTitulo _controller;
 
   int _index = 0;
   bool _paginacao = true;
@@ -39,7 +41,7 @@ abstract class _LerBase extends Disposable with Store {
   @observable
   String pagina = '';
 
-  _LerBase() {
+  _LerBase(this._controller) {
     pageController.addListener(listenerPage);
   }
 

@@ -5,16 +5,10 @@ import 'package:mobx/mobx.dart';
 
 part 'manga_controller.g.dart';
 
-class MangaController = _MangaBase with _$MangaController;
+class MangaController extends _MangaBase with _$MangaController{}
 
 abstract class _MangaBase extends ListagemTitulo with Store {
   _MangaBase() {
     box = Hive.openBox<TituloModel>("mangas");
-  }
-
-  @override
-  void dispose() async {
-    super.dispose();
-    (await box)?.close();
   }
 }

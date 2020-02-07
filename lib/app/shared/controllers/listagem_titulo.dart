@@ -11,9 +11,11 @@ part 'listagem_titulo.g.dart';
 class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
   @override
   @mustCallSuper
-  void dispose() {
+  void dispose() async{
     scroll.dispose();
+    (await box)?.close();
   }
+
 }
 
 abstract class _ListagemTituloBase extends Disposable with Store {
@@ -51,9 +53,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
     Box<TituloModel> boxHive = (await _box);
     lista.whenComplete(
       () {
-        if (!boxHive.containsKey(titulo.nome)) {
-          boxHive.put(titulo.nome, titulo);
-        } else {
+        if (boxHive.containsKey(titulo.nome)) {
           titulo.lista = boxHive.get(titulo.nome).lista;
           if (titulo.lista.isNotEmpty) {
             for (IStatus i in lista.value) {

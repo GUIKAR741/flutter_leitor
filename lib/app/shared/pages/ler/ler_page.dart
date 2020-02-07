@@ -62,10 +62,12 @@ class _LerPageState extends ModularState<LerPage, Ler> {
                         controller.imagens.value.length <= 1
                     ? null
                     : () {
-                        Get.dialog(MudarPaginaWidget(
-                          paginas: controller.imagens.value.length,
-                          onPressed: controller.irPara,
-                        ));
+                        Get.dialog(
+                          MudarPaginaWidget(
+                            paginas: controller.imagens.value.length,
+                            onPressed: controller.irPara,
+                          ),
+                        );
                       },
               )
             : CircularProgressIndicator();
@@ -77,63 +79,65 @@ class _LerPageState extends ModularState<LerPage, Ler> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: Observer(builder: (_) {
-          return Stack(
-            children: <Widget>[
-              GestureDetector(
-                onTap: controller.lerController.mudar,
-                child: controller.imagens?.value != null
-                    ? PreloadPageView(
-                        controller: controller.pageController,
-                        onPageChanged:
-                            controller.paginacao ? controller.mudar : null,
-                        children: controller.imagens.value,
-                        preloadPagesCount: 5,
-                      )
-                    : Center(
-                        child: CircularProgressIndicator(),
-                      ),
-              ),
-              LerControle(
-                controller: controller.lerController,
-                title: Observer(
-                  builder: (_) {
-                    return DefaultTextStyle(
-                      style: Theme.of(context).primaryTextTheme.title,
-                      child: Text(
-                        controller.capitulo != null
-                            ? controller.capitulo.titulo
-                            : '',
-                      ),
-                    );
-                  },
+        child: Observer(
+          builder: (_) {
+            return Stack(
+              children: <Widget>[
+                GestureDetector(
+                  onTap: controller.lerController.mudar,
+                  child: controller.imagens?.value != null
+                      ? PreloadPageView(
+                          controller: controller.pageController,
+                          onPageChanged:
+                              controller.paginacao ? controller.mudar : null,
+                          children: controller.imagens.value,
+                          preloadPagesCount: 5,
+                        )
+                      : Center(
+                          child: CircularProgressIndicator(),
+                        ),
                 ),
-                actions: <Widget>[
-                  mostrarPaginas(),
-                  IconButton(
-                    icon: Icon(Icons.screen_rotation),
-                    onPressed: controller.lerController.esconderControle
-                        ? null
-                        : controller.virar,
-                    tooltip: 'Virar Tela',
+                LerControle(
+                  controller: controller.lerController,
+                  title: Observer(
+                    builder: (_) {
+                      return DefaultTextStyle(
+                        style: Theme.of(context).primaryTextTheme.title,
+                        child: Text(
+                          controller.capitulo != null
+                              ? controller.capitulo.titulo
+                              : '',
+                        ),
+                      );
+                    },
                   ),
-                  Observer(
-                    builder: (_) => IconButton(
-                      icon: Icon(
-                        controller.icone,
-                      ),
+                  actions: <Widget>[
+                    mostrarPaginas(),
+                    IconButton(
+                      icon: Icon(Icons.screen_rotation),
                       onPressed: controller.lerController.esconderControle
                           ? null
-                          : controller.pausar,
-                      tooltip: "Play/Pause",
-                      color: Theme.of(context).primaryIconTheme.color,
+                          : controller.virar,
+                      tooltip: 'Virar Tela',
                     ),
-                  ),
-                ],
-              )
-            ],
-          );
-        }),
+                    Observer(
+                      builder: (_) => IconButton(
+                        icon: Icon(
+                          controller.icone,
+                        ),
+                        onPressed: controller.lerController.esconderControle
+                            ? null
+                            : controller.pausar,
+                        tooltip: "Play/Pause",
+                        color: Theme.of(context).primaryIconTheme.color,
+                      ),
+                    ),
+                  ],
+                )
+              ],
+            );
+          },
+        ),
       ),
     );
   }

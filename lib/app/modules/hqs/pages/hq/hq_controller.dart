@@ -5,16 +5,10 @@ import 'package:mobx/mobx.dart';
 
 part 'hq_controller.g.dart';
 
-class HqController = _HqBase with _$HqController;
+class HqController extends _HqBase with _$HqController {}
 
 abstract class _HqBase extends ListagemTitulo with Store {
   _HqBase() {
-    box = Hive.openBox<TituloModel>('hqs');
-  }
-
-  @override
-  void dispose() async {
-    super.dispose();
-    (await box)?.close();
+    box = Hive.openBox<TituloModel>("hqs");
   }
 }

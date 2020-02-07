@@ -24,9 +24,10 @@ class HqsPage extends StatelessWidget {
             ),
             onPressed: () {
               showSearch(
-                  context: context,
-                  delegate:
-                      PesquisarTitulo(path: '/hqs/hq', controller: controller));
+                context: context,
+                delegate:
+                    PesquisarTitulo(path: '/hqs/hq', controller: controller),
+              );
             },
             tooltip: "Pesquisar",
           )

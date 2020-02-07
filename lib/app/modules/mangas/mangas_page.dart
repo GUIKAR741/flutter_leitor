@@ -24,9 +24,12 @@ class MangasPage extends StatelessWidget {
             ),
             onPressed: () {
               showSearch(
-                  context: context,
-                  delegate: PesquisarTitulo(
-                      path: '/mangas/manga', controller: controller));
+                context: context,
+                delegate: PesquisarTitulo(
+                  path: '/mangas/manga',
+                  controller: controller,
+                ),
+              );
             },
             tooltip: "Pesquisar",
           )

@@ -27,11 +27,13 @@ class HqRepository extends IRepositoryUnique {
         .trim();
     List<Element> td = soup.querySelectorAll("td");
     List<CapituloModel> capitulos = List();
-    td.forEach((data) {
-      capitulos.add(CapituloModel(
-          titulo: data.querySelector('a').text,
-          link: data.querySelector('a').attributes['href']));
-    });
+    td.forEach(
+      (data) {
+        capitulos.add(CapituloModel(
+            titulo: data.querySelector('a').text,
+            link: data.querySelector('a').attributes['href']));
+      },
+    );
     return capitulos;
   }
 

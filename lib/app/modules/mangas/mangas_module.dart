@@ -7,7 +7,6 @@ import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.
 import 'package:flutter_leitor/app/modules/mangas/repositories/mangas_repository.dart';
 import 'package:flutter_leitor/app/shared/controllers/ler.dart';
 import 'package:flutter_leitor/app/shared/controllers/listagem_principal.dart';
-import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/pages/ler/ler_page.dart';
@@ -17,8 +16,8 @@ class MangasModule extends ChildModule {
   @override
   List<Bind> get binds => [
         Bind<ListagemPrincipal>((i) => MangasController()),
-        Bind<ListagemTitulo>((i) => MangaController()),
-        Bind<Ler>((i) => LerController()),
+        Bind((i) => MangaController()),
+        Bind<Ler>((i) => LerController(i.get<MangaController>())),
         Bind<IRepositoryPrincipal>((i) => MangasRepository()),
         Bind<IRepositoryUnique>((i) => MangaRepository()),
       ];
