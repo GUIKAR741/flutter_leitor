@@ -14,16 +14,13 @@ import 'modules/hqs/hqs_module.dart';
 import 'modules/mangas/mangas_module.dart';
 
 class AppModule extends MainModule {
-  static FirebaseAnalytics analytics = FirebaseAnalytics();
-  static Crashlytics crashlytics = Crashlytics.instance;
-
   @override
   List<Bind> get binds => [
         Bind<Dio>((i) => Dio()),
         Bind<DioService>((i) => DioService()),
         Bind<AppController>((i) => AppController()),
-        Bind<FirebaseAnalytics>((i) => analytics),
-        Bind<Crashlytics>((i) => crashlytics),
+        Bind<FirebaseAnalytics>((i) => FirebaseAnalytics()),
+        Bind<Crashlytics>((i) => Crashlytics.instance),
       ];
 
   @override
@@ -51,9 +48,7 @@ class AppModule extends MainModule {
       ];
 
   @override
-  Widget get bootstrap => App(
-        analytics: analytics,
-      );
+  Widget get bootstrap => App();
 
   static Inject get to => Inject<AppModule>.of();
 }

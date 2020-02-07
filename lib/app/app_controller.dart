@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
@@ -6,8 +7,9 @@ part 'app_controller.g.dart';
 
 class AppController extends _AppBase with _$AppController {
   @override
-  void dispose() async {
-    (await _box).close();
+  Future<void> dispose() async {
+    await (await _box).close();
+    await Hive.close();
   }
 }
 
@@ -16,6 +18,9 @@ abstract class _AppBase extends Disposable with Store {
   bool tema = true;
 
   Future<Box<bool>> _box;
+
+  @visibleForTesting
+  Future<Box<bool>> get box => _box;
 
   _AppBase() {
     _box = Hive.openBox<bool>('theme');

@@ -32,7 +32,7 @@ abstract class IRepositoryPrincipal extends Disposable {
 
   @override
   @mustCallSuper
-  void dispose() async {
-    (await _box).close();
+  Future<void> dispose() async {
+    await (await _box).close();
   }
 }

@@ -11,10 +11,4 @@ abstract class _AnimeBase extends ListagemTitulo with Store {
   _AnimeBase() {
     box = Hive.openBox<TituloModel>("animes");
   }
-
-  @override
-  void dispose() async {
-    super.dispose();
-    (await box)?.close();
-  }
 }

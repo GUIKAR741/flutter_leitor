@@ -7,12 +7,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
 
 class App extends StatelessWidget {
-  final FirebaseAnalytics analytics;
+  final FirebaseAnalytics analytics = Modular.get<FirebaseAnalytics>();
   final AppController controller = Modular.get<AppController>();
 
   App({
     Key key,
-    @required this.analytics,
   }) : super(key: key);
 
   @override

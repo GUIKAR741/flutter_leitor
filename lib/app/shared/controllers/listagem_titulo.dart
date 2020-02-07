@@ -11,9 +11,9 @@ part 'listagem_titulo.g.dart';
 class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
   @override
   @mustCallSuper
-  void dispose() async{
+  Future<void> dispose() async{
     scroll.dispose();
-    (await box)?.close();
+    await (await box)?.close();
   }
 
 }

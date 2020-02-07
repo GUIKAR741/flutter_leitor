@@ -14,8 +14,14 @@ void main() {
   });
 
   group('HomeController Test', () {
-    test("First Test", () {
+    test("Home é instancia de HomeController", () {
       expect(home, isInstanceOf<HomeController>());
+    });
+    test("Home é instancia de HomeController no HomeModule", () {
+      expect(HomeModule.to.get<HomeController>(), isInstanceOf<HomeController>());
+    });
+    test("HomeController do Modular.get é igual ao HomeController no HomeModule", () {
+      expect(home, HomeModule.to.get<HomeController>());
     });
   });
 }

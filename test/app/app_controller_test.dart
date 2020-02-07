@@ -17,7 +17,7 @@ void main() async {
   });
 
   group('AppController Test', () {
-    test("First Test", () {
+    test("app é instancia de AppController", () {
       expect(app, isInstanceOf<AppController>());
     });
 
@@ -29,6 +29,20 @@ void main() async {
     test('Tema muda para true', () async {
       await app.mudarTema();
       expect(app.tema, true);
+    });
+
+    test("AppModule inject retorna AppController", () {
+      expect(
+        AppModule.to.get<AppController>(),
+        isInstanceOf<AppController>(),
+      );
+    });
+
+    test("Dispose close the box", () async {
+      await app.box;
+      expect(Hive.isBoxOpen('theme'), true);
+      await app.dispose();
+      expect(Hive.isBoxOpen('theme'), false);
     });
   });
 }
