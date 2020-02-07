@@ -4,9 +4,9 @@ import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class DioService extends Disposable {
-  final Dio client;
+  final Dio client = Modular.get<Dio>();
 
-  DioService(this.client) {
+  DioService() {
     this.client.interceptors.add(
           DioCacheManager(
             CacheConfig(),

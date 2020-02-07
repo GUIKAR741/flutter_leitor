@@ -1,4 +1,6 @@
+import 'package:flutter_leitor/app/app_module.dart';
 import 'package:flutter_leitor/app/shared/services/dio_service.dart';
+import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:mockito/mockito.dart';
 
@@ -7,6 +9,7 @@ import 'package:flutter_leitor/app/modules/mangas/repositories/manga_repository.
 class MockClient extends Mock implements DioService {}
 
 void main() {
+  initModule(AppModule());
   MangaRepository repository;
   // MockClient client;
 

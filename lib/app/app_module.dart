@@ -20,7 +20,7 @@ class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
         Bind<Dio>((i) => Dio()),
-        Bind<DioService>((i) => DioService(i.get<Dio>())),
+        Bind<DioService>((i) => DioService()),
         Bind<AppController>((i) => AppController()),
         Bind<FirebaseAnalytics>((i) => analytics),
         Bind<Crashlytics>((i) => crashlytics),

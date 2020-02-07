@@ -16,6 +16,7 @@ void main() async {
   debugPrint = (String message, {int wrapWidth}) =>
       crashlytics.log("[${DateTime.now()}] : $message");
   FlutterError.onError = crashlytics.recordFlutterError;
+  Modular.debugMode = false;
 
   await Hive.initFlutter();
   Hive.registerAdapter<TituloModel>(TituloModelAdapter());
