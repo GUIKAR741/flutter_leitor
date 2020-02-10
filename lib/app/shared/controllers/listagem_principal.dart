@@ -34,9 +34,11 @@ abstract class _ListagemPrincipalBase extends Disposable with Store {
 
   @action
   List<TituloModel> pesquisar(res) {
-    List<TituloModel> pesquisa = titulos.value
-        .where((t) => t.nome.toLowerCase().contains(res.toLowerCase()))
-        .toList();
+    List pesquisa = titulos.value is List
+        ? titulos.value
+            .where((t) => t.nome.toLowerCase().contains(res.toLowerCase()))
+            .toList()
+        : [];
     return pesquisa.length > 0 ? pesquisa : titulos.value;
   }
 }

@@ -15,14 +15,8 @@ import 'package:hive/hive.dart';
 main() {
   Hive.init(Directory.current.path + "/hive");
   HomeModule homeModule = HomeModule();
-  // Modular.init(AppModule());
-  Modular.debugMode = false;
-  // Modular.addCoreInit(module)
-  Modular.init(AppModule());
-  Modular.bindModule(homeModule);
-  Modular.bindModule(HqsModule());
-  Modular.bindModule(MangasModule());
-  Modular.bindModule(AnimesModule());
+  initModule(AppModule(), initialModule: true);
+  initModules([homeModule, HqsModule(), MangasModule(), AnimesModule()]);
   HomePage home = HomePage(title: 'Home');
   group('HomePage Tests', () {
     testWidgets('HomePage has title', (WidgetTester tester) async {
@@ -39,11 +33,7 @@ main() {
       expect(clear, findsOneWidget);
     });
     testWidgets('Ir para pagina hqs', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget(MaterialApp(
-        navigatorKey: Modular.navigatorKey,
-        onGenerateRoute: Modular.generateRoute,
-        home: home,
-      )));
+      await tester.pumpWidget(buildTestableWidget(home));
       final hqs = find.byWidgetPredicate(
         (Widget widget) =>
             widget is RaisedButton &&
@@ -54,11 +44,7 @@ main() {
       expect('/hqs', Modular.actualRoute);
     });
     testWidgets('Ir para pagina mangas', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget(MaterialApp(
-        navigatorKey: Modular.navigatorKey,
-        onGenerateRoute: Modular.generateRoute,
-        home: home,
-      )));
+      await tester.pumpWidget(buildTestableWidget(home));
       final mangas = find.byWidgetPredicate(
         (Widget widget) =>
             widget is RaisedButton &&
@@ -69,11 +55,7 @@ main() {
       expect('/mangas', Modular.actualRoute);
     });
     testWidgets('Ir para pagina animes', (WidgetTester tester) async {
-      await tester.pumpWidget(buildTestableWidget(MaterialApp(
-        navigatorKey: Modular.navigatorKey,
-        onGenerateRoute: Modular.generateRoute,
-        home: home,
-      )));
+      await tester.pumpWidget(buildTestableWidget(home));
       final animes = find.byWidgetPredicate(
         (Widget widget) =>
             widget is RaisedButton &&

@@ -11,11 +11,10 @@ part 'listagem_titulo.g.dart';
 class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
   @override
   @mustCallSuper
-  Future<void> dispose() async{
+  Future<void> dispose() async {
     scroll.dispose();
     await (await box)?.close();
   }
-
 }
 
 abstract class _ListagemTituloBase extends Disposable with Store {
@@ -82,9 +81,11 @@ abstract class _ListagemTituloBase extends Disposable with Store {
 
   @action
   List pesquisar(res) {
-    List pesquisa = lista.value
-        .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
-        .toList();
+    List pesquisa = lista.value is List
+        ? lista.value
+            .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
+            .toList()
+        : [];
     return pesquisa.length > 0 ? pesquisa : lista.value;
   }
 }
