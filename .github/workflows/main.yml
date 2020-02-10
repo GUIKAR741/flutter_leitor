@@ -27,7 +27,7 @@ jobs:
     # - name: Analyze Project
     #   run: flutter analyze
     - name: Run Tests
-      run: flutter test test/app/modules/hqs_page_test.dart
+      run: flutter test test/app/modules/hqs/hqs_page_test.dart
     # - name: Run Tests
     #   run: flutter test --coverage
     # - uses: codecov/codecov-action@v1.0.0
