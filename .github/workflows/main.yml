@@ -24,16 +24,14 @@ jobs:
         flutter-version: '1.12.13+hotfix.7'
     - name: Get Dependencies
       run: flutter pub get
-    # - name: Analyze Project
-    #   run: flutter analyze
+    - name: Analyze Project
+      run: flutter analyze
     - name: Run Tests
-      run: flutter test test/app/modules/hqs/hqs_page_test.dart
-    # - name: Run Tests
-    #   run: flutter test --coverage
-    # - uses: codecov/codecov-action@v1.0.0
-    #   with:
-    #     token: ${{ secrets.CODECOV_TOKEN }}
-    #     file: coverage/lcov.info
+      run: flutter test --coverage
+    - uses: codecov/codecov-action@v1.0.0
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage/lcov.info
 
     # - name: Build APK
     #   run: flutter build apk --release --target=lib/main_prod.dart
