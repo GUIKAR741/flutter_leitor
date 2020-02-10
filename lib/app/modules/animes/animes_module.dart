@@ -23,7 +23,7 @@ class AnimesModule extends ChildModule {
   @override
   List<Router> get routers => [
         Router('/', child: (_, args) => AnimesPage()),
-        Router('/anime', child: (_, args) => AnimePage(anime: args.data)),
+        Router('/anime', child: (_, args) => AnimePage()),
       ];
 
   static Inject get to => Inject<AnimesModule>.of();

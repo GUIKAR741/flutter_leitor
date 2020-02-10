@@ -3,20 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_controller.dart';
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class MangaPage extends StatelessWidget {
-  final TituloModel manga;
   final MangaController controller = Modular.get<MangaController>();
 
-  MangaPage({Key key, this.manga}) : super(key: key);
+  MangaPage({Key key}) : super(key: key);
 
   @override
   StatelessElement createElement() {
-    controller.titulo = manga;
     controller.listarTitulo();
     return super.createElement();
   }
@@ -48,7 +45,7 @@ class MangaPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(manga.nome),
+        title: Text(controller.titulo.nome),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -90,7 +87,7 @@ class MangaPage extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         CardWidget(
-                                          titulo: manga,
+                                          titulo: controller.titulo,
                                         ),
                                         listTile(capitulos[index])
                                       ],
@@ -103,7 +100,7 @@ class MangaPage extends StatelessWidget {
                       : Column(
                           children: <Widget>[
                             CardWidget(
-                              titulo: manga,
+                              titulo: controller.titulo,
                             ),
                             Center(
                               child: RaisedButton(

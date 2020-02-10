@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/shared/controllers/ler.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle.dart';
 import 'package:flutter_leitor/app/shared/widgets/mudar_pagina/mudar_pagina_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -10,12 +9,7 @@ import 'package:get/get.dart';
 import 'package:preload_page_view/preload_page_view.dart';
 
 class LerPage extends StatefulWidget {
-  final CapituloModel capitulo;
-
-  LerPage({
-    Key key,
-    @required this.capitulo,
-  }) : super(key: key);
+  LerPage({Key key}) : super(key: key);
 
   @override
   _LerPageState createState() => _LerPageState();
@@ -25,7 +19,6 @@ class _LerPageState extends ModularState<LerPage, Ler> {
   @override
   void initState() {
     super.initState();
-    controller.capitulo = widget.capitulo;
     controller.listarImagens();
     SystemChrome.setPreferredOrientations([
       DeviceOrientation.portraitUp,

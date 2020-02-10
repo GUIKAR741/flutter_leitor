@@ -269,7 +269,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.4.7+1"
+    version: "0.4.7+4"
   flutter_test:
     dependency: "direct dev"
     description: flutter

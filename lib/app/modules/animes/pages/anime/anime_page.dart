@@ -3,7 +3,6 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -11,13 +10,11 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'anime_controller.dart';
 
 class AnimePage extends StatelessWidget {
-  final TituloModel anime;
   final AnimeController controller = Modular.get<AnimeController>();
-  AnimePage({Key key, this.anime}) : super(key: key);
+  AnimePage({Key key}) : super(key: key);
 
   @override
   StatelessElement createElement() {
-    controller.titulo = anime;
     controller.listarTitulo();
     return super.createElement();
   }
@@ -26,7 +23,7 @@ class AnimePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(anime.nome),
+        title: Text(controller.titulo.nome),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -66,7 +63,7 @@ class AnimePage extends StatelessWidget {
                                   ? Column(
                                       children: <Widget>[
                                         CardWidget(
-                                          titulo: anime,
+                                          titulo: controller.titulo,
                                         ),
                                         listTile(episodios[index])
                                       ],
@@ -79,7 +76,7 @@ class AnimePage extends StatelessWidget {
                       : Column(
                           children: <Widget>[
                             CardWidget(
-                              titulo: anime,
+                              titulo: controller.titulo,
                             ),
                             Center(
                               child: RaisedButton(

@@ -29,8 +29,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   @observable
   bool _isReversed = false;
 
-  @protected
   TituloModel get titulo => _titulo;
+  @protected
   set titulo(TituloModel value) => _titulo = value;
   bool get isReversed => _isReversed;
 
@@ -41,6 +41,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
 
   @action
   void listarTitulo() {
+    titulo = Modular.args.data;
     lista = null;
     _isReversed = false;
     lista = _repo.listarTitulo(_titulo).asObservable();

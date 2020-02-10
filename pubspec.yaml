@@ -44,7 +44,7 @@ dependencies:
       # url: git://github.com/guikar741/modular.git
       # url: git://github.com/flutterando/modular.git
       # ref: master
-  flutter_modular: ^0.4.7+1
+  flutter_modular: ^0.4.7+4
   flutter:
     sdk: flutter
 

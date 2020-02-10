@@ -3,20 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_controller.dart';
 import 'package:flutter_leitor/app/modules/hqs/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class HqPage extends StatelessWidget {
-  final TituloModel hq;
   final HqController controller = Modular.get<HqController>();
 
-  HqPage({Key key, this.hq}) : super(key: key);
+  HqPage({Key key}) : super(key: key);
 
   @override
   StatelessElement createElement() {
-    controller.titulo = hq;
     controller.listarTitulo();
     return super.createElement();
   }
@@ -25,7 +22,7 @@ class HqPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(hq.nome),
+        title: Text(controller.titulo.nome),
         actions: <Widget>[
           IconButton(
             icon: Icon(
@@ -67,7 +64,7 @@ class HqPage extends StatelessWidget {
                                           CrossAxisAlignment.start,
                                       children: <Widget>[
                                         CardWidget(
-                                          titulo: hq,
+                                          titulo: controller.titulo,
                                         ),
                                         listTile(capitulos[index])
                                       ],
@@ -80,7 +77,7 @@ class HqPage extends StatelessWidget {
                       : Column(
                           children: <Widget>[
                             CardWidget(
-                              titulo: hq,
+                              titulo: controller.titulo,
                             ),
                             Center(
                               child: RaisedButton(
