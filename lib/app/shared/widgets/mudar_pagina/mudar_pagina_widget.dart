@@ -37,12 +37,17 @@ class MudarPaginaWidget extends StatelessWidget {
           Text('Mudar Página'),
         ],
       ),
-      content: GridView.count(
-        primary: false,
-        crossAxisSpacing: 2,
-        mainAxisSpacing: 2,
-        crossAxisCount: 4,
-        children: botoes,
+      content: Container(
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height,
+        child: GridView.count(
+          primary: false,
+          shrinkWrap: true,
+          crossAxisSpacing: 2,
+          mainAxisSpacing: 2,
+          crossAxisCount: 4,
+          children: botoes,
+        ),
       ),
     );
   }
