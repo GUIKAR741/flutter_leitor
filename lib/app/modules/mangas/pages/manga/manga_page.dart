@@ -4,6 +4,7 @@ import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_controller.d
 import 'package:flutter_leitor/app/modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
+import 'package:flutter_leitor/app/shared/widgets/drawer/drawer_custom.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -44,6 +45,7 @@ class MangaPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: DrawerCustom(),
       appBar: AppBar(
         title: Text(controller.titulo.nome),
         actions: <Widget>[

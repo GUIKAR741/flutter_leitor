@@ -1,3 +1,6 @@
+import 'package:flutter_leitor/app/shared/interfaces/auth.dart';
+import 'package:flutter_leitor/app/shared/repositories/auth_repository.dart';
+import 'package:flutter_leitor/app/shared/auth/auth_controller.dart';
 import 'package:dio/dio.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
@@ -16,6 +19,8 @@ import 'modules/mangas/mangas_module.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+        Bind<IAuthRepository>((i) => AuthRepository()),
+        Bind<AuthController>((i) => AuthController()),
         Bind<Dio>((i) => Dio()),
         Bind<DioService>((i) => DioService()),
         Bind<AppController>((i) => AppController()),
