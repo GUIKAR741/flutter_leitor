@@ -17,7 +17,7 @@ abstract class _DrawerBase with Store {
     try {
       loading = true;
       await authController.loginWithGoogle();
-      Modular.to.pushReplacementNamed('/home');
+      loading = false;
     } catch (e) {
       loading = false;
     }
@@ -29,7 +29,6 @@ abstract class _DrawerBase with Store {
       loading = true;
       await authController.logout();
       loading = false;
-      Modular.to.pushReplacementNamed('/home');
     } catch (e) {
       loading = false;
     }

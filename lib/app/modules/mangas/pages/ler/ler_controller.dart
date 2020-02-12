@@ -18,7 +18,7 @@ abstract class _LerBase extends Ler with Store {
   @override
   @action
   void listarImagens() {
-    capitulo = Modular.args.data;
+    if (capitulo == null) capitulo = Modular.args.data;
     icone = Icons.pause;
     pagina = '';
     imagens = null;
