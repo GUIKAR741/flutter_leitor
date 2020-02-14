@@ -1,3 +1,4 @@
+import 'package:flutter_leitor/app/shared/services/hasura_service.dart';
 import 'package:flutter_leitor/app/shared/interfaces/auth.dart';
 import 'package:flutter_leitor/app/shared/repositories/auth_repository.dart';
 import 'package:flutter_leitor/app/shared/auth/auth_controller.dart';
@@ -19,6 +20,7 @@ import 'modules/mangas/mangas_module.dart';
 class AppModule extends MainModule {
   @override
   List<Bind> get binds => [
+        Bind((i) => HasuraService()),
         Bind<IAuthRepository>((i) => AuthRepository()),
         Bind<AuthController>((i) => AuthController()),
         Bind<Dio>((i) => Dio()),

@@ -23,6 +23,7 @@ scripts:
   release: flutter run --release --target=lib/main_prod.dart -v
 
 dependencies:
+  hasura_connect: ^1.1.0
   google_sign_in: ^4.1.1
   firebase_auth: ^0.15.4
   hive_flutter: ^0.3.0+1
@@ -41,7 +42,7 @@ dependencies:
   dio: ^3.0.8
   flutter_mobx: ^1.0.1
   mobx: ^1.0.2
-  flutter_modular: ^0.4.7+4
+  flutter_modular: ^0.5.0
   # flutter_modular:
     # git:
       # url: git://github.com/guikar741/modular.git
@@ -56,7 +57,7 @@ dependencies:
 dev_dependencies:
   hive_generator: ^0.7.0
   mockito: ^4.1.1
-  mobx_codegen: ^1.0.1
+  mobx_codegen: ^1.0.2
   build_runner: ^1.7.4
   test: any
   flutter_test:

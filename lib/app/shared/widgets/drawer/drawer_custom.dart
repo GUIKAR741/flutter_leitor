@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/auth/auth_controller.dart';
+import 'package:flutter_leitor/app/shared/controllers/listagem_principal.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -21,6 +22,7 @@ class DrawerCustom extends StatelessWidget {
             leading: Icon(Icons.book),
             title: Text('HQs'),
             onTap: () {
+              Modular.dispose<ListagemPrincipal>();
               Modular.to.popUntil(ModalRoute.withName('/'));
               Modular.to.pushNamed('/hqs');
             }),
@@ -28,6 +30,7 @@ class DrawerCustom extends StatelessWidget {
           leading: Icon(Icons.image),
           title: Text('Mangás'),
           onTap: () {
+            Modular.dispose<ListagemPrincipal>();
             Modular.to.popUntil(ModalRoute.withName('/'));
             Modular.to.pushNamed('/mangas');
           },
@@ -36,6 +39,7 @@ class DrawerCustom extends StatelessWidget {
           leading: Icon(Icons.video_label),
           title: Text('Animes'),
           onTap: () {
+            Modular.dispose<ListagemPrincipal>();
             Modular.to.popUntil(ModalRoute.withName('/'));
             Modular.to.pushNamed('/animes');
           },

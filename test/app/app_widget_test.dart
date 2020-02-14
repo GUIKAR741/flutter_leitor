@@ -8,6 +8,7 @@ import 'package:hive/hive.dart';
 
 void main() async {
   Hive.init(Directory.current.path + "/hive");
+  Modular.debugMode = false;
   ModularApp modularApp = ModularApp(
     module: AppModule(),
   );

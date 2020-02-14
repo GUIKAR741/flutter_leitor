@@ -1,18 +1,27 @@
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
-import 'package:firebase_crashlytics/firebase_crashlytics.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class DioService extends Disposable {
   final Dio client = Modular.get<Dio>();
+  Interceptor _interceptor;
+
+  @protected
+  void initInterceptor() {
+    _interceptor = DioCacheManager(
+      CacheConfig(),
+    ).interceptor;
+  }
 
   DioService() {
+    initInterceptor();
     this.client.interceptors.add(
-          DioCacheManager(
-            CacheConfig(),
-          ).interceptor,
+          _interceptor,
         );
   }
+
+  bool get hasInterceptor => client.interceptors.contains(_interceptor);
 
   Future getLink(String link,
       {bool returnResponse = false,
@@ -23,19 +32,22 @@ class DioService extends Disposable {
     try {
       response = await client.get(
         link,
-        options: buildCacheOptions(
-          Duration(days: 7),
-          maxStale: Duration(days: 10),
-          forceRefresh: refresh,
-          options: options,
-        ),
+        options: hasInterceptor
+            ? buildCacheOptions(
+                Duration(days: 7),
+                maxStale: Duration(days: 10),
+                forceRefresh: refresh,
+                options: options,
+              )
+            : null,
       );
-    } on DioError catch (e, s) {
-      Modular.get<Crashlytics>().recordError(
-        e,
-        s,
-        context: contextError,
-      );
+    } on DioError catch (e) {
+      // if (hasInterceptor)
+      //   Modular.get<Crashlytics>().recordError(
+      //     e,
+      //     s,
+      //     context: contextError,
+      //   );
       throw e;
     }
     return returnResponse ? response : response.data;
@@ -52,19 +64,22 @@ class DioService extends Disposable {
       response = await client.post(
         link,
         data: data,
-        options: buildCacheOptions(
-          Duration(days: 7),
-          maxStale: Duration(days: 10),
-          forceRefresh: refresh,
-          options: options,
-        ),
+        options: hasInterceptor
+            ? buildCacheOptions(
+                Duration(days: 7),
+                maxStale: Duration(days: 10),
+                forceRefresh: refresh,
+                options: options,
+              )
+            : null,
       );
-    } on DioError catch (e, s) {
-      Modular.get<Crashlytics>().recordError(
-        e,
-        s,
-        context: contextError,
-      );
+    } on DioError catch (e) {
+      // if (hasInterceptor)
+      //   Modular.get<Crashlytics>().recordError(
+      //     e,
+      //     s,
+      //     context: contextError,
+      //   );
       throw e;
     }
     return returnResponse ? response : response.data;
