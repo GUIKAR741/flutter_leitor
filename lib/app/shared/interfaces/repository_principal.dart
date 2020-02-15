@@ -15,13 +15,14 @@ abstract class IRepositoryPrincipal extends Disposable {
   @protected
   Future<Box<String>> get box => _box;
 
-  Future<String> verificaData() async {
+  Future<String> verificaData({CancelToken cancel}) async {
     dynamic response;
     try {
       response = await dio.getLink(
         ATUALIZACAO,
         contextError: "Falha ao Pegar Data",
         refresh: true,
+        cancelToken: cancel
       );
     } on DioError catch (e) {
       if (e.request == null) return '';
@@ -29,7 +30,7 @@ abstract class IRepositoryPrincipal extends Disposable {
     return response[response.keys.elementAt(0)]['data'];
   }
 
-  Future<List<TituloModel>> pegarListagem({bool refresh = false});
+  Future<List<TituloModel>> pegarListagem({bool refresh = false, CancelToken cancel});
 
   @override
   @mustCallSuper

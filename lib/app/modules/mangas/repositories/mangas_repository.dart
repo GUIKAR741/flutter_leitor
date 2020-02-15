@@ -6,22 +6,25 @@ import 'package:hive/hive.dart';
 
 class MangasRepository extends IRepositoryPrincipal {
   @override
-  Future<List<TituloModel>> pegarListagem({bool refresh = false}) async {
+  Future<List<TituloModel>> pegarListagem({
+    bool refresh = false,
+    CancelToken cancel,
+  }) async {
     Box<String> boxData = await box;
     if (refresh) {
-      String data = await verificaData();
+      String data = await verificaData(cancel: cancel);
       boxData.put('data_mangas', data);
     } else {
       if (boxData.containsKey('data_mangas')) {
         DateTime dataSalva = DateTime.parse(boxData.get('data_mangas'));
         DateTime dataAtual = DateTime.now();
         if (dataAtual.isBefore(dataSalva)) {
-          String data = await verificaData();
+          String data = await verificaData(cancel: cancel);
           boxData.put('data_mangas', data);
         }
         refresh = dataAtual.isBefore(dataSalva);
       } else {
-        String data = await verificaData();
+        String data = await verificaData(cancel: cancel);
         boxData.put('data_mangas', data);
         refresh = true;
       }
@@ -31,6 +34,7 @@ class MangasRepository extends IRepositoryPrincipal {
       response = await dio.getLink(
         MANGAS,
         refresh: refresh,
+        cancelToken: cancel,
         contextError: "Falha ao Listar Mangas",
       );
     } on DioError catch (e) {

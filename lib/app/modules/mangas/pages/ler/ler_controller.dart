@@ -23,7 +23,7 @@ abstract class _LerBase extends Ler with Store {
     pagina = '';
     imagens = null;
     paginacao = true;
-    imagens = _repo.imagens(capitulo.link).then(
+    imagens = _repo.imagens(capitulo.link, cancel: cancel).then(
       (data) {
         index = data.length > 0 ? 0 : -1;
         pagina = "${index + 1}/${data.length}";

@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/interfaces/status.dart';
@@ -13,6 +14,7 @@ class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
   @mustCallSuper
   Future<void> dispose() async {
     scroll.dispose();
+    if(!_cancel.isCancelled) _cancel.cancel();
     await (await box)?.close();
   }
 }
@@ -20,6 +22,7 @@ class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
 abstract class _ListagemTituloBase extends Disposable with Store {
   final IRepositoryUnique _repo = Modular.get<IRepositoryUnique>();
   final ScrollController scroll = ScrollController();
+  final CancelToken _cancel = CancelToken();
 
   Future<Box<TituloModel>> _box;
   TituloModel _titulo;
@@ -44,7 +47,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
     titulo = Modular.args.data;
     lista = null;
     _isReversed = false;
-    lista = _repo.listarTitulo(_titulo).asObservable();
+    lista = _repo.listarTitulo(_titulo, cancel: _cancel).asObservable();
     iniciaBox();
   }
 

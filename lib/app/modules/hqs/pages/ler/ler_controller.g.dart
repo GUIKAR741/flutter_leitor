@@ -20,4 +20,10 @@ mixin _$LerController on _LerBase, Store {
       _$_LerBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = '';
+    return '{$string}';
+  }
 }

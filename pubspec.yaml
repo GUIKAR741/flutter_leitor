@@ -11,7 +11,7 @@ description: Leitor em Flutter
 # In iOS, build-name is used as CFBundleShortVersionString while build-number used as CFBundleVersion.
 # Read more about iOS versioning at
 # https://developer.apple.com/library/archive/documentation/General/Reference/InfoPlistKeyReference/Articles/CoreFoundationKeys.html
-version: 4.1.5
+version: 4.5.0
 
 environment:
   sdk: ">=2.2.2 <3.0.0"
@@ -23,7 +23,8 @@ scripts:
   release: flutter run --release --target=lib/main_prod.dart -v
 
 dependencies:
-  hasura_connect: ^1.1.0
+  # flutter_inappwebview: ^2.1.0+1
+  # hasura_connect: ^1.1.0
   google_sign_in: ^4.1.1
   firebase_auth: ^0.15.4
   hive_flutter: ^0.3.0+1
@@ -31,7 +32,7 @@ dependencies:
   dio_http_cache: ^0.2.5
   firebase_analytics: ^5.0.11
   firebase_crashlytics: ^0.1.2+5
-  get: ^1.8.1
+  get: ^1.9.2
   rxdart: ^0.23.1
   preload_page_view: ^0.1.4
   draggable_scrollbar: ^0.0.4
@@ -42,7 +43,7 @@ dependencies:
   dio: ^3.0.8
   flutter_mobx: ^1.0.1
   mobx: ^1.0.2
-  flutter_modular: ^0.5.0
+  flutter_modular: ^0.5.1
   # flutter_modular:
     # git:
       # url: git://github.com/guikar741/modular.git

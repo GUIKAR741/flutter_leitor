@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
@@ -16,6 +17,7 @@ abstract class Ler extends _LerBase with _$Ler {
   @override
   @mustCallSuper
   void dispose() {
+    if(!_cancel.isCancelled) _cancel.isCancelled;
     pageController.dispose();
   }
 }
@@ -23,6 +25,9 @@ abstract class Ler extends _LerBase with _$Ler {
 abstract class _LerBase extends Disposable with Store {
   final PreloadPageController pageController = PreloadPageController();
   final LerControleController lerController = LerControleController();
+  final CancelToken _cancel = CancelToken();
+
+  CancelToken get cancel => _cancel;
 
   final ListagemTitulo _controller;
 

@@ -32,4 +32,10 @@ mixin _$AppController on _AppBase, Store {
   Future mudarTema() {
     return _$mudarTemaAsyncAction.run(() => super.mudarTema());
   }
+
+  @override
+  String toString() {
+    final string = 'tema: ${tema.toString()}';
+    return '{$string}';
+  }
 }

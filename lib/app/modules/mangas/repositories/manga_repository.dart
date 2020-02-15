@@ -6,15 +6,39 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 class MangaRepository extends IRepositoryUnique {
-  @override
-  Future<List<CapituloModel>> listarTitulo(TituloModel manga) async {
+  Future<String> _requisicaoErroDb(String link, {CancelToken cancel}) async {
     String data;
     try {
       data = await dio.getLink(
-        manga.link,
+        link,
         refresh: true,
+        cancelToken: cancel,
         contextError: "Falha ao Listar Titulos",
       );
+      if (!data.contains("Erro ao conectar ao banco de dados")) return data;
+      return _requisicaoErroDb(link);
+    } catch (e) {
+      if (e.runtimeType == DioError && e.request != null) throw e;
+      return _requisicaoErroDb(link);
+    }
+  }
+
+  @override
+  Future<List<CapituloModel>> listarTitulo(
+    TituloModel manga, {
+    CancelToken cancel,
+  }) async {
+    String data;
+    try {
+      data = await _requisicaoErroDb(
+        manga.link,
+        cancel: cancel,
+      );
+      // data = await dio.getLink(
+      //   manga.link,
+      //   refresh: true,
+      //   contextError: "Falha ao Listar Titulos",
+      // );
     } on DioError catch (e) {
       manga.descricao = 'Erro ao Carregar';
       if (e.request == null) return [];
@@ -33,14 +57,21 @@ class MangaRepository extends IRepositoryUnique {
     return capitulos;
   }
 
-  Future<List<String>> imagens(String link) async {
+  Future<List<String>> imagens(
+    String link, {
+    CancelToken cancel,
+  }) async {
     String data;
     try {
-      data = await dio.getLink(
+      data = await _requisicaoErroDb(
         link,
-        refresh: true,
-        contextError: "Falha ao Pegar Imagens",
+        cancel: cancel,
       );
+      // data = await dio.getLink(
+      //   link,
+      //   refresh: true,
+      //   contextError: "Falha ao Pegar Imagens",
+      // );
     } on DioError catch (e) {
       if (e.request == null) return [];
     }

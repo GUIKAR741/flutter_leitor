@@ -89,4 +89,11 @@ mixin _$CapituloModel on _CapituloModelBase, Store {
       _$infoAtom.reportChanged();
     }, _$infoAtom, name: '${_$infoAtom.name}_set');
   }
+
+  @override
+  String toString() {
+    final string =
+        'titulo: ${titulo.toString()},link: ${link.toString()},info: ${info.toString()}';
+    return '{$string}';
+  }
 }

@@ -67,4 +67,10 @@ mixin _$AuthController on _AuthBase, Store {
       _$_AuthBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'user: ${user.toString()},status: ${status.toString()}';
+    return '{$string}';
+  }
 }

@@ -10,13 +10,14 @@ import 'package:html/parser.dart';
 
 class AnimeRepository extends IRepositoryUnique {
   @override
-  Future<List<EpisodioModel>> listarTitulo(TituloModel anime) async {
+  Future<List<EpisodioModel>> listarTitulo(TituloModel anime, {CancelToken cancel}) async {
     String data;
     try {
       data = await dio.getLink(
         anime.link,
         contextError: 'Titulos Não Carregaram',
         refresh: true,
+        cancelToken: cancel
       );
     } on DioError catch (e) {
       anime.descricao = 'Erro ao Carregar';
@@ -48,6 +49,7 @@ class AnimeRepository extends IRepositoryUnique {
           data: FormData.fromMap(data),
           contextError: "Falha ao Listar Episodios",
           refresh: true,
+          cancelToken: cancel
         )
             .then(
           (data) {
@@ -128,7 +130,7 @@ class AnimeRepository extends IRepositoryUnique {
 
   /// Função Não Necessaria Neste Modulo
   @override
-  Future<List<String>> imagens(String link) {
+  Future<List<String>> imagens(String link, {CancelToken cancel}) {
     return null;
   }
 

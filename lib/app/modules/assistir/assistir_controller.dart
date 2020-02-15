@@ -1,4 +1,5 @@
 import 'package:chewie/chewie.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/modules/assistir/repositories/assistir_anime_repository.dart';
@@ -13,12 +14,14 @@ part 'assistir_controller.g.dart';
 class AssistirController extends _AssistirBase with _$AssistirController {
   @override
   void dispose() {
+    if(!_cancel.isCancelled) _cancel.cancel();
     if (_videoPlayerController != null) _videoPlayerController?.dispose();
     if (_chewieController != null) _chewieController?.dispose();
   }
 }
 
 abstract class _AssistirBase extends Disposable with Store {
+  final CancelToken _cancel = CancelToken();
   VideoPlayerController _videoPlayerController;
   ChewieController _chewieController;
 
@@ -30,7 +33,7 @@ abstract class _AssistirBase extends Disposable with Store {
   @action
   void iniciarLink(EpisodioModel ep) {
     chewie = null;
-    chewie = _repo.linkVideo(ep).then((data) {
+    chewie = _repo.linkVideo(ep, cancel: _cancel).then((data) {
       if (data == 'link_invalido') {
         ep.titulo = 'Indisponivel';
         _videoPlayerController = VideoPlayerController.network(null);

@@ -109,4 +109,11 @@ mixin _$TituloModel on _TituloModelBase, Store {
       _$imagemAtom.reportChanged();
     }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
   }
+
+  @override
+  String toString() {
+    final string =
+        'nome: ${nome.toString()},link: ${link.toString()},descricao: ${descricao.toString()},imagem: ${imagem.toString()}';
+    return '{$string}';
+  }
 }

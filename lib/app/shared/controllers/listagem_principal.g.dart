@@ -48,4 +48,10 @@ mixin _$ListagemPrincipal on _ListagemPrincipalBase, Store {
       _$_ListagemPrincipalBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'titulos: ${titulos.toString()}';
+    return '{$string}';
+  }
 }

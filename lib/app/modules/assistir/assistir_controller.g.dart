@@ -38,4 +38,10 @@ mixin _$AssistirController on _AssistirBase, Store {
       _$_AssistirBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'chewie: ${chewie.toString()}';
+    return '{$string}';
+  }
 }

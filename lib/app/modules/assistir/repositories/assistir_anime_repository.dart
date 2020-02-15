@@ -10,13 +10,14 @@ class AssistirAnimeRepository extends Disposable {
 
   AssistirAnimeRepository();
 
-  Future<String> linkVideo(EpisodioModel ep) async {
+  Future<String> linkVideo(EpisodioModel ep, {CancelToken cancel}) async {
     String data;
     try {
       data = await dio.getLink(
         ep.link,
         contextError: 'Falha ao Procurar Episodio',
         refresh: true,
+        cancelToken: cancel
       );
     } on DioError catch (e) {
       if (e.request == null) return 'link_invalido';
@@ -42,6 +43,7 @@ class AssistirAnimeRepository extends Disposable {
             receiveDataWhenStatusError: true,
             validateStatus: (i) => true,
           ),
+          cancelToken: cancel,
           refresh: true,
           returnResponse: true,
           contextError: "Falha ao Requisitar Video",
@@ -64,6 +66,7 @@ class AssistirAnimeRepository extends Disposable {
         data = await dio.getLink(
           linkVideo,
           refresh: true,
+          cancelToken: cancel,
           contextError: "Falha ao Requisitar Video",
         );
       } on DioError catch (e) {
@@ -74,6 +77,7 @@ class AssistirAnimeRepository extends Disposable {
       try {
         responseVideo = await dio.getLink(
           linkVideo,
+          cancelToken: cancel,
           options: Options(
             headers: {'Referer': ep.link},
             followRedirects: false,

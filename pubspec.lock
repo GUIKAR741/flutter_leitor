@@ -318,7 +318,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.0"
+    version: "0.5.1"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -340,7 +340,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.8.1"
+    version: "1.9.2"
   glob:
     dependency: transitive
     description:
@@ -376,13 +376,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.2.0"
-  hasura_connect:
-    dependency: "direct main"
-    description:
-      name: hasura_connect
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.1.0"
   hive:
     dependency: "direct main"
     description:
@@ -677,34 +670,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "0.0.5"
-  shared_preferences:
-    dependency: transitive
-    description:
-      name: shared_preferences
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.5.6+1"
-  shared_preferences_macos:
-    dependency: transitive
-    description:
-      name: shared_preferences_macos
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.1+4"
-  shared_preferences_platform_interface:
-    dependency: transitive
-    description:
-      name: shared_preferences_platform_interface
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.1"
-  shared_preferences_web:
-    dependency: transitive
-    description:
-      name: shared_preferences_web
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.1.2+3"
   shelf:
     dependency: transitive
     description:
@@ -857,13 +822,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.6"
-  uuid:
-    dependency: transitive
-    description:
-      name: uuid
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.0.4"
   vector_math:
     dependency: transitive
     description:
@@ -920,13 +878,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.0"
-  websocket:
-    dependency: transitive
-    description:
-      name: websocket
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "0.0.5"
   xml:
     dependency: transitive
     description:

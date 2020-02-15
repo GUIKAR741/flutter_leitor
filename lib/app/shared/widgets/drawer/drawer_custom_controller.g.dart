@@ -68,4 +68,11 @@ mixin _$DrawerCustomController on _DrawerBase, Store {
       _$_DrawerBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string =
+        'loading: ${loading.toString()},esconderLogout: ${esconderLogout.toString()}';
+    return '{$string}';
+  }
 }

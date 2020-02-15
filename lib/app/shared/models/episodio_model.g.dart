@@ -106,4 +106,11 @@ mixin _$EpisodioModel on _EpisodioModelBase, Store {
       _$imagemAtom.reportChanged();
     }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
   }
+
+  @override
+  String toString() {
+    final string =
+        'titulo: ${titulo.toString()},link: ${link.toString()},info: ${info.toString()},imagem: ${imagem.toString()}';
+    return '{$string}';
+  }
 }

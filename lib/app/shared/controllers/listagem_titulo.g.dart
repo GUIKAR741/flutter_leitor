@@ -97,4 +97,11 @@ mixin _$ListagemTitulo on _ListagemTituloBase, Store {
       _$_ListagemTituloBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string =
+        'lista: ${lista.toString()},listagem: ${listagem.toString()}';
+    return '{$string}';
+  }
 }

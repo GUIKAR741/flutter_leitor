@@ -1,3 +1,4 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
@@ -12,12 +13,14 @@ abstract class ListagemPrincipal extends _ListagemPrincipalBase
   @mustCallSuper
   void dispose() {
     scroll.dispose();
+    if(!_cancel.isCancelled) _cancel.cancel();
   }
 }
 
 abstract class _ListagemPrincipalBase extends Disposable with Store {
   final IRepositoryPrincipal _repo = Modular.get<IRepositoryPrincipal>();
   final ScrollController scroll = ScrollController();
+  final CancelToken _cancel = CancelToken();
 
   @observable
   ObservableFuture<List<TituloModel>> titulos;
@@ -29,7 +32,7 @@ abstract class _ListagemPrincipalBase extends Disposable with Store {
   @action
   void listar({bool refresh = false}) {
     titulos = null;
-    titulos = this._repo.pegarListagem(refresh: refresh).asObservable();
+    titulos = this._repo.pegarListagem(refresh: refresh, cancel: _cancel).asObservable();
   }
 
   @action

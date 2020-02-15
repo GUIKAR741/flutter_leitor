@@ -138,4 +138,11 @@ mixin _$Ler on _LerBase, Store {
       _$_LerBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string =
+        'capitulo: ${capitulo.toString()},imagens: ${imagens.toString()},icone: ${icone.toString()},pagina: ${pagina.toString()}';
+    return '{$string}';
+  }
 }

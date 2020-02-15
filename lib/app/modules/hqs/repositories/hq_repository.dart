@@ -6,15 +6,37 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 class HqRepository extends IRepositoryUnique {
-  @override
-  Future<List<CapituloModel>> listarTitulo(TituloModel hq) async {
+  Future<String> _requisicaoErroDb(String link, {CancelToken cancel}) async {
     String data;
     try {
       data = await dio.getLink(
-        hq.link,
-        contextError: "Falha ao Listar Titulo",
+        link,
         refresh: true,
+        cancelToken: cancel,
+        contextError: "Falha ao Listar Titulos",
       );
+      if (!data.contains("Erro ao conectar ao banco de dados")) return data;
+      return _requisicaoErroDb(link);
+    } catch (e) {
+      if (e.runtimeType == DioError && e.request != null) throw e;
+      return _requisicaoErroDb(link);
+    }
+  }
+
+  @override
+  Future<List<CapituloModel>> listarTitulo(TituloModel hq,
+      {CancelToken cancel}) async {
+    String data;
+    try {
+      data = await _requisicaoErroDb(
+        hq.link,
+        cancel: cancel,
+      );
+      // data = await dio.getLink(
+      //   hq.link,
+      //   contextError: "Falha ao Listar Titulo",
+      //   refresh: true,
+      // );
     } on DioError catch (e) {
       if (e.request == null) return [];
     }
@@ -37,14 +59,18 @@ class HqRepository extends IRepositoryUnique {
     return capitulos;
   }
 
-  Future<List<String>> imagens(String link) async {
+  Future<List<String>> imagens(String link, {CancelToken cancel}) async {
     String data;
     try {
-      data = await dio.getLink(
+      data = await _requisicaoErroDb(
         link,
-        contextError: "Falha ao Pegar Imagens",
-        refresh: true,
+        cancel: cancel,
       );
+      // data = await dio.getLink(
+      //   link,
+      //   contextError: "Falha ao Pegar Imagens",
+      //   refresh: true,
+      // );
     } on DioError catch (e) {
       if (e.request == null) return [];
     }

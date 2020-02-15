@@ -27,11 +27,13 @@ class DioService extends Disposable {
       {bool returnResponse = false,
       bool refresh = false,
       Options options,
-      String contextError}) async {
+      String contextError,
+      CancelToken cancelToken}) async {
     Response response;
     try {
       response = await client.get(
         link,
+        cancelToken: cancelToken,
         options: hasInterceptor
             ? buildCacheOptions(
                 Duration(days: 7),
@@ -53,17 +55,21 @@ class DioService extends Disposable {
     return returnResponse ? response : response.data;
   }
 
-  Future postLink(String link,
-      {dynamic data,
-      bool returnResponse = false,
-      bool refresh = false,
-      Options options,
-      String contextError}) async {
+  Future postLink(
+    String link, {
+    dynamic data,
+    bool returnResponse = false,
+    bool refresh = false,
+    Options options,
+    String contextError,
+    CancelToken cancelToken
+  }) async {
     Response response;
     try {
       response = await client.post(
         link,
         data: data,
+        cancelToken: cancelToken,
         options: hasInterceptor
             ? buildCacheOptions(
                 Duration(days: 7),

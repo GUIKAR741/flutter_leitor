@@ -39,4 +39,10 @@ mixin _$LerControleController on _LerControleBase, Store {
       _$_LerControleBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'esconderControle: ${esconderControle.toString()}';
+    return '{$string}';
+  }
 }

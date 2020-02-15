@@ -37,4 +37,10 @@ mixin _$IStatus on _IStatusBase, Store {
       _$_IStatusBaseActionController.endAction(_$actionInfo);
     }
   }
+
+  @override
+  String toString() {
+    final string = 'status: ${status.toString()}';
+    return '{$string}';
+  }
 }
