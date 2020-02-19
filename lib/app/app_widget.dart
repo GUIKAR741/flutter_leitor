@@ -18,7 +18,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Get.key = Modular.navigatorKey;
+    Get.addKey(Modular.navigatorKey);
     return OKToast(
       handleTouth: true,
       dismissOtherOnShow: true,
