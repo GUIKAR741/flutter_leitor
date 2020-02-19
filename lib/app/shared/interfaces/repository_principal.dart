@@ -18,19 +18,18 @@ abstract class IRepositoryPrincipal extends Disposable {
   Future<String> verificaData({CancelToken cancel}) async {
     dynamic response;
     try {
-      response = await dio.getLink(
-        ATUALIZACAO,
-        contextError: "Falha ao Pegar Data",
-        refresh: true,
-        cancelToken: cancel
-      );
+      response = await dio.getLink(ATUALIZACAO,
+          contextError: "Falha ao Pegar Data",
+          refresh: true,
+          cancelToken: cancel);
     } on DioError catch (e) {
       if (e.request == null) return '';
     }
     return response[response.keys.elementAt(0)]['data'];
   }
 
-  Future<List<TituloModel>> pegarListagem({bool refresh = false, CancelToken cancel});
+  Future<List<TituloModel>> pegarListagem(
+      {bool refresh = false, CancelToken cancel});
 
   @override
   @mustCallSuper

@@ -6,7 +6,10 @@ import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
 class MangaRepository extends IRepositoryUnique {
-  Future<String> _requisicaoErroDb(String link, {CancelToken cancel}) async {
+  Future<String> _requisicaoErroDb(
+    String link, {
+    CancelToken cancel,
+  }) async {
     String data;
     try {
       data = await dio.getLink(

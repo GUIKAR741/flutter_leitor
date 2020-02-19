@@ -63,7 +63,7 @@ main() {
 
       await tester.tap(find.text('X'));
       await tester.pumpAndSettle();
-      
+
       await tester.tap(find.text('5'));
       expect(pagina, '5');
     });

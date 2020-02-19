@@ -14,7 +14,7 @@ class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
   @mustCallSuper
   Future<void> dispose() async {
     scroll.dispose();
-    if(!_cancel.isCancelled) _cancel.cancel();
+    if (!_cancel.isCancelled) _cancel.cancel();
     await (await box)?.close();
   }
 }

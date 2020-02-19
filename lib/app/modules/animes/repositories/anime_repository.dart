@@ -10,15 +10,14 @@ import 'package:html/parser.dart';
 
 class AnimeRepository extends IRepositoryUnique {
   @override
-  Future<List<EpisodioModel>> listarTitulo(TituloModel anime, {CancelToken cancel}) async {
+  Future<List<EpisodioModel>> listarTitulo(TituloModel anime,
+      {CancelToken cancel}) async {
     String data;
     try {
-      data = await dio.getLink(
-        anime.link,
-        contextError: 'Titulos Não Carregaram',
-        refresh: true,
-        cancelToken: cancel
-      );
+      data = await dio.getLink(anime.link,
+          contextError: 'Titulos Não Carregaram',
+          refresh: true,
+          cancelToken: cancel);
     } on DioError catch (e) {
       anime.descricao = 'Erro ao Carregar';
       if (e.response == null) return [];
@@ -44,13 +43,11 @@ class AnimeRepository extends IRepositoryUnique {
       };
       try {
         pagina = await dio
-            .postLink(
-          ANIMEPOST,
-          data: FormData.fromMap(data),
-          contextError: "Falha ao Listar Episodios",
-          refresh: true,
-          cancelToken: cancel
-        )
+            .postLink(ANIMEPOST,
+                data: FormData.fromMap(data),
+                contextError: "Falha ao Listar Episodios",
+                refresh: true,
+                cancelToken: cancel)
             .then(
           (data) {
             return json.decode(data);

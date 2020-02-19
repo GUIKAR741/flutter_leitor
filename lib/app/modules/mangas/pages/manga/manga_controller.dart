@@ -5,7 +5,7 @@ import 'package:mobx/mobx.dart';
 
 part 'manga_controller.g.dart';
 
-class MangaController extends _MangaBase with _$MangaController{}
+class MangaController extends _MangaBase with _$MangaController {}
 
 abstract class _MangaBase extends ListagemTitulo with Store {
   _MangaBase() {

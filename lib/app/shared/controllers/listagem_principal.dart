@@ -13,7 +13,7 @@ abstract class ListagemPrincipal extends _ListagemPrincipalBase
   @mustCallSuper
   void dispose() {
     scroll.dispose();
-    if(!_cancel.isCancelled) _cancel.cancel();
+    if (!_cancel.isCancelled) _cancel.cancel();
   }
 }
 
@@ -32,7 +32,10 @@ abstract class _ListagemPrincipalBase extends Disposable with Store {
   @action
   void listar({bool refresh = false}) {
     titulos = null;
-    titulos = this._repo.pegarListagem(refresh: refresh, cancel: _cancel).asObservable();
+    titulos = this
+        ._repo
+        .pegarListagem(refresh: refresh, cancel: _cancel)
+        .asObservable();
   }
 
   @action

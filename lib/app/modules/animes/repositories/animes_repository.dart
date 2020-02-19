@@ -6,10 +6,8 @@ import 'package:hive/hive.dart';
 
 class AnimesRepository extends IRepositoryPrincipal {
   @override
-  Future<List<TituloModel>> pegarListagem({
-    bool refresh = false,
-    CancelToken cancel
-  }) async {
+  Future<List<TituloModel>> pegarListagem(
+      {bool refresh = false, CancelToken cancel}) async {
     Box<String> boxData = await box;
     if (refresh) {
       String data = await verificaData(cancel: cancel);

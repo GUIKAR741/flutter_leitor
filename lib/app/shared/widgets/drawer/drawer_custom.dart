@@ -7,7 +7,8 @@ import 'package:flutter_modular/flutter_modular.dart';
 import './drawer_custom_controller.dart';
 
 class DrawerCustom extends StatelessWidget {
-  final DrawerCustomController controller = DrawerCustomController();
+  final DrawerCustomController controller =
+      Modular.get<DrawerCustomController>();
 
   Column items() {
     return Column(
@@ -18,27 +19,28 @@ class DrawerCustom extends StatelessWidget {
           onTap: () => Modular.to.popUntil(ModalRoute.withName('/')),
         ),
         ListTile(
-            leading: Icon(Icons.book),
-            title: Text('HQs'),
-            onTap: () {
-              Modular.to.popUntil(ModalRoute.withName('/'));
-              Modular.to.pushNamed('/hqs');
-            }),
+          leading: Icon(Icons.book),
+          title: Text('HQs'),
+          onTap: () => Modular.to.pushNamedAndRemoveUntil(
+            '/hqs',
+            ModalRoute.withName('/'),
+          ),
+        ),
         ListTile(
           leading: Icon(Icons.image),
           title: Text('Mangás'),
-          onTap: () {
-            Modular.to.popUntil(ModalRoute.withName('/'));
-            Modular.to.pushNamed('/mangas');
-          },
+          onTap: () => Modular.to.pushNamedAndRemoveUntil(
+            '/mangas',
+            ModalRoute.withName('/'),
+          ),
         ),
         ListTile(
           leading: Icon(Icons.video_label),
           title: Text('Animes'),
-          onTap: () {
-            Modular.to.popUntil(ModalRoute.withName('/'));
-            Modular.to.pushNamed('/animes');
-          },
+          onTap: () => Modular.to.pushNamedAndRemoveUntil(
+            '/animes',
+            ModalRoute.withName('/'),
+          ),
         ),
         controller.authController.status != AuthStatus.logged
             ? logar()

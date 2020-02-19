@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class DioService extends Disposable {
-  final Dio client = Modular.get<Dio>();
+  final Dio client = Dio();
   Interceptor _interceptor;
 
   @protected
@@ -55,15 +55,13 @@ class DioService extends Disposable {
     return returnResponse ? response : response.data;
   }
 
-  Future postLink(
-    String link, {
-    dynamic data,
-    bool returnResponse = false,
-    bool refresh = false,
-    Options options,
-    String contextError,
-    CancelToken cancelToken
-  }) async {
+  Future postLink(String link,
+      {dynamic data,
+      bool returnResponse = false,
+      bool refresh = false,
+      Options options,
+      String contextError,
+      CancelToken cancelToken}) async {
     Response response;
     try {
       response = await client.post(

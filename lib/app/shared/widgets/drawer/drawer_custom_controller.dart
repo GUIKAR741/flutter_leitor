@@ -9,7 +9,7 @@ class DrawerCustomController = _DrawerBase with _$DrawerCustomController;
 abstract class _DrawerBase with Store {
   final AuthController authController = Modular.get<AuthController>();
 
-   @observable
+  @observable
   bool loading = false;
 
   @action

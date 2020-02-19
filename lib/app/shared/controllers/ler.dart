@@ -17,7 +17,7 @@ abstract class Ler extends _LerBase with _$Ler {
   @override
   @mustCallSuper
   void dispose() {
-    if(!_cancel.isCancelled) _cancel.isCancelled;
+    if (!_cancel.isCancelled) _cancel.isCancelled;
     pageController.dispose();
   }
 }

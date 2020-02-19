@@ -14,7 +14,7 @@ part 'assistir_controller.g.dart';
 class AssistirController extends _AssistirBase with _$AssistirController {
   @override
   void dispose() {
-    if(!_cancel.isCancelled) _cancel.cancel();
+    if (!_cancel.isCancelled) _cancel.cancel();
     if (_videoPlayerController != null) _videoPlayerController?.dispose();
     if (_chewieController != null) _chewieController?.dispose();
   }
