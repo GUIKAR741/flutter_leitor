@@ -1,4 +1,4 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
@@ -29,7 +29,7 @@ class AppModule extends MainModule {
         Bind<DrawerCustomController>((i) => DrawerCustomController()),
         Bind<FirebaseAnalytics>((i) => FirebaseAnalytics()),
         Bind<Crashlytics>((i) => Crashlytics.instance),
-        // Bind<Firestore>((i) => Firestore.instance),
+        Bind<Firestore>((i) => Firestore.instance),
       ];
 
   @override

@@ -23,7 +23,7 @@ scripts:
   release: flutter run --release --target=lib/main_prod.dart -v
 
 dependencies:
-  # cloud_firestore: ^0.13.2+1
+  cloud_firestore: ^0.13.2+3
   oktoast: ^2.3.1
   google_sign_in: ^4.1.1
   firebase_auth: ^0.15.4

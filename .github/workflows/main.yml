@@ -33,8 +33,8 @@ jobs:
         token: ${{ secrets.CODECOV_TOKEN }}
         file: coverage/lcov.info
 
-    # - name: Build APK
-    #   run: flutter build apk --release --target=lib/main_prod.dart
+    - name: Build APK
+      run: flutter build apk --release --target=lib/main_prod.dart
 
     # - name: Upload Release to Firebase App Distribution
       # uses: wzieba/Firebase-Distribution-Github-Action@v1.1.1
