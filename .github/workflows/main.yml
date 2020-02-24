@@ -21,20 +21,20 @@ jobs:
     - name: Setup Flutter
       uses: subosito/flutter-action@v1
       with:
-        flutter-version: '1.12.13+hotfix.7'
+        flutter-version: '1.12.13+hotfix.8'
     - name: Get Dependencies
       run: flutter pub get
     - name: Analyze Project
       run: flutter analyze
-    # - name: Run Tests
-    #   run: flutter test --coverage
-    # - uses: codecov/codecov-action@v1.0.0
-    #   with:
-    #     token: ${{ secrets.CODECOV_TOKEN }}
-    #     file: coverage/lcov.info
+    - name: Run Tests
+      run: flutter test --coverage
+    - uses: codecov/codecov-action@v1.0.0
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage/lcov.info
 
-    - name: Build APK
-      run: flutter build apk --release --target=lib/main_prod.dart
+    # - name: Build APK
+    #   run: flutter build apk --release --target=lib/main_prod.dart
 
     # - name: Upload Release to Firebase App Distribution
       # uses: wzieba/Firebase-Distribution-Github-Action@v1.1.1

@@ -14,6 +14,11 @@ mixin _$AuthController on _AuthBase, Store {
   @override
   AuthStatus get status =>
       (_$statusComputed ??= Computed<AuthStatus>(() => super.status)).value;
+  Computed<String> _$userIDComputed;
+
+  @override
+  String get userID =>
+      (_$userIDComputed ??= Computed<String>(() => super.userID)).value;
 
   final _$userAtom = Atom(name: '_AuthBase.user');
 
@@ -70,7 +75,8 @@ mixin _$AuthController on _AuthBase, Store {
 
   @override
   String toString() {
-    final string = 'user: ${user.toString()},status: ${status.toString()}';
+    final string =
+        'user: ${user.toString()},status: ${status.toString()},userID: ${userID.toString()}';
     return '{$string}';
   }
 }

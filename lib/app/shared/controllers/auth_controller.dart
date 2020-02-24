@@ -1,4 +1,4 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_leitor/app/shared/interfaces/auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
@@ -10,13 +10,15 @@ class AuthController = _AuthBase with _$AuthController;
 
 abstract class _AuthBase with Store {
   final IAuthRepository _authRepository = Modular.get<IAuthRepository>();
-  final Firestore _firestore = Modular.get<Firestore>();
+
+  @observable
+  FirebaseUser user;
 
   @computed
   AuthStatus get status => user == null ? AuthStatus.logoff : AuthStatus.logged;
 
-  @observable
-  FirebaseUser user;
+  @computed
+  String get userID => user?.uid;
 
   @action
   setUser(FirebaseUser value) => user = value;
@@ -28,15 +30,19 @@ abstract class _AuthBase with Store {
     });
   }
 
-  void _sincronizarUser(){
-    if(_firestore.collection('usuarios').document(user.uid).get()!=null){
-      print(_firestore.collection('usuarios').document(user.uid).collection('animes'));
-    }
+  void _sincronizarUser() {
+    // print(user.uid);
+    // if (_firestore.collection('usuarios').document(user.uid).get() != null) {
+    //   print(_firestore
+    //       .collection('usuarios')
+    //       .document(user.uid)
+    //       .collection('animes'));
+    // }
   }
 
   _AuthBase() {
     _initUser();
-    _sincronizarUser();
+    when((_) => user != null, _sincronizarUser);
   }
 
   @action

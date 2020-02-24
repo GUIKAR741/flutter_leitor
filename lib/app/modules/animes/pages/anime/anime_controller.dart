@@ -10,5 +10,6 @@ class AnimeController = _AnimeBase with _$AnimeController;
 abstract class _AnimeBase extends ListagemTitulo with Store {
   _AnimeBase() {
     box = Hive.openBox<TituloModel>("animes");
+    colecao = "animes";
   }
 }

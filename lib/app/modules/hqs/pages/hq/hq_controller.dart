@@ -10,5 +10,6 @@ class HqController extends _HqBase with _$HqController {}
 abstract class _HqBase extends ListagemTitulo with Store {
   _HqBase() {
     box = Hive.openBox<TituloModel>("hqs");
+    colecao = "hqs";
   }
 }

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_leitor/app/shared/controllers/firestore_controller.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_leitor/app/shared/interfaces/status.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
@@ -23,9 +24,15 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   final IRepositoryUnique _repo = Modular.get<IRepositoryUnique>();
   final ScrollController scroll = ScrollController();
   final CancelToken _cancel = CancelToken();
+  final FirestoreController _firestoreController =
+      Modular.get<FirestoreController>();
 
   Future<Box<TituloModel>> _box;
   TituloModel _titulo;
+  String _colecao;
+
+  @protected
+  set colecao(String value) => _colecao = value;
 
   @observable
   ObservableFuture<List> lista;
@@ -55,15 +62,25 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   iniciaBox() async {
     Box<TituloModel> boxHive = (await _box);
     lista.whenComplete(
-      () {
+      () async {
+        await _firestoreController.copiarDadosNuvem(
+          colecao: _colecao,
+          titulo: titulo,
+          box: boxHive,
+        );
         if (boxHive.containsKey(titulo.nome)) {
           titulo.lista = boxHive.get(titulo.nome).lista;
           if (titulo.lista.isNotEmpty) {
             for (IStatus i in lista.value) {
-              if (titulo.lista.containsKey(i.titulo)) i.status = true;
+              if (titulo.lista.containsKey(i.titulo)) i.status = titulo.lista[i.titulo].status;
             }
           }
         }
+        _firestoreController.copiarDadosParaNuvem(
+          colecao: _colecao,
+          titulo: titulo,
+          box: boxHive,
+        );
       },
     );
   }
@@ -73,6 +90,11 @@ abstract class _ListagemTituloBase extends Disposable with Store {
     value.mudarStatus(add: add);
     titulo.addLista(key, value, add: add);
     Box<TituloModel> boxHive = (await _box);
+    _firestoreController.atualizarDados(
+      colecao: _colecao,
+      titulo: titulo,
+      value: value,
+    );
     boxHive.put(titulo.nome, titulo);
   }
 

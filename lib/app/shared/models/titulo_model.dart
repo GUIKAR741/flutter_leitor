@@ -57,7 +57,7 @@ abstract class _TituloModelBase extends HiveObject with Store {
   String imagem;
 
   @HiveField(2)
-  Map<String, dynamic> lista = <String, dynamic>{};
+  Map<String, IStatus> lista = <String, IStatus>{};
 
   void addLista(String key, IStatus value, {bool add = false}) {
     if (lista.containsKey(key) && !add) {

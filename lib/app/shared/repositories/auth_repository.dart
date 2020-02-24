@@ -9,7 +9,7 @@ class AuthRepository implements IAuthRepository {
 
   @override
   Future<FirebaseUser> getLogin() async {
-    final GoogleSignInAccount googleUser = await _googleSignIn.signIn();
+    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
     final GoogleSignInAuthentication googleAuth =
         await googleUser?.authentication;
     final AuthCredential credential = GoogleAuthProvider.getCredential(
