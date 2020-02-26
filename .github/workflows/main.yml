@@ -24,25 +24,27 @@ jobs:
         channel: 'stable'
     - name: Get Dependencies
       run: flutter pub get
-    # - name: Analyze Project
-    #   run: flutter analyze
-    # - name: Run Tests
-    #   run: flutter test --coverage
-    # - name: Run CodeCov
-    #   uses: codecov/codecov-action@v1.0.0
-    #   with:
-    #     token: ${{ secrets.CODECOV_TOKEN }}
-    #     file: coverage/lcov.info
+    - name: Analyze Project
+      run: flutter analyze
+    - name: Run Tests
+      run: flutter test --coverage
+    - name: Run CodeCov
+      uses: codecov/codecov-action@v1.0.0
+      with:
+        token: ${{ secrets.CODECOV_TOKEN }}
+        file: coverage/lcov.info
 
-    - name: Build APK
+    - name: Keystore Properties
+      run: echo $KEYSTORE_PROPERTIES | base64 --decode > android/key.properties
       env:
         KEYSTORE_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
+    - name: Release Keystore
+      run: mkdir android/app/keystore && echo $RELEASE_KEYSTORE | base64 --decode > android/app/keystore/release.keystore.jks
+      env:
         RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
-      run:
-        echo $KEYSTORE_PROPERTIES | base64 --decode > android/keystore.jks;
-        mkdir android/app/keystore;
-        echo $RELEASE_KEYSTORE | base64 --decode > android/app/keystore/release.keystore.jks;
-        flutter build apk --release --target=lib/main_prod.dart
+
+    - name: Build APK
+      run: flutter build apk --release --target=lib/main_prod.dart
 
     # - name: Upload Release to Firebase App Distribution
       # uses: wzieba/Firebase-Distribution-Github-Action@v1.1.1
