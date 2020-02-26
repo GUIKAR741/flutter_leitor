@@ -24,16 +24,16 @@ jobs:
         channel: 'stable'
     - name: Get Dependencies
       run: flutter pub get
-    - name: Analyze Project
-      run: flutter analyze
-    - name: Run Tests
-      run: flutter test --coverage
-    - name: Run CodeCov
-      uses: codecov/codecov-action@v1.0.0
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage/lcov.info
-  
+    # - name: Analyze Project
+    #   run: flutter analyze
+    # - name: Run Tests
+    #   run: flutter test --coverage
+    # - name: Run CodeCov
+    #   uses: codecov/codecov-action@v1.0.0
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+    #     file: coverage/lcov.info
+
     - name: Build APK
       env:
         KEYSTORE_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
