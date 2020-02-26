@@ -25,13 +25,13 @@ jobs:
     - name: Get Dependencies
       run: flutter pub get
     - name: Analyze Project
-      run: flutter analyze
-    - name: Run Tests
-      run: flutter test --coverage
-    - uses: codecov/codecov-action@v1.0.0
-      with:
-        token: ${{ secrets.CODECOV_TOKEN }}
-        file: coverage/lcov.info
+    #   run: flutter analyze
+    # - name: Run Tests
+    #   run: flutter test --coverage
+    # - uses: codecov/codecov-action@v1.0.0
+    #   with:
+    #     token: ${{ secrets.CODECOV_TOKEN }}
+    #     file: coverage/lcov.info
 
     - name: keystore properties
       run: echo $KEYSTORE_PROPERTIES | base64 --decode > android/keystore.jks
@@ -39,7 +39,7 @@ jobs:
         KEYSTORE_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
     - name: release keystore
       run:
-        mkdir android/app/keystore
+        mkdir android/app/keystore;
         echo $RELEASE_KEYSTORE | base64 --decode > android/app/keystore/release.keystore.jks
       env:
         RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
