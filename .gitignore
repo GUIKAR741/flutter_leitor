@@ -39,3 +39,6 @@ lib/generated_plugin_registrant.dart
 
 coverage
 test/.test_coverage.dart
+
+android/key.properties
+android/app/keystore

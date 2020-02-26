@@ -45,6 +45,7 @@ abstract class _ListagemPrincipalBase extends Disposable with Store {
             .where((t) => t.nome.toLowerCase().contains(res.toLowerCase()))
             .toList()
         : [];
+    if (pesquisa?.length == null) return [];
     return pesquisa.length > 0 ? pesquisa : titulos.value;
   }
 }

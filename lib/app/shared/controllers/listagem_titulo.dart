@@ -119,6 +119,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
             .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
             .toList()
         : [];
+    if (pesquisa?.length == null) return [];
     return pesquisa.length > 0 ? pesquisa : lista.value;
   }
 }
