@@ -38,7 +38,9 @@ jobs:
       env:
         KEYSTORE_PROPERTIES: ${{ secrets.KEY_PROPERTIES }}
     - name: release keystore
-      run: echo $RELEASE_KEYSTORE | base64 --decode > android/app/keystore/release.keystore.jks
+      run:
+        mkdir android/app/keystore
+        echo $RELEASE_KEYSTORE | base64 --decode > android/app/keystore/release.keystore.jks
       env:
         RELEASE_KEYSTORE: ${{ secrets.RELEASE_KEYSTORE }}
 
