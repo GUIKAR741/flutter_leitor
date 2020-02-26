@@ -24,7 +24,7 @@ jobs:
         flutter-version: '1.12.13+hotfix.8'
     - name: Get Dependencies
       run: flutter pub get
-    - name: Analyze Project
+    # - name: Analyze Project
     #   run: flutter analyze
     # - name: Run Tests
     #   run: flutter test --coverage
