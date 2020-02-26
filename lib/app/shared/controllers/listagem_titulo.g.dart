@@ -60,7 +60,7 @@ mixin _$ListagemTitulo on _ListagemTituloBase, Store {
   final _$addListaAsyncAction = AsyncAction('addLista');
 
   @override
-  Future addLista(String key, IStatus value, {bool add = false}) {
+  Future addLista(String key, CapEpModel value, {bool add = false}) {
     return _$addListaAsyncAction
         .run(() => super.addLista(key, value, add: add));
   }

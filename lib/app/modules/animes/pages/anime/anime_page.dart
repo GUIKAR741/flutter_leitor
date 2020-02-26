@@ -2,7 +2,7 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
-import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
 import 'package:flutter_leitor/app/shared/widgets/drawer/drawer_custom.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -48,7 +48,7 @@ class AnimePage extends StatelessWidget {
           if (controller.lista.value == null) {
             return Center(child: CircularProgressIndicator());
           }
-          List<EpisodioModel> episodios = controller.listagem;
+          List<CapEpModel> episodios = controller.listagem;
           return Column(
             children: <Widget>[
               Expanded(
@@ -97,7 +97,7 @@ class AnimePage extends StatelessWidget {
     );
   }
 
-  Widget listTile(EpisodioModel episodio) {
+  Widget listTile(CapEpModel episodio) {
     return ListTile(
       contentPadding: EdgeInsets.symmetric(horizontal: 10),
       leading: Container(

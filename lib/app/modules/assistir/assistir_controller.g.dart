@@ -30,7 +30,7 @@ mixin _$AssistirController on _AssistirBase, Store {
       ActionController(name: '_AssistirBase');
 
   @override
-  void iniciarLink(EpisodioModel ep) {
+  void iniciarLink(CapEpModel ep) {
     final _$actionInfo = _$_AssistirBaseActionController.startAction();
     try {
       return super.iniciarLink(ep);

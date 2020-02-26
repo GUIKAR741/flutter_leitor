@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle_controller.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:get/get.dart';
@@ -38,7 +38,7 @@ abstract class _LerBase extends Disposable with Store {
   bool _tap = false;
 
   @observable
-  CapituloModel capitulo;
+  CapEpModel capitulo;
   @observable
   ObservableFuture<List<Widget>> imagens;
   @observable

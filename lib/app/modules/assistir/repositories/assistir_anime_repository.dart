@@ -1,5 +1,5 @@
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/services/dio_service.dart';
-import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:dio/dio.dart';
 import 'package:html/dom.dart';
@@ -10,7 +10,7 @@ class AssistirAnimeRepository extends Disposable {
 
   AssistirAnimeRepository();
 
-  Future<String> linkVideo(EpisodioModel ep, {CancelToken cancel}) async {
+  Future<String> linkVideo(CapEpModel ep, {CancelToken cancel}) async {
     String data;
     try {
       data = await dio.getLink(ep.link,

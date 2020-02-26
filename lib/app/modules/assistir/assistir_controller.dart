@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/modules/assistir/repositories/assistir_anime_repository.dart';
 import 'package:flutter_leitor/app/modules/assistir/widgets/controles/controles_widget.dart';
-import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
 import 'package:video_player/video_player.dart';
@@ -31,7 +31,7 @@ abstract class _AssistirBase extends Disposable with Store {
   ObservableFuture<Chewie> chewie;
 
   @action
-  void iniciarLink(EpisodioModel ep) {
+  void iniciarLink(CapEpModel ep) {
     chewie = null;
     chewie = _repo.linkVideo(ep, cancel: _cancel).then((data) {
       if (data == 'link_invalido') {

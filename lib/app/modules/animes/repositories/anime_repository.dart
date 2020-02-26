@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_leitor/app/shared/utils/constants.dart';
 import 'package:html/dom.dart';
@@ -10,7 +10,7 @@ import 'package:html/parser.dart';
 
 class AnimeRepository extends IRepositoryUnique {
   @override
-  Future<List<EpisodioModel>> listarTitulo(TituloModel anime,
+  Future<List<CapEpModel>> listarTitulo(TituloModel anime,
       {CancelToken cancel}) async {
     String data;
     try {
@@ -32,7 +32,7 @@ class AnimeRepository extends IRepositoryUnique {
         .toList()[0];
     int inicio = 1, fim = 20;
     Map<String, dynamic> pagina;
-    List<EpisodioModel> episodios = List();
+    List<CapEpModel> episodios = List();
     while (inicio <= fim) {
       Map<String, dynamic> data = {
         'id_cat': idCategoria.toString(),
@@ -76,7 +76,7 @@ class AnimeRepository extends IRepositoryUnique {
               .reversed
               .toList();
           episodios.add(
-            EpisodioModel(
+            CapEpModel(
               titulo: ep.querySelector('a').text,
               link: ep.querySelector('a').attributes['href'],
               info:
@@ -109,7 +109,7 @@ class AnimeRepository extends IRepositoryUnique {
                 .reversed
                 .toList();
             episodios.add(
-              EpisodioModel(
+              CapEpModel(
                 titulo:
                     "OVA: ${ep.querySelector('div.epsBoxSobre').querySelector('a').text}",
                 link: ep.querySelector('a').attributes['href'],

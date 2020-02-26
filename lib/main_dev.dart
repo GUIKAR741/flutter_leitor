@@ -8,9 +8,8 @@ import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 
 import 'app/app_module.dart';
-import 'app/shared/models/capitulo_model.dart';
-import 'app/shared/models/episodio_model.dart';
 import 'app/shared/models/titulo_model.dart';
+import 'app/shared/models/capitulo_episodio_model.dart';
 
 void main() async {
   Crashlytics crashlytics = Crashlytics.instance;
@@ -29,8 +28,7 @@ void main() async {
 
   await Hive.initFlutter();
   Hive.registerAdapter<TituloModel>(TituloModelAdapter());
-  Hive.registerAdapter<CapituloModel>(CapituloModelAdapter());
-  Hive.registerAdapter<EpisodioModel>(EpisodioModelAdapter());
+  Hive.registerAdapter<CapEpModel>(CapEpModelAdapter());
 
   WidgetsFlutterBinding.ensureInitialized();
 

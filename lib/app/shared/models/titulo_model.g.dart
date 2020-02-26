@@ -19,7 +19,7 @@ class TituloModelAdapter extends TypeAdapter<TituloModel> {
     return TituloModel()
       ..nome = fields[0] as String
       ..link = fields[1] as String
-      ..lista = (fields[2] as Map)?.cast<String, IStatus>();
+      ..lista = (fields[2] as Map)?.cast<String, CapEpModel>();
   }
 
   @override

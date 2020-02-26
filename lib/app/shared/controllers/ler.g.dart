@@ -12,14 +12,14 @@ mixin _$Ler on _LerBase, Store {
   final _$capituloAtom = Atom(name: '_LerBase.capitulo');
 
   @override
-  CapituloModel get capitulo {
+  CapEpModel get capitulo {
     _$capituloAtom.context.enforceReadPolicy(_$capituloAtom);
     _$capituloAtom.reportObserved();
     return super.capitulo;
   }
 
   @override
-  set capitulo(CapituloModel value) {
+  set capitulo(CapEpModel value) {
     _$capituloAtom.context.conditionallyRunInAction(() {
       super.capitulo = value;
       _$capituloAtom.reportChanged();

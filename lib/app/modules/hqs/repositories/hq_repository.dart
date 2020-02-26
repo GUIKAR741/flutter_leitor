@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
@@ -24,7 +24,7 @@ class HqRepository extends IRepositoryUnique {
   }
 
   @override
-  Future<List<CapituloModel>> listarTitulo(TituloModel hq,
+  Future<List<CapEpModel>> listarTitulo(TituloModel hq,
       {CancelToken cancel}) async {
     String data;
     try {
@@ -48,10 +48,10 @@ class HqRepository extends IRepositoryUnique {
         .replaceAll('Sinopse:', '')
         .trim();
     List<Element> td = soup.querySelectorAll("td");
-    List<CapituloModel> capitulos = List();
+    List<CapEpModel> capitulos = List();
     td.forEach(
       (data) {
-        capitulos.add(CapituloModel(
+        capitulos.add(CapEpModel(
             titulo: data.querySelector('a').text,
             link: data.querySelector('a').attributes['href']));
       },

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_leitor/app/modules/assistir/assistir_controller.dart';
-import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class AssistirPage extends StatefulWidget {
-  final EpisodioModel episodio;
+  final CapEpModel episodio;
   AssistirPage({Key key, this.episodio}) : super(key: key);
   _AssistirPageState createState() => _AssistirPageState();
 }

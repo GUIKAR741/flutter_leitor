@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
@@ -27,7 +27,7 @@ class MangaRepository extends IRepositoryUnique {
   }
 
   @override
-  Future<List<CapituloModel>> listarTitulo(
+  Future<List<CapEpModel>> listarTitulo(
     TituloModel manga, {
     CancelToken cancel,
   }) async {
@@ -50,9 +50,9 @@ class MangaRepository extends IRepositoryUnique {
     manga.descricao =
         soup.querySelector('div.panel-body').text.trim().replaceAll('\n', '');
     List<Element> divs = soup.querySelectorAll("div.row.lancamento-linha");
-    List<CapituloModel> capitulos = List();
+    List<CapEpModel> capitulos = List();
     divs.forEach((data) {
-      capitulos.add(CapituloModel(
+      capitulos.add(CapEpModel(
           titulo: data.querySelector('a').text,
           link: data.querySelector('a').attributes['href'],
           info: data.querySelector('a').nextElementSibling.innerHtml));

@@ -1,19 +1,18 @@
 import 'dart:convert';
 
-import 'package:flutter_leitor/app/shared/interfaces/status.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 
-part 'episodio_model.g.dart';
+part 'capitulo_episodio_model.g.dart';
 
-@HiveType(typeId: 2)
-class EpisodioModel extends _EpisodioModelBase with _$EpisodioModel {
-  EpisodioModel({String titulo, String link, String info, String imagem})
+@HiveType(typeId: 1)
+class CapEpModel extends _CapEpModelBase with _$CapEpModel {
+  CapEpModel({String titulo, String link, String info, String imagem})
       : super(titulo: titulo, link: link, info: info, imagem: imagem);
 
-  factory EpisodioModel.fromJson(Map<String, dynamic> json) {
+  factory CapEpModel.fromJson(Map<String, dynamic> json) {
     if (json == null) return null;
-    return EpisodioModel(
+    return CapEpModel(
       titulo: json['titulo'],
       link: json['link'],
       info: json['info'],
@@ -28,13 +27,13 @@ class EpisodioModel extends _EpisodioModelBase with _$EpisodioModel {
         'imagem': this.imagem,
       };
 
-  factory EpisodioModel.fromRawJson(String str) =>
-      EpisodioModel.fromJson(json.decode(str));
+  factory CapEpModel.fromRawJson(String str) =>
+      CapEpModel.fromJson(json.decode(str));
 
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _EpisodioModelBase extends IStatus with Store {
+abstract class _CapEpModelBase with Store {
   @HiveField(0)
   @observable
   String titulo;
@@ -49,7 +48,14 @@ abstract class _EpisodioModelBase extends IStatus with Store {
   @observable
   String imagem;
 
-  _EpisodioModelBase({this.titulo, this.link, this.info, this.imagem});
+  @observable
+  bool status = false;
+
+
+  _CapEpModelBase({this.titulo, this.link, this.info, this.imagem});
+
+  @action
+  void mudarStatus({bool add = false}) => status = !add ? !status : add;
 
   @override
   String toString() => titulo;

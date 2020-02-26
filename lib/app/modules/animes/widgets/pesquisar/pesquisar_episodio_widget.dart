@@ -1,7 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_controller.dart';
-import 'package:flutter_leitor/app/shared/models/episodio_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -19,7 +19,7 @@ class PesquisarEpisodio extends Pesquisar {
   }
 
   Widget listEpisodios() {
-    List<EpisodioModel> episodios = controller.pesquisar(query);
+    List<CapEpModel> episodios = controller.pesquisar(query);
     return ListView.separated(
       itemCount: episodios.length,
       itemBuilder: (_, index) {

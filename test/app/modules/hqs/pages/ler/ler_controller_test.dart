@@ -8,6 +8,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:hive/hive.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   Hive.init(Directory.current.path + "/hive");
   initModules([AppModule(), HqsModule()]);
   LerController ler;

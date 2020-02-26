@@ -5,6 +5,7 @@ import 'package:flutter_leitor/app/shared/controllers/firestore_controller.dart'
 import 'package:flutter_leitor/app/app_module.dart';
 
 void main() {
+  TestWidgetsFlutterBinding.ensureInitialized();
   initModule(AppModule());
   FirestoreController firestore;
 

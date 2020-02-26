@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/shared/controllers/firestore_controller.dart';
 import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/interfaces/status.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
@@ -61,41 +61,48 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   @action
   iniciaBox() async {
     Box<TituloModel> boxHive = (await _box);
+    titulo.lista = boxHive.containsKey(titulo.nome.replaceAll('.', ''))
+        ? (await _box).get(titulo.nome.replaceAll('.', '')).lista
+        : <String, CapEpModel>{};
+    final Future<void> copiarDadosNuvem = _firestoreController.copiarDadosNuvem(
+      colecao: _colecao,
+      titulo: titulo,
+      box: boxHive,
+    );
     lista.whenComplete(
       () async {
-        await _firestoreController.copiarDadosNuvem(
-          colecao: _colecao,
-          titulo: titulo,
-          box: boxHive,
-        );
-        if (boxHive.containsKey(titulo.nome)) {
-          titulo.lista = boxHive.get(titulo.nome).lista;
+        await copiarDadosNuvem;
+        if (boxHive.containsKey(titulo.nome.replaceAll('.', ''))) {
           if (titulo.lista.isNotEmpty) {
-            for (IStatus i in lista.value) {
-              if (titulo.lista.containsKey(i.titulo)) i.status = titulo.lista[i.titulo].status;
+            for (CapEpModel i in lista.value) {
+              if (titulo.lista.containsKey(i.titulo.replaceAll('.', ''))) i.status = titulo.lista[i.titulo.replaceAll('.', '')].status;
             }
           }
         }
-        _firestoreController.copiarDadosParaNuvem(
+        _firestoreController
+            .copiarDadosParaNuvem(
           colecao: _colecao,
           titulo: titulo,
           box: boxHive,
-        );
+        )
+            .whenComplete(() async{
+          await boxHive.put(titulo.nome.replaceAll('.', ''), titulo);
+        });
       },
     );
   }
 
   @action
-  addLista(String key, IStatus value, {bool add = false}) async {
+  addLista(String key, CapEpModel value, {bool add = false}) async {
     value.mudarStatus(add: add);
-    titulo.addLista(key, value, add: add);
+    titulo.addLista(key.replaceAll('.', ''), value, add: add);
     Box<TituloModel> boxHive = (await _box);
     _firestoreController.atualizarDados(
       colecao: _colecao,
       titulo: titulo,
       value: value,
     );
-    boxHive.put(titulo.nome, titulo);
+    boxHive.put(titulo.nome.replaceAll('.', ''), titulo);
   }
 
   @computed

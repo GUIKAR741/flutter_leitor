@@ -2,7 +2,7 @@ import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_leitor/app/modules/hqs/pages/hq/hq_controller.dart';
 import 'package:flutter_leitor/app/modules/hqs/widgets/pesquisar/pesquisar_capitulo_widget.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_model.dart';
+import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
 import 'package:flutter_leitor/app/shared/widgets/drawer/drawer_custom.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -47,7 +47,7 @@ class HqPage extends StatelessWidget {
           if (controller.lista.value == null) {
             return Center(child: CircularProgressIndicator());
           }
-          List<CapituloModel> capitulos = controller.listagem;
+          List<CapEpModel> capitulos = controller.listagem;
           return Column(
             children: <Widget>[
               Expanded(

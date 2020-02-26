@@ -1,28 +1,28 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'episodio_model.dart';
+part of 'capitulo_episodio_model.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class EpisodioModelAdapter extends TypeAdapter<EpisodioModel> {
+class CapEpModelAdapter extends TypeAdapter<CapEpModel> {
   @override
-  final typeId = 2;
+  final typeId = 1;
 
   @override
-  EpisodioModel read(BinaryReader reader) {
+  CapEpModel read(BinaryReader reader) {
     var numOfFields = reader.readByte();
     var fields = <int, dynamic>{
       for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return EpisodioModel()
+    return CapEpModel()
       ..titulo = fields[0] as String
       ..link = fields[1] as String;
   }
 
   @override
-  void write(BinaryWriter writer, EpisodioModel obj) {
+  void write(BinaryWriter writer, CapEpModel obj) {
     writer
       ..writeByte(2)
       ..writeByte(0)
@@ -38,8 +38,8 @@ class EpisodioModelAdapter extends TypeAdapter<EpisodioModel> {
 
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
-mixin _$EpisodioModel on _EpisodioModelBase, Store {
-  final _$tituloAtom = Atom(name: '_EpisodioModelBase.titulo');
+mixin _$CapEpModel on _CapEpModelBase, Store {
+  final _$tituloAtom = Atom(name: '_CapEpModelBase.titulo');
 
   @override
   String get titulo {
@@ -56,7 +56,7 @@ mixin _$EpisodioModel on _EpisodioModelBase, Store {
     }, _$tituloAtom, name: '${_$tituloAtom.name}_set');
   }
 
-  final _$linkAtom = Atom(name: '_EpisodioModelBase.link');
+  final _$linkAtom = Atom(name: '_CapEpModelBase.link');
 
   @override
   String get link {
@@ -73,7 +73,7 @@ mixin _$EpisodioModel on _EpisodioModelBase, Store {
     }, _$linkAtom, name: '${_$linkAtom.name}_set');
   }
 
-  final _$infoAtom = Atom(name: '_EpisodioModelBase.info');
+  final _$infoAtom = Atom(name: '_CapEpModelBase.info');
 
   @override
   String get info {
@@ -90,7 +90,7 @@ mixin _$EpisodioModel on _EpisodioModelBase, Store {
     }, _$infoAtom, name: '${_$infoAtom.name}_set');
   }
 
-  final _$imagemAtom = Atom(name: '_EpisodioModelBase.imagem');
+  final _$imagemAtom = Atom(name: '_CapEpModelBase.imagem');
 
   @override
   String get imagem {
@@ -107,10 +107,40 @@ mixin _$EpisodioModel on _EpisodioModelBase, Store {
     }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
   }
 
+  final _$statusAtom = Atom(name: '_CapEpModelBase.status');
+
+  @override
+  bool get status {
+    _$statusAtom.context.enforceReadPolicy(_$statusAtom);
+    _$statusAtom.reportObserved();
+    return super.status;
+  }
+
+  @override
+  set status(bool value) {
+    _$statusAtom.context.conditionallyRunInAction(() {
+      super.status = value;
+      _$statusAtom.reportChanged();
+    }, _$statusAtom, name: '${_$statusAtom.name}_set');
+  }
+
+  final _$_CapEpModelBaseActionController =
+      ActionController(name: '_CapEpModelBase');
+
+  @override
+  void mudarStatus({bool add = false}) {
+    final _$actionInfo = _$_CapEpModelBaseActionController.startAction();
+    try {
+      return super.mudarStatus(add: add);
+    } finally {
+      _$_CapEpModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     final string =
-        'titulo: ${titulo.toString()},link: ${link.toString()},info: ${info.toString()},imagem: ${imagem.toString()}';
+        'titulo: ${titulo.toString()},link: ${link.toString()},info: ${info.toString()},imagem: ${imagem.toString()},status: ${status.toString()}';
     return '{$string}';
   }
 }

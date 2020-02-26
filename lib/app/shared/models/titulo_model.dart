@@ -1,8 +1,9 @@
 import 'dart:convert';
 
-import 'package:flutter_leitor/app/shared/interfaces/status.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
+
+import 'capitulo_episodio_model.dart';
 
 part 'titulo_model.g.dart';
 
@@ -57,9 +58,9 @@ abstract class _TituloModelBase extends HiveObject with Store {
   String imagem;
 
   @HiveField(2)
-  Map<String, IStatus> lista = <String, IStatus>{};
+  Map<String, CapEpModel> lista = <String, CapEpModel>{};
 
-  void addLista(String key, IStatus value, {bool add = false}) {
+  void addLista(String key, CapEpModel value, {bool add = false}) {
     if (lista.containsKey(key) && !add) {
       lista.remove(key);
       return;
