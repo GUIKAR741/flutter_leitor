@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:flutter_leitor/app/shared/services/dio_service.dart';
-import 'package:flutter_leitor/app/shared/utils/constants.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+
+import '../models/titulo_model.dart';
+import '../services/dio_service.dart';
+import '../utils/constants.dart';
 
 abstract class IRepositoryPrincipal extends Disposable {
   final DioService dio = Modular.get<DioService>();

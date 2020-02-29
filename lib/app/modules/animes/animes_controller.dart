@@ -1,4 +1,4 @@
-import 'package:flutter_leitor/app/shared/controllers/listagem_principal.dart';
+import '../../shared/controllers/listagem_principal.dart';
 import 'package:mobx/mobx.dart';
 
 part 'animes_controller.g.dart';

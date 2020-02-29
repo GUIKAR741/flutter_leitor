@@ -1,9 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/app_controller.dart';
-import 'package:flutter_leitor/app/shared/widgets/drawer/drawer_custom.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../app_controller.dart';
+import '../../shared/widgets/drawer/drawer_custom.dart';
 
 class HomePage extends StatelessWidget {
   final String title;

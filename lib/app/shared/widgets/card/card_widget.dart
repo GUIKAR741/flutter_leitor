@@ -1,6 +1,7 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
+
+import '../../models/titulo_model.dart';
 
 class CardWidget extends StatelessWidget {
   final TituloModel titulo;

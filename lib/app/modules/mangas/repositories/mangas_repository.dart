@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:flutter_leitor/app/shared/utils/constants.dart';
 import 'package:hive/hive.dart';
+
+import '../../../shared/interfaces/repository_principal.dart';
+import '../../../shared/models/titulo_model.dart';
+import '../../../shared/utils/constants.dart';
 
 class MangasRepository extends IRepositoryPrincipal {
   @override

@@ -1,13 +1,13 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/widgets/card/card_widget.dart';
-import 'package:flutter_leitor/app/shared/widgets/drawer/drawer_custom.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../../../modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
+import '../../../../shared/models/capitulo_episodio_model.dart';
+import '../../../../shared/widgets/card/card_widget.dart';
+import '../../../../shared/widgets/drawer/drawer_custom.dart';
 import 'anime_controller.dart';
 
 class AnimePage extends StatelessWidget {

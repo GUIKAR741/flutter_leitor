@@ -1,8 +1,9 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_leitor/app/shared/interfaces/auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+
+import '../interfaces/auth.dart';
 
 part 'auth_controller.g.dart';
 

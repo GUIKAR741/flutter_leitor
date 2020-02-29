@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/controllers/firestore_controller.dart';
-import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
+
+import '../controllers/firestore_controller.dart';
+import '../interfaces/repository_unique.dart';
+import '../models/capitulo_episodio_model.dart';
+import '../models/titulo_model.dart';
 
 part 'listagem_titulo.g.dart';
 
@@ -75,7 +76,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
         if (boxHive.containsKey(titulo.nome.replaceAll('.', ''))) {
           if (titulo.lista.isNotEmpty) {
             for (CapEpModel i in lista.value) {
-              if (titulo.lista.containsKey(i.titulo.replaceAll('.', ''))) i.status = titulo.lista[i.titulo.replaceAll('.', '')].status;
+              if (titulo.lista.containsKey(i.titulo.replaceAll('.', '')))
+                i.status = titulo.lista[i.titulo.replaceAll('.', '')].status;
             }
           }
         }
@@ -85,7 +87,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
           titulo: titulo,
           box: boxHive,
         )
-            .whenComplete(() async{
+            .whenComplete(() async {
           await boxHive.put(titulo.nome.replaceAll('.', ''), titulo);
         });
       },

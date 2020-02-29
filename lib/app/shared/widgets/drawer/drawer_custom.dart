@@ -1,10 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/controllers/auth_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import './drawer_custom_controller.dart';
+import '../../controllers/auth_controller.dart';
 
 class DrawerCustom extends StatelessWidget {
   final DrawerCustomController controller =

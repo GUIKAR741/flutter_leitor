@@ -1,9 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/controllers/listagem_principal.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../controllers/listagem_principal.dart';
+import '../../models/titulo_model.dart';
+import '../../widgets/pesquisar/pesquisar_widget.dart';
 
 class PesquisarTitulo extends Pesquisar {
   final String path;

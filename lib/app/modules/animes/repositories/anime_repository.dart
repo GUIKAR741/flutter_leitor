@@ -1,12 +1,13 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:flutter_leitor/app/shared/utils/constants.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+
+import '../../../shared/interfaces/repository_unique.dart';
+import '../../../shared/models/capitulo_episodio_model.dart';
+import '../../../shared/models/titulo_model.dart';
+import '../../../shared/utils/constants.dart';
 
 class AnimeRepository extends IRepositoryUnique {
   @override

@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/widgets/ler_controle/ler_controle_controller.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../widgets/ler_controle/ler_controle_controller.dart';
 
 class LerControle extends StatelessWidget {
   final LerControleController controller;

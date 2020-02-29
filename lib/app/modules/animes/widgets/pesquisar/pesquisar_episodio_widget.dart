@@ -1,9 +1,10 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_controller.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../../modules/animes/pages/anime/anime_controller.dart';
+import '../../../../shared/models/capitulo_episodio_model.dart';
+import '../../../../shared/widgets/pesquisar/pesquisar_widget.dart';
 
 class PesquisarEpisodio extends Pesquisar {
   AnimeController controller = Modular.get<AnimeController>();

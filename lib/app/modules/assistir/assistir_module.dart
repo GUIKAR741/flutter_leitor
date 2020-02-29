@@ -1,7 +1,8 @@
-import 'package:flutter_leitor/app/modules/assistir/assistir_controller.dart';
-import 'package:flutter_leitor/app/modules/assistir/assistir_page.dart';
-import 'package:flutter_leitor/app/modules/assistir/repositories/assistir_anime_repository.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../modules/assistir/assistir_controller.dart';
+import '../../modules/assistir/assistir_page.dart';
+import '../../modules/assistir/repositories/assistir_anime_repository.dart';
 
 class AssistirModule extends ChildModule {
   @override

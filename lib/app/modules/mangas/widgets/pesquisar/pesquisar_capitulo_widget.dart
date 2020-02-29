@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/mangas/pages/manga/manga_controller.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../../../modules/mangas/pages/manga/manga_controller.dart';
+import '../../../../shared/models/capitulo_episodio_model.dart';
+import '../../../../shared/widgets/pesquisar/pesquisar_widget.dart';
 
 class PesquisarCapitulo extends Pesquisar {
   MangaController controller = Modular.get<MangaController>();

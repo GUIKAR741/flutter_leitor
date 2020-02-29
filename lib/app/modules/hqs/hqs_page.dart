@@ -1,11 +1,12 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/modules/hqs/hqs_controller.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
-import 'package:flutter_leitor/app/shared/widgets/drawer/drawer_custom.dart';
-import 'package:flutter_leitor/app/shared/widgets/pesquisar/pesquisar_titulo_widget.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+
+import '../../modules/hqs/hqs_controller.dart';
+import '../../shared/models/titulo_model.dart';
+import '../../shared/widgets/drawer/drawer_custom.dart';
+import '../../shared/widgets/pesquisar/pesquisar_titulo_widget.dart';
 
 class HqsPage extends StatelessWidget {
   final String title;

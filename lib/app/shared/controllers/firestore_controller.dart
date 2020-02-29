@@ -1,11 +1,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/controllers/auth_controller.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
+
+import '../controllers/auth_controller.dart';
+import '../models/capitulo_episodio_model.dart';
+import '../models/titulo_model.dart';
 
 part 'firestore_controller.g.dart';
 
@@ -58,11 +59,7 @@ abstract class _FirestoreControllerBase with Store {
           .get();
       for (CapEpModel value in titulo.lista.values) {
         await atualizarDados(
-          colecao: colecao,
-          titulo: titulo,
-          value: value,
-          doc: documento
-        );
+            colecao: colecao, titulo: titulo, value: value, doc: documento);
       }
     }
   }
@@ -75,9 +72,10 @@ abstract class _FirestoreControllerBase with Store {
   }) async {
     assert(colecao != '');
     if (_authController.userID != null) {
-      final DocumentSnapshot documento = doc ?? await _colecoes(colecao)
-          .document(titulo.nome.replaceAll('.', ''))
-          .get();
+      final DocumentSnapshot documento = doc ??
+          await _colecoes(colecao)
+              .document(titulo.nome.replaceAll('.', ''))
+              .get();
       await _firestore.runTransaction((Transaction tx) async {
         if (documento.exists)
           await tx.update(

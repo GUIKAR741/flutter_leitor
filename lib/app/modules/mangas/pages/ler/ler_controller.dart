@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/controllers/ler.dart';
-import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
-import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../../../shared/controllers/ler.dart';
+import '../../../../shared/controllers/listagem_titulo.dart';
+import '../../../../shared/interfaces/repository_unique.dart';
+import '../../../../shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 
 part 'ler_controller.g.dart';
 

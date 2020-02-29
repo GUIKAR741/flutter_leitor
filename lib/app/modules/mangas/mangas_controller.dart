@@ -1,5 +1,6 @@
-import 'package:flutter_leitor/app/shared/controllers/listagem_principal.dart';
 import 'package:mobx/mobx.dart';
+
+import '../../shared/controllers/listagem_principal.dart';
 
 part 'mangas_controller.g.dart';
 

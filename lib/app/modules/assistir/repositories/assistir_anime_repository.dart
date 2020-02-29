@@ -1,9 +1,10 @@
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/services/dio_service.dart';
-import 'package:flutter_modular/flutter_modular.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_modular/flutter_modular.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+
+import '../../../shared/models/capitulo_episodio_model.dart';
+import '../../../shared/services/dio_service.dart';
 
 class AssistirAnimeRepository extends Disposable {
   final DioService dio = Modular.get<DioService>();

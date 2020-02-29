@@ -1,14 +1,14 @@
-import 'package:flutter_leitor/app/modules/animes/animes_controller.dart';
-import 'package:flutter_leitor/app/modules/animes/animes_page.dart';
-import 'package:flutter_leitor/app/modules/animes/pages/anime/anime_controller.dart';
-import 'package:flutter_leitor/app/modules/animes/repositories/anime_repository.dart';
-import 'package:flutter_leitor/app/modules/animes/repositories/animes_repository.dart';
-import 'package:flutter_leitor/app/shared/controllers/listagem_principal.dart';
-import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
-import 'package:flutter_leitor/app/shared/interfaces/repository_principal.dart';
-import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
+import '../../modules/animes/animes_controller.dart';
+import '../../modules/animes/animes_page.dart';
+import '../../modules/animes/pages/anime/anime_controller.dart';
+import '../../modules/animes/repositories/anime_repository.dart';
+import '../../modules/animes/repositories/animes_repository.dart';
+import '../../shared/controllers/listagem_principal.dart';
+import '../../shared/controllers/listagem_titulo.dart';
+import '../../shared/interfaces/repository_principal.dart';
+import '../../shared/interfaces/repository_unique.dart';
 import 'pages/anime/anime_page.dart';
 
 class AnimesModule extends ChildModule {

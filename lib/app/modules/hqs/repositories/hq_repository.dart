@@ -1,9 +1,10 @@
 import 'package:dio/dio.dart';
-import 'package:flutter_leitor/app/shared/interfaces/repository_unique.dart';
-import 'package:flutter_leitor/app/shared/models/capitulo_episodio_model.dart';
-import 'package:flutter_leitor/app/shared/models/titulo_model.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
+
+import '../../../shared/interfaces/repository_unique.dart';
+import '../../../shared/models/capitulo_episodio_model.dart';
+import '../../../shared/models/titulo_model.dart';
 
 class HqRepository extends IRepositoryUnique {
   Future<String> _requisicaoErroDb(String link, {CancelToken cancel}) async {

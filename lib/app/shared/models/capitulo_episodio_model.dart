@@ -51,7 +51,6 @@ abstract class _CapEpModelBase with Store {
   @observable
   bool status = false;
 
-
   _CapEpModelBase({this.titulo, this.link, this.info, this.imagem});
 
   @action
