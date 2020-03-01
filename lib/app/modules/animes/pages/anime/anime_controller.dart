@@ -21,24 +21,24 @@ abstract class _AnimeBase extends ListagemTitulo with Store {
   }
 
   Future<void> videoExterno(CapEpModel ep) async {
+    addLista(ep.titulo, ep, add: true);
     final String link = await (repo as AnimeRepository).linkVideo(
       ep,
       cancel: cancel,
     );
-    if (link == "link_invalido") {
+    if (link == "link_invalido" || link == null || link.isEmpty) {
       Modular.get<NotificationService>().notificacaoPadrao(
         mensagem: "Capitulo Não Disponivel",
         tipo: NotificationType.danger,
         icon: Icon(Icons.error),
       );
       return;
-    } else if (link == null || link.isEmpty) return;
+    }
     final AndroidIntent intent = AndroidIntent(
       action: "action_view",
       data: link,
       type: "video/*",
     );
     await intent.launch();
-    addLista(ep.titulo, ep, add: true);
   }
 }
