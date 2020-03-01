@@ -1,4 +1,3 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:mobx/mobx.dart';
@@ -43,12 +42,12 @@ abstract class _AuthBase with Store {
 
   _AuthBase() {
     _initUser();
-    when((_) => user != null, _sincronizarUser);
   }
 
   @action
   Future loginWithGoogle() async {
     user = await _authRepository.getLogin();
+    _sincronizarUser();
   }
 
   @action

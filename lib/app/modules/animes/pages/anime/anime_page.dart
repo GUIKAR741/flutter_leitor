@@ -126,6 +126,7 @@ class AnimePage extends StatelessWidget {
         controller.addLista(episodio.titulo, episodio, add: true);
         Modular.to.pushNamed('/assistir', arguments: episodio);
       },
+      onLongPress: () async => await controller.videoExterno(episodio),
     );
   }
 }

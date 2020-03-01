@@ -34,6 +34,10 @@ abstract class _ListagemTituloBase extends Disposable with Store {
 
   @protected
   set colecao(String value) => _colecao = value;
+  @protected
+  IRepositoryUnique get repo => _repo;
+  @protected
+  CancelToken get cancel => _cancel;
 
   @observable
   ObservableFuture<List> lista;
@@ -62,8 +66,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   @action
   iniciaBox() async {
     Box<TituloModel> boxHive = (await _box);
-    titulo.lista = boxHive.containsKey(titulo.nome.replaceAll('.', ''))
-        ? (await _box).get(titulo.nome.replaceAll('.', '')).lista
+    titulo.lista = boxHive.containsKey(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
+        ? (await _box).get(titulo.nome.replaceAll('.', '').replaceAll('/', '')).lista
         : <String, CapEpModel>{};
     final Future<void> copiarDadosNuvem = _firestoreController.copiarDadosNuvem(
       colecao: _colecao,
@@ -73,11 +77,11 @@ abstract class _ListagemTituloBase extends Disposable with Store {
     lista.whenComplete(
       () async {
         await copiarDadosNuvem;
-        if (boxHive.containsKey(titulo.nome.replaceAll('.', ''))) {
+        if (boxHive.containsKey(titulo.nome.replaceAll('.', '').replaceAll('/', ''))) {
           if (titulo.lista.isNotEmpty) {
             for (CapEpModel i in lista.value) {
-              if (titulo.lista.containsKey(i.titulo.replaceAll('.', '')))
-                i.status = titulo.lista[i.titulo.replaceAll('.', '')].status;
+              if (titulo.lista.containsKey(i.titulo.replaceAll('.', '').replaceAll('/', '')))
+                i.status = titulo.lista[i.titulo.replaceAll('.', '').replaceAll('/', '')].status;
             }
           }
         }
@@ -88,7 +92,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
           box: boxHive,
         )
             .whenComplete(() async {
-          await boxHive.put(titulo.nome.replaceAll('.', ''), titulo);
+          await boxHive.put(titulo.nome.replaceAll('.', '').replaceAll('/', ''), titulo);
         });
       },
     );
@@ -97,14 +101,14 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   @action
   addLista(String key, CapEpModel value, {bool add = false}) async {
     value.mudarStatus(add: add);
-    titulo.addLista(key.replaceAll('.', ''), value, add: add);
+    titulo.addLista(key.replaceAll('.', '').replaceAll('/', ''), value, add: add);
     Box<TituloModel> boxHive = (await _box);
     _firestoreController.atualizarDados(
       colecao: _colecao,
       titulo: titulo,
       value: value,
     );
-    boxHive.put(titulo.nome.replaceAll('.', ''), titulo);
+    boxHive.put(titulo.nome.replaceAll('.', '').replaceAll('/', ''), titulo);
   }
 
   @computed

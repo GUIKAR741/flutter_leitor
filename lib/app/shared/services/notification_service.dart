@@ -27,7 +27,7 @@ class NotificationService extends Disposable {
     Icon icon = const Icon(Icons.forum),
     NotificationType tipo = NotificationType.primary,
     int timeout = 3,
-    int containerHeight = 80,
+    double containerHeight = 80.0,
     BuildContext context,
   }) {
     showToastWidget(
@@ -40,7 +40,7 @@ class NotificationService extends Disposable {
             child: Container(
               color: _pegarCorPeloTipo(tipo),
               padding: EdgeInsets.all(12),
-              height: containerHeight ?? 80,
+              height: containerHeight ?? 80.0,
               width: MediaQuery.of(Modular.navigatorKey.currentContext)
                       .size
                       .width /

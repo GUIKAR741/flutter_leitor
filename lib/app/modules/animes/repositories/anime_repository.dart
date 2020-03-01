@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
+import 'package:flutter_leitor/app/shared/interfaces/repository_assistir.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
@@ -9,7 +10,7 @@ import '../../../shared/models/capitulo_episodio_model.dart';
 import '../../../shared/models/titulo_model.dart';
 import '../../../shared/utils/constants.dart';
 
-class AnimeRepository extends IRepositoryUnique {
+class AnimeRepository extends IRepositoryUnique with IRepositoryAssistir {
   @override
   Future<List<CapEpModel>> listarTitulo(TituloModel anime,
       {CancelToken cancel}) async {

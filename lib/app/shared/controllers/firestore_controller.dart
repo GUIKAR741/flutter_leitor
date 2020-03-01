@@ -29,18 +29,18 @@ abstract class _FirestoreControllerBase with Store {
     assert(colecao != '');
     if (_authController.userID != null) {
       final Map<String, dynamic> documento = (await _colecoes(colecao)
-              .document(titulo.nome.replaceAll('.', ''))
+              .document(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
               .get())
           ?.data;
       if (documento != null) {
         documento.forEach((String key, dynamic value) {
-          if (titulo.lista.containsKey(key.replaceAll('.', '')))
-            titulo.lista[key.replaceAll('.', '')].status = value;
+          if (titulo.lista.containsKey(key.replaceAll('.', '').replaceAll('/', '')))
+            titulo.lista[key.replaceAll('.', '').replaceAll('/', '')].status = value;
           else {
             CapEpModel capEp = CapEpModel();
-            capEp.titulo = key.replaceAll('.', '');
+            capEp.titulo = key.replaceAll('.', '').replaceAll('/', '');
             capEp.status = value;
-            titulo.lista[key.replaceAll('.', '')] = capEp;
+            titulo.lista[key.replaceAll('.', '').replaceAll('/', '')] = capEp;
           }
         });
       }
@@ -55,7 +55,7 @@ abstract class _FirestoreControllerBase with Store {
     assert(colecao != '');
     if (_authController.userID != null) {
       final DocumentSnapshot documento = await _colecoes(colecao)
-          .document(titulo.nome.replaceAll('.', ''))
+          .document(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
           .get();
       for (CapEpModel value in titulo.lista.values) {
         await atualizarDados(
@@ -74,18 +74,18 @@ abstract class _FirestoreControllerBase with Store {
     if (_authController.userID != null) {
       final DocumentSnapshot documento = doc ??
           await _colecoes(colecao)
-              .document(titulo.nome.replaceAll('.', ''))
+              .document(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
               .get();
       await _firestore.runTransaction((Transaction tx) async {
         if (documento.exists)
           await tx.update(
             documento.reference,
-            {value.titulo.replaceAll('.', ''): value.status},
+            {value.titulo.replaceAll('.', '').replaceAll('/', ''): value.status},
           );
         else
           await tx.set(
             documento.reference,
-            {value.titulo.replaceAll('.', ''): value.status},
+            {value.titulo.replaceAll('.', '').replaceAll('/', ''): value.status},
           );
       });
     }

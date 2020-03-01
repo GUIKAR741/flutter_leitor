@@ -19,33 +19,28 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Get.addKey(Modular.navigatorKey);
-    return
-    // PageStorage(
-    //   bucket: Modular.get<PageStorageBucket>(),
-      // child:
-      OKToast(
-        handleTouth: true,
-        dismissOtherOnShow: true,
-        position: ToastPosition.bottom,
-        child: Observer(
-          builder: (_) {
-            return MaterialApp(
-              navigatorKey: Modular.navigatorKey,
-              title: 'Flutter Leitor',
-              debugShowCheckedModeBanner: false,
-              themeMode: controller.tema ? ThemeMode.dark : ThemeMode.light,
-              darkTheme: ThemeData.dark(),
-              initialRoute: '/',
-              onGenerateRoute: Modular.generateRoute,
-              navigatorObservers: [
-                FirebaseAnalyticsObserver(
-                  analytics: analytics,
-                )
-              ],
-            );
-          },
-        ),
-      );
-    // );
+    return OKToast(
+      handleTouth: true,
+      dismissOtherOnShow: true,
+      position: ToastPosition.bottom,
+      child: Observer(
+        builder: (_) {
+          return MaterialApp(
+            navigatorKey: Modular.navigatorKey,
+            title: 'Flutter Leitor',
+            debugShowCheckedModeBanner: false,
+            themeMode: controller.tema ? ThemeMode.dark : ThemeMode.light,
+            darkTheme: ThemeData.dark(),
+            initialRoute: '/',
+            onGenerateRoute: Modular.generateRoute,
+            navigatorObservers: [
+              FirebaseAnalyticsObserver(
+                analytics: analytics,
+              )
+            ],
+          );
+        },
+      ),
+    );
   }
 }
