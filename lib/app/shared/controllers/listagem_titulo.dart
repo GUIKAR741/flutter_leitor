@@ -40,7 +40,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   CancelToken get cancel => _cancel;
 
   @observable
-  ObservableFuture<List> lista;
+  ObservableFuture<List<CapEpModel>> lista;
   @observable
   bool _isReversed = false;
 
@@ -55,28 +55,27 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   set box(Future<Box<TituloModel>> value) => _box = value;
 
   @action
-  Future<void> listarTitulo() async {
+  void listarTitulo(){
     titulo = Modular.args.data;
     lista = null;
     _isReversed = false;
     lista = _repo.listarTitulo(_titulo, cancel: _cancel).asObservable();
-    await iniciaBox();
+    iniciaBox();
   }
 
   @action
-  Future<void> iniciaBox() async {
-    Box<TituloModel> boxHive = (await _box);
-    titulo.lista = boxHive.containsKey(titulo.nomeFormatado)
-        ? (await _box).get(titulo.nomeFormatado).lista
-        : <String, CapEpModel>{};
-    final Future<void> copiarDadosNuvem = _firestoreController.copiarDadosNuvem(
-      colecao: _colecao,
-      titulo: titulo,
-      box: boxHive,
-    );
-    lista.whenComplete(
-      () async {
-        await copiarDadosNuvem;
+  void iniciaBox(){
+    lista.then(
+      (List<CapEpModel> data) async {
+        Box<TituloModel> boxHive = (await _box);
+        titulo.lista = boxHive.containsKey(titulo.nomeFormatado)
+            ? (await _box).get(titulo.nomeFormatado).lista
+            : <String, CapEpModel>{};
+        await _firestoreController.copiarDadosNuvem(
+          colecao: _colecao,
+          titulo: titulo,
+          box: boxHive,
+        );
         if (boxHive.containsKey(titulo.nomeFormatado)) {
           if (titulo.lista.isNotEmpty) {
             for (CapEpModel i in lista.value) {
@@ -91,15 +90,17 @@ abstract class _ListagemTituloBase extends Disposable with Store {
           titulo: titulo,
           box: boxHive,
         )
-            .whenComplete(() async {
-          await boxHive.put(titulo.nomeFormatado, titulo);
-        });
+            .whenComplete(
+          () async {
+            await boxHive.put(titulo.nomeFormatado, titulo);
+          },
+        );
       },
     );
   }
 
   @action
-  addLista(String key, CapEpModel value, {bool add = false}) async {
+  Future<void> addLista(String key, CapEpModel value, {bool add = false}) async {
     value.mudarStatus(add: add);
     titulo.addLista(key, value, add: add);
     Box<TituloModel> boxHive = (await _box);
@@ -112,20 +113,20 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   }
 
   @computed
-  List get listagem =>
+  List<CapEpModel> get listagem =>
       !isReversed ? lista.value : lista.value.reversed.toList();
 
   @action
   void reversed() => _isReversed = !_isReversed;
 
   @action
-  List pesquisar(res) {
-    List pesquisa = lista.value is List
+  List<CapEpModel> pesquisar(res) {
+    List<CapEpModel> pesquisa = lista.value is List<CapEpModel>
         ? lista.value
             .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
             .toList()
         : [];
-    if (pesquisa?.length == null) return [];
+    if (pesquisa == null || pesquisa?.length == null) return [];
     return pesquisa.length > 0 ? pesquisa : lista.value;
   }
 }

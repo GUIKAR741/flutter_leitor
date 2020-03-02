@@ -20,12 +20,18 @@ class ItemListagemPrincipal extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
+      contentPadding: EdgeInsets.symmetric(
+        vertical: 2,
+        horizontal: 5,
+      ),
       leading: Container(
         height: 100,
         width: 50,
-        child:
-            ExtendedImage.network(titulo.imagem, cache: true, fit: BoxFit.fill),
+        child: ExtendedImage.network(
+          titulo.imagem,
+          cache: true,
+          fit: BoxFit.fill,
+        ),
       ),
       title: Text(titulo.nome),
       trailing: Observer(builder: (_) {

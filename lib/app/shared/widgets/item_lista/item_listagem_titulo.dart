@@ -22,7 +22,7 @@ class ItemListagemTitulo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 15),
+      contentPadding: EdgeInsets.symmetric(horizontal: 10),
       leading: capEp.imagem != null && capEp.imagem.isNotEmpty
           ? Container(
               height: 100,

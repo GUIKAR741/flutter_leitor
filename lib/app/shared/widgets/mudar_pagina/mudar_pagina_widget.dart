@@ -40,14 +40,16 @@ class MudarPaginaWidget extends StatelessWidget {
       content: Container(
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
-        child: GridView.count(
-          primary: false,
-          shrinkWrap: true,
-          crossAxisSpacing: 2,
-          mainAxisSpacing: 2,
-          crossAxisCount: 4,
-          children: botoes,
-        ),
+        child: OrientationBuilder(builder: (_, Orientation orientation) {
+          return GridView.count(
+            primary: false,
+            shrinkWrap: true,
+            crossAxisSpacing: 2,
+            mainAxisSpacing: 2,
+            crossAxisCount: orientation == Orientation.portrait ? 4 : 6,
+            children: botoes,
+          );
+        }),
       ),
     );
   }

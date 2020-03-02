@@ -54,7 +54,7 @@ abstract class _ListagemPrincipalBase extends Disposable with Store {
       Box<TituloModel> boxHive = (await _box);
       for (TituloModel t in data) {
         if (boxHive.containsKey(t.nomeFormatado)) {
-          t.favorito = boxHive.get(t.nomeFormatado).favorito;
+          t.favorito = boxHive.get(t.nomeFormatado).favorito ?? false;
           if (t.favorito) {
             data.remove(t);
             data.insert(0, t);
@@ -72,7 +72,7 @@ abstract class _ListagemPrincipalBase extends Disposable with Store {
             .where((t) => t.nome.toLowerCase().contains(res.toLowerCase()))
             .toList()
         : [];
-    if (pesquisa?.length == null) return [];
+    if (pesquisa == null || pesquisa?.length == null) return [];
     return pesquisa.length > 0 ? pesquisa : titulos.value;
   }
 
