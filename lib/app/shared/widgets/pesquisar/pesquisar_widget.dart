@@ -10,9 +10,10 @@ abstract class Pesquisar extends SearchDelegate<String> {
     this.keyboardType,
     this.textInputAction = TextInputAction.search,
   }) : super(
-            searchFieldLabel: searchFieldLabel,
-            keyboardType: keyboardType,
-            textInputAction: textInputAction);
+          searchFieldLabel: searchFieldLabel,
+          keyboardType: keyboardType,
+          textInputAction: textInputAction,
+        );
 
   @override
   ThemeData appBarTheme(BuildContext context) {
@@ -22,7 +23,12 @@ abstract class Pesquisar extends SearchDelegate<String> {
 
   @override
   List<Widget> buildActions(BuildContext context) {
-    return [IconButton(icon: Icon(Icons.clear), onPressed: () => query = '')];
+    return [
+      IconButton(
+        icon: Icon(Icons.clear),
+        onPressed: () => query = '',
+      ),
+    ];
   }
 
   @override
@@ -30,6 +36,5 @@ abstract class Pesquisar extends SearchDelegate<String> {
     return Center(
       child: Text("Faça uma Pesquisa!"),
     );
-    // }
   }
 }

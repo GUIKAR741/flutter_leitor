@@ -1,10 +1,10 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../shared/models/titulo_model.dart';
 import '../../shared/widgets/drawer/drawer_custom.dart';
+import '../../shared/widgets/item_lista/item_listagem_principal.dart';
 import '../../shared/widgets/pesquisar/pesquisar_titulo_widget.dart';
 import 'animes_controller.dart';
 
@@ -27,9 +27,11 @@ class AnimesPage extends StatelessWidget {
             ),
             onPressed: () {
               showSearch(
-                  context: context,
-                  delegate: PesquisarTitulo(
-                      path: '/animes/anime', controller: controller));
+                context: context,
+                delegate: PesquisarTitulo(
+                  rota: '/animes/anime',
+                ),
+              );
             },
             tooltip: "Pesquisar",
           )
@@ -52,19 +54,10 @@ class AnimesPage extends StatelessWidget {
                       controller: controller.scroll,
                       itemCount: titulos.length,
                       itemBuilder: (_, index) {
-                        return ListTile(
-                          contentPadding:
-                              EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                          leading: ExtendedImage.network(titulos[index].imagem,
-                              width: 50,
-                              cache: true,
-                              enableMemoryCache: true,
-                              fit: BoxFit.fill),
-                          title: Text(titulos[index].nome),
-                          onTap: () {
-                            Modular.to.pushNamed('/animes/anime',
-                                arguments: titulos[index]);
-                          },
+                        return ItemListagemPrincipal(
+                          titulo: titulos[index],
+                          onPressed: controller.addFavorito,
+                          rota: '/animes/anime',
                         );
                       },
                       separatorBuilder: (_, index) => Divider(),

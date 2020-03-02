@@ -1,28 +1,28 @@
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../controllers/listagem_principal.dart';
 import '../../models/titulo_model.dart';
 import '../../widgets/pesquisar/pesquisar_widget.dart';
+import '../item_lista/item_listagem_principal.dart';
 
 class PesquisarTitulo extends Pesquisar {
-  final String path;
-  final ListagemPrincipal controller;
+  final String rota;
+  final ListagemPrincipal controller = Modular.get<ListagemPrincipal>();
 
   PesquisarTitulo({
-    @required this.controller,
-    @required this.path,
+    @required this.rota,
   });
 
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: Icon(Icons.arrow_back),
-        onPressed: () {
-          controller.listar();
-          close(context, '');
-        });
+      icon: Icon(Icons.arrow_back),
+      onPressed: () {
+        controller.listar();
+        close(context, '');
+      },
+    );
   }
 
   Widget listTitulos() {
@@ -30,18 +30,10 @@ class PesquisarTitulo extends Pesquisar {
     return ListView.separated(
       itemCount: titulos.length,
       itemBuilder: (_, index) {
-        return ListTile(
-          contentPadding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-          leading: Container(
-            height: 100,
-            width: 50,
-            child: ExtendedImage.network(titulos[index].imagem,
-                cache: true, fit: BoxFit.fill),
-          ),
-          title: Text(titulos[index].nome),
-          onTap: () {
-            Modular.to.pushNamed(path, arguments: titulos[index]);
-          },
+        return ItemListagemPrincipal(
+          titulo: titulos[index],
+          onPressed: controller.addFavorito,
+          rota: '/mangas/manga',
         );
       },
       separatorBuilder: (_, index) => Divider(),

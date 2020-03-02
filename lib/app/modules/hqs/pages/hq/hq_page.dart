@@ -4,10 +4,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../modules/hqs/pages/hq/hq_controller.dart';
-import '../../../../modules/hqs/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import '../../../../shared/models/capitulo_episodio_model.dart';
 import '../../../../shared/widgets/card/card_widget.dart';
 import '../../../../shared/widgets/drawer/drawer_custom.dart';
+import '../../../../shared/widgets/item_lista/item_listagem_titulo.dart';
+import '../../../../shared/widgets/pesquisar/pesquisar_capitulo_episodio_widget.dart';
 
 class HqPage extends StatelessWidget {
   final HqController controller = Modular.get<HqController>();
@@ -32,7 +33,11 @@ class HqPage extends StatelessWidget {
               Icons.search,
             ),
             onPressed: () {
-              showSearch(context: context, delegate: PesquisarCapitulo());
+              showSearch(
+                  context: context,
+                  delegate: PesquisarCapituloEpisodio(
+                    rota: '/hqs/ler_hq',
+                  ));
             },
             tooltip: "Pesquisar",
           ),
@@ -59,20 +64,17 @@ class HqPage extends StatelessWidget {
                           controller: controller.scroll,
                           child: ListView.separated(
                             controller: controller.scroll,
-                            itemCount: capitulos.length,
+                            itemCount: capitulos.length + 1,
                             itemBuilder: (_, index) {
                               return index == 0
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        CardWidget(
-                                          titulo: controller.titulo,
-                                        ),
-                                        listTile(capitulos[index])
-                                      ],
+                                  ? CardWidget(
+                                      titulo: controller.titulo,
                                     )
-                                  : listTile(capitulos[index]);
+                                  : ItemListagemTitulo(
+                                      capEp: capitulos[index],
+                                      onPressed: controller.addLista,
+                                      rota: '/hqs/ler_hq',
+                                    );
                             },
                             separatorBuilder: (_, index) => Divider(),
                           ),
@@ -96,26 +98,6 @@ class HqPage extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget listTile(capitulo) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 15),
-      title: Text(capitulo.titulo),
-      trailing: Observer(builder: (_) {
-        return IconButton(
-          icon: Icon(
-            capitulo.status ? Icons.check_box : Icons.check_box_outline_blank,
-          ),
-          tooltip: capitulo.status ? "Lido" : "Não Lido",
-          onPressed: () => controller.addLista(capitulo.titulo, capitulo),
-        );
-      }),
-      onTap: () {
-        controller.addLista(capitulo.titulo, capitulo, add: true);
-        Modular.to.pushNamed('/hqs/ler_hq', arguments: capitulo);
-      },
     );
   }
 }

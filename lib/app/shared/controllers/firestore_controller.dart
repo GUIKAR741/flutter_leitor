@@ -12,6 +12,11 @@ part 'firestore_controller.g.dart';
 
 class FirestoreController = _FirestoreControllerBase with _$FirestoreController;
 
+extension S on String{
+  String format(){
+    return this.replaceAll('.', '').replaceAll('/', '');
+  }
+}
 abstract class _FirestoreControllerBase with Store {
   final Firestore _firestore = Firestore.instance;
   final AuthController _authController = Modular.get();
@@ -28,19 +33,19 @@ abstract class _FirestoreControllerBase with Store {
   }) async {
     assert(colecao != '');
     if (_authController.userID != null) {
-      final Map<String, dynamic> documento = (await _colecoes(colecao)
-              .document(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
-              .get())
-          ?.data;
+      final Map<String, dynamic> documento =
+          (await _colecoes(colecao).document(titulo.nomeFormatado).get())?.data;
       if (documento != null) {
         documento.forEach((String key, dynamic value) {
-          if (titulo.lista.containsKey(key.replaceAll('.', '').replaceAll('/', '')))
-            titulo.lista[key.replaceAll('.', '').replaceAll('/', '')].status = value;
+          if (titulo.lista
+              .containsKey(key.format()))
+            titulo.lista[key.format()].status =
+                value;
           else {
             CapEpModel capEp = CapEpModel();
-            capEp.titulo = key.replaceAll('.', '').replaceAll('/', '');
+            capEp.titulo = key.format();
             capEp.status = value;
-            titulo.lista[key.replaceAll('.', '').replaceAll('/', '')] = capEp;
+            titulo.lista[key.format()] = capEp;
           }
         });
       }
@@ -54,9 +59,8 @@ abstract class _FirestoreControllerBase with Store {
   }) async {
     assert(colecao != '');
     if (_authController.userID != null) {
-      final DocumentSnapshot documento = await _colecoes(colecao)
-          .document(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
-          .get();
+      final DocumentSnapshot documento =
+          await _colecoes(colecao).document(titulo.nomeFormatado).get();
       for (CapEpModel value in titulo.lista.values) {
         await atualizarDados(
             colecao: colecao, titulo: titulo, value: value, doc: documento);
@@ -72,20 +76,18 @@ abstract class _FirestoreControllerBase with Store {
   }) async {
     assert(colecao != '');
     if (_authController.userID != null) {
-      final DocumentSnapshot documento = doc ??
-          await _colecoes(colecao)
-              .document(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
-              .get();
+      final DocumentSnapshot documento =
+          doc ?? await _colecoes(colecao).document(titulo.nomeFormatado).get();
       await _firestore.runTransaction((Transaction tx) async {
         if (documento.exists)
           await tx.update(
             documento.reference,
-            {value.titulo.replaceAll('.', '').replaceAll('/', ''): value.status},
+            {value.tituloFormatado: value.status},
           );
         else
           await tx.set(
             documento.reference,
-            {value.titulo.replaceAll('.', '').replaceAll('/', ''): value.status},
+            {value.tituloFormatado: value.status},
           );
       });
     }

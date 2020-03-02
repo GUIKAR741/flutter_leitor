@@ -1,13 +1,13 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
-import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../../../modules/animes/widgets/pesquisar/pesquisar_episodio_widget.dart';
 import '../../../../shared/models/capitulo_episodio_model.dart';
 import '../../../../shared/widgets/card/card_widget.dart';
 import '../../../../shared/widgets/drawer/drawer_custom.dart';
+import '../../../../shared/widgets/item_lista/item_listagem_titulo.dart';
+import '../../../../shared/widgets/pesquisar/pesquisar_capitulo_episodio_widget.dart';
 import 'anime_controller.dart';
 
 class AnimePage extends StatelessWidget {
@@ -32,7 +32,12 @@ class AnimePage extends StatelessWidget {
               Icons.search,
             ),
             onPressed: () {
-              showSearch(context: context, delegate: PesquisarEpisodio());
+              showSearch(
+                context: context,
+                delegate: PesquisarCapituloEpisodio(
+                  rota: '/assistir',
+                ),
+              );
             },
             tooltip: "Pesquisar",
           ),
@@ -59,18 +64,21 @@ class AnimePage extends StatelessWidget {
                           controller: controller.scroll,
                           child: ListView.separated(
                             controller: controller.scroll,
-                            itemCount: episodios.length,
+                            itemCount: episodios.length + 1,
                             itemBuilder: (_, index) {
                               return index == 0
-                                  ? Column(
-                                      children: <Widget>[
-                                        CardWidget(
-                                          titulo: controller.titulo,
-                                        ),
-                                        listTile(episodios[index])
-                                      ],
+                                  ? CardWidget(
+                                      titulo: controller.titulo,
                                     )
-                                  : listTile(episodios[index]);
+                                  : ItemListagemTitulo(
+                                      capEp: episodios[index],
+                                      onPressed: controller.addLista,
+                                      rota: '/assistir',
+                                      onLongPress: () async =>
+                                          await controller.videoExterno(
+                                        episodios[index],
+                                      ),
+                                    );
                             },
                             separatorBuilder: (_, index) => Divider(),
                           ),
@@ -94,39 +102,6 @@ class AnimePage extends StatelessWidget {
           );
         },
       ),
-    );
-  }
-
-  Widget listTile(CapEpModel episodio) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-      leading: Container(
-        height: 100,
-        width: 70,
-        child: ExtendedImage.network(
-          episodio.imagem,
-          cache: true,
-          fit: BoxFit.fill,
-        ),
-      ),
-      title: Text(episodio.titulo),
-      subtitle: Text(episodio.info),
-      trailing: Observer(
-        builder: (_) {
-          return IconButton(
-            icon: Icon(
-              episodio.status ? Icons.check_box : Icons.check_box_outline_blank,
-            ),
-            tooltip: episodio.status ? "Lido" : "Não Lido",
-            onPressed: () => controller.addLista(episodio.titulo, episodio),
-          );
-        },
-      ),
-      onTap: () {
-        controller.addLista(episodio.titulo, episodio, add: true);
-        Modular.to.pushNamed('/assistir', arguments: episodio);
-      },
-      onLongPress: () async => await controller.videoExterno(episodio),
     );
   }
 }

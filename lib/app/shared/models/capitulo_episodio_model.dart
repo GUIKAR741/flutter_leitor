@@ -53,6 +53,9 @@ abstract class _CapEpModelBase with Store {
 
   _CapEpModelBase({this.titulo, this.link, this.info, this.imagem});
 
+  @computed
+  String get tituloFormatado => titulo.replaceAll('.', '').replaceAll('/', '');
+
   @action
   void mudarStatus({bool add = false}) => status = !add ? !status : add;
 

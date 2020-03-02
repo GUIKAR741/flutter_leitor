@@ -60,6 +60,16 @@ abstract class _TituloModelBase extends HiveObject with Store {
   @HiveField(2)
   Map<String, CapEpModel> lista = <String, CapEpModel>{};
 
+  @observable
+  @HiveField(3)
+  bool favorito = false;
+
+  @action
+  setFavorito(bool value) => favorito = value;
+
+  @computed
+  String get nomeFormatado => nome.replaceAll('.', '').replaceAll('/', '');
+
   void addLista(String key, CapEpModel value, {bool add = false}) {
     if (lista.containsKey(key) && !add) {
       lista.remove(key);

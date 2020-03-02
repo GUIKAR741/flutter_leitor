@@ -39,6 +39,13 @@ class CapEpModelAdapter extends TypeAdapter<CapEpModel> {
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$CapEpModel on _CapEpModelBase, Store {
+  Computed<String> _$tituloFormatadoComputed;
+
+  @override
+  String get tituloFormatado => (_$tituloFormatadoComputed ??=
+          Computed<String>(() => super.tituloFormatado))
+      .value;
+
   final _$tituloAtom = Atom(name: '_CapEpModelBase.titulo');
 
   @override
@@ -140,7 +147,7 @@ mixin _$CapEpModel on _CapEpModelBase, Store {
   @override
   String toString() {
     final string =
-        'titulo: ${titulo.toString()},link: ${link.toString()},info: ${info.toString()},imagem: ${imagem.toString()},status: ${status.toString()}';
+        'titulo: ${titulo.toString()},link: ${link.toString()},info: ${info.toString()},imagem: ${imagem.toString()},status: ${status.toString()},tituloFormatado: ${tituloFormatado.toString()}';
     return '{$string}';
   }
 }

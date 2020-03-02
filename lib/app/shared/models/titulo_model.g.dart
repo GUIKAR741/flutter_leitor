@@ -19,19 +19,22 @@ class TituloModelAdapter extends TypeAdapter<TituloModel> {
     return TituloModel()
       ..nome = fields[0] as String
       ..link = fields[1] as String
-      ..lista = (fields[2] as Map)?.cast<String, CapEpModel>();
+      ..lista = (fields[2] as Map)?.cast<String, CapEpModel>()
+      ..favorito = fields[3] as bool;
   }
 
   @override
   void write(BinaryWriter writer, TituloModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.nome)
       ..writeByte(1)
       ..write(obj.link)
       ..writeByte(2)
-      ..write(obj.lista);
+      ..write(obj.lista)
+      ..writeByte(3)
+      ..write(obj.favorito);
   }
 }
 
@@ -42,6 +45,13 @@ class TituloModelAdapter extends TypeAdapter<TituloModel> {
 // ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
 
 mixin _$TituloModel on _TituloModelBase, Store {
+  Computed<String> _$nomeFormatadoComputed;
+
+  @override
+  String get nomeFormatado =>
+      (_$nomeFormatadoComputed ??= Computed<String>(() => super.nomeFormatado))
+          .value;
+
   final _$nomeAtom = Atom(name: '_TituloModelBase.nome');
 
   @override
@@ -110,10 +120,40 @@ mixin _$TituloModel on _TituloModelBase, Store {
     }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
   }
 
+  final _$favoritoAtom = Atom(name: '_TituloModelBase.favorito');
+
+  @override
+  bool get favorito {
+    _$favoritoAtom.context.enforceReadPolicy(_$favoritoAtom);
+    _$favoritoAtom.reportObserved();
+    return super.favorito;
+  }
+
+  @override
+  set favorito(bool value) {
+    _$favoritoAtom.context.conditionallyRunInAction(() {
+      super.favorito = value;
+      _$favoritoAtom.reportChanged();
+    }, _$favoritoAtom, name: '${_$favoritoAtom.name}_set');
+  }
+
+  final _$_TituloModelBaseActionController =
+      ActionController(name: '_TituloModelBase');
+
+  @override
+  dynamic setFavorito(bool value) {
+    final _$actionInfo = _$_TituloModelBaseActionController.startAction();
+    try {
+      return super.setFavorito(value);
+    } finally {
+      _$_TituloModelBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
   @override
   String toString() {
     final string =
-        'nome: ${nome.toString()},link: ${link.toString()},descricao: ${descricao.toString()},imagem: ${imagem.toString()}';
+        'nome: ${nome.toString()},link: ${link.toString()},descricao: ${descricao.toString()},imagem: ${imagem.toString()},favorito: ${favorito.toString()},nomeFormatado: ${nomeFormatado.toString()}';
     return '{$string}';
   }
 }

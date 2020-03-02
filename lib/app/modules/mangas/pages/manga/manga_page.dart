@@ -4,10 +4,11 @@ import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../../../../modules/mangas/pages/manga/manga_controller.dart';
-import '../../../../modules/mangas/widgets/pesquisar/pesquisar_capitulo_widget.dart';
 import '../../../../shared/models/capitulo_episodio_model.dart';
 import '../../../../shared/widgets/card/card_widget.dart';
 import '../../../../shared/widgets/drawer/drawer_custom.dart';
+import '../../../../shared/widgets/item_lista/item_listagem_titulo.dart';
+import '../../../../shared/widgets/pesquisar/pesquisar_capitulo_episodio_widget.dart';
 
 class MangaPage extends StatelessWidget {
   final MangaController controller = Modular.get<MangaController>();
@@ -18,29 +19,6 @@ class MangaPage extends StatelessWidget {
   StatelessElement createElement() {
     controller.listarTitulo();
     return super.createElement();
-  }
-
-  Widget listTile(CapEpModel capitulo) {
-    return ListTile(
-      contentPadding: EdgeInsets.symmetric(horizontal: 15),
-      title: Text(capitulo.titulo),
-      subtitle: Text(capitulo.info),
-      trailing: Observer(
-        builder: (_) {
-          return IconButton(
-            icon: Icon(
-              capitulo.status ? Icons.check_box : Icons.check_box_outline_blank,
-            ),
-            tooltip: capitulo.status ? "Lido" : "Não Lido",
-            onPressed: () => controller.addLista(capitulo.titulo, capitulo),
-          );
-        },
-      ),
-      onTap: () {
-        controller.addLista(capitulo.titulo, capitulo, add: true);
-        Modular.to.pushNamed('/mangas/ler_manga', arguments: capitulo);
-      },
-    );
   }
 
   @override
@@ -55,7 +33,12 @@ class MangaPage extends StatelessWidget {
               Icons.search,
             ),
             onPressed: () {
-              showSearch(context: context, delegate: PesquisarCapitulo());
+              showSearch(
+                context: context,
+                delegate: PesquisarCapituloEpisodio(
+                  rota: '/mangas/ler_manga',
+                ),
+              );
             },
             tooltip: "Pesquisar",
           ),
@@ -82,20 +65,17 @@ class MangaPage extends StatelessWidget {
                           controller: controller.scroll,
                           child: ListView.separated(
                             controller: controller.scroll,
-                            itemCount: capitulos.length,
+                            itemCount: capitulos.length + 1,
                             itemBuilder: (_, index) {
                               return index == 0
-                                  ? Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        CardWidget(
-                                          titulo: controller.titulo,
-                                        ),
-                                        listTile(capitulos[index])
-                                      ],
+                                  ? CardWidget(
+                                      titulo: controller.titulo,
                                     )
-                                  : listTile(capitulos[index]);
+                                  : ItemListagemTitulo(
+                                      capEp: capitulos[index - 1],
+                                      onPressed: controller.addLista,
+                                      rota: '/mangas/ler_manga',
+                                    );
                             },
                             separatorBuilder: (_, index) => Divider(),
                           ),

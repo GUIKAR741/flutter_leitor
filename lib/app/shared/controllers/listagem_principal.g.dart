@@ -26,6 +26,13 @@ mixin _$ListagemPrincipal on _ListagemPrincipalBase, Store {
     }, _$titulosAtom, name: '${_$titulosAtom.name}_set');
   }
 
+  final _$addFavoritoAsyncAction = AsyncAction('addFavorito');
+
+  @override
+  Future<void> addFavorito(TituloModel titulo) {
+    return _$addFavoritoAsyncAction.run(() => super.addFavorito(titulo));
+  }
+
   final _$_ListagemPrincipalBaseActionController =
       ActionController(name: '_ListagemPrincipalBase');
 
@@ -34,6 +41,16 @@ mixin _$ListagemPrincipal on _ListagemPrincipalBase, Store {
     final _$actionInfo = _$_ListagemPrincipalBaseActionController.startAction();
     try {
       return super.listar(refresh: refresh);
+    } finally {
+      _$_ListagemPrincipalBaseActionController.endAction(_$actionInfo);
+    }
+  }
+
+  @override
+  void iniciaBox() {
+    final _$actionInfo = _$_ListagemPrincipalBaseActionController.startAction();
+    try {
+      return super.iniciaBox();
     } finally {
       _$_ListagemPrincipalBaseActionController.endAction(_$actionInfo);
     }

@@ -50,10 +50,17 @@ mixin _$ListagemTitulo on _ListagemTituloBase, Store {
     }, _$_isReversedAtom, name: '${_$_isReversedAtom.name}_set');
   }
 
+  final _$listarTituloAsyncAction = AsyncAction('listarTitulo');
+
+  @override
+  Future<void> listarTitulo() {
+    return _$listarTituloAsyncAction.run(() => super.listarTitulo());
+  }
+
   final _$iniciaBoxAsyncAction = AsyncAction('iniciaBox');
 
   @override
-  Future iniciaBox() {
+  Future<void> iniciaBox() {
     return _$iniciaBoxAsyncAction.run(() => super.iniciaBox());
   }
 
@@ -67,16 +74,6 @@ mixin _$ListagemTitulo on _ListagemTituloBase, Store {
 
   final _$_ListagemTituloBaseActionController =
       ActionController(name: '_ListagemTituloBase');
-
-  @override
-  void listarTitulo() {
-    final _$actionInfo = _$_ListagemTituloBaseActionController.startAction();
-    try {
-      return super.listarTitulo();
-    } finally {
-      _$_ListagemTituloBaseActionController.endAction(_$actionInfo);
-    }
-  }
 
   @override
   void reversed() {

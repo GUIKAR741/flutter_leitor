@@ -30,7 +30,6 @@ class AppModule extends MainModule {
         Bind<DrawerCustomController>((i) => DrawerCustomController()),
         Bind<FirebaseAnalytics>((i) => FirebaseAnalytics()),
         Bind<Crashlytics>((i) => Crashlytics.instance),
-        // Bind<PageStorageBucket>((i) => PageStorageBucket()),
       ];
 
   @override

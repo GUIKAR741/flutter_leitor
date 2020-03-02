@@ -55,19 +55,19 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   set box(Future<Box<TituloModel>> value) => _box = value;
 
   @action
-  void listarTitulo() {
+  Future<void> listarTitulo() async {
     titulo = Modular.args.data;
     lista = null;
     _isReversed = false;
     lista = _repo.listarTitulo(_titulo, cancel: _cancel).asObservable();
-    iniciaBox();
+    await iniciaBox();
   }
 
   @action
-  iniciaBox() async {
+  Future<void> iniciaBox() async {
     Box<TituloModel> boxHive = (await _box);
-    titulo.lista = boxHive.containsKey(titulo.nome.replaceAll('.', '').replaceAll('/', ''))
-        ? (await _box).get(titulo.nome.replaceAll('.', '').replaceAll('/', '')).lista
+    titulo.lista = boxHive.containsKey(titulo.nomeFormatado)
+        ? (await _box).get(titulo.nomeFormatado).lista
         : <String, CapEpModel>{};
     final Future<void> copiarDadosNuvem = _firestoreController.copiarDadosNuvem(
       colecao: _colecao,
@@ -77,11 +77,11 @@ abstract class _ListagemTituloBase extends Disposable with Store {
     lista.whenComplete(
       () async {
         await copiarDadosNuvem;
-        if (boxHive.containsKey(titulo.nome.replaceAll('.', '').replaceAll('/', ''))) {
+        if (boxHive.containsKey(titulo.nomeFormatado)) {
           if (titulo.lista.isNotEmpty) {
             for (CapEpModel i in lista.value) {
-              if (titulo.lista.containsKey(i.titulo.replaceAll('.', '').replaceAll('/', '')))
-                i.status = titulo.lista[i.titulo.replaceAll('.', '').replaceAll('/', '')].status;
+              if (titulo.lista.containsKey(i.tituloFormatado))
+                i.status = titulo.lista[i.tituloFormatado].status;
             }
           }
         }
@@ -92,7 +92,7 @@ abstract class _ListagemTituloBase extends Disposable with Store {
           box: boxHive,
         )
             .whenComplete(() async {
-          await boxHive.put(titulo.nome.replaceAll('.', '').replaceAll('/', ''), titulo);
+          await boxHive.put(titulo.nomeFormatado, titulo);
         });
       },
     );
@@ -101,14 +101,14 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   @action
   addLista(String key, CapEpModel value, {bool add = false}) async {
     value.mudarStatus(add: add);
-    titulo.addLista(key.replaceAll('.', '').replaceAll('/', ''), value, add: add);
+    titulo.addLista(key, value, add: add);
     Box<TituloModel> boxHive = (await _box);
     _firestoreController.atualizarDados(
       colecao: _colecao,
       titulo: titulo,
       value: value,
     );
-    boxHive.put(titulo.nome.replaceAll('.', '').replaceAll('/', ''), titulo);
+    boxHive.put(titulo.nomeFormatado, titulo);
   }
 
   @computed
