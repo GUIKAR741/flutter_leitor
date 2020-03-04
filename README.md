@@ -5,14 +5,14 @@
 
 Aplicativo para Leitura de HQs, Mangás e Assistir Animes
 
-<img src="screenshots/flutter_01.png" width="49.5%" />
-<img src="screenshots/flutter_02.png" width="49.5%" />
+<img src="screenshots/flutter_01.png" width="48%" />
+<img src="screenshots/flutter_02.png" width="48%" />
 
 Login no Aplicativo agora Disponivel com Sincronização dos dados Locais e Online
 
-<img src="screenshots/flutter_05.png" width="49.5%" />
-<img src="screenshots/flutter_03.png" width="49.5%" />
-<img src="screenshots/flutter_04.png" width="49.5%" />
+<img src="screenshots/flutter_05.png" width="48%" />
+<img src="screenshots/flutter_03.png" width="48%" />
+<img src="screenshots/flutter_04.png" width="48%" />
 
 
 ## HQs
