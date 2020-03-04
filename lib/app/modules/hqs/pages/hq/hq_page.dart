@@ -1,5 +1,6 @@
 import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_leitor/app/shared/services/notification_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -67,11 +68,16 @@ class HqPage extends StatelessWidget {
                             itemCount: capitulos.length + 1,
                             itemBuilder: (_, index) {
                               return index == 0
-                                  ? CardWidget(
-                                      titulo: controller.titulo,
-                                    )
+                                  ? GestureDetector(
+                                    onTap: (){
+                                      Modular.get<NotificationService>().notificacaoPadrao(mensagem: capitulos[0].titulo);
+                                    },
+                                                                      child: CardWidget(
+                                        titulo: controller.titulo,
+                                      ),
+                                  )
                                   : ItemListagemTitulo(
-                                      capEp: capitulos[index],
+                                      capEp: capitulos[index-1],
                                       onPressed: controller.addLista,
                                       rota: '/hqs/ler_hq',
                                     );

@@ -35,7 +35,7 @@ class ItemListagemTitulo extends StatelessWidget {
             )
           : null,
       title: Text(capEp.titulo),
-      subtitle: Text(capEp.info),
+      subtitle: capEp.info != null ? Text(capEp.info) : null,
       trailing: Observer(
         builder: (_) {
           return IconButton(

@@ -9,7 +9,7 @@ import 'pesquisar_widget.dart';
 
 class PesquisarCapituloEpisodio extends Pesquisar {
   final String rota;
-  ListagemTitulo controller = Modular.get<ListagemTitulo>();
+  final ListagemTitulo controller = Modular.get<ListagemTitulo>();
 
   PesquisarCapituloEpisodio({
     @required this.rota,

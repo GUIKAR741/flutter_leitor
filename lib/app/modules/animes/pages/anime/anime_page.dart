@@ -71,12 +71,12 @@ class AnimePage extends StatelessWidget {
                                       titulo: controller.titulo,
                                     )
                                   : ItemListagemTitulo(
-                                      capEp: episodios[index],
+                                      capEp: episodios[index-1],
                                       onPressed: controller.addLista,
                                       rota: '/assistir',
                                       onLongPress: () async =>
                                           await controller.videoExterno(
-                                        episodios[index],
+                                        episodios[index-1],
                                       ),
                                     );
                             },
