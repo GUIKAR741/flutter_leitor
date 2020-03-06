@@ -1,15 +1,15 @@
 import 'package:flutter_modular/flutter_modular.dart';
 
-import '../../modules/animes/animes_controller.dart';
-import '../../modules/animes/animes_page.dart';
-import '../../modules/animes/pages/anime/anime_controller.dart';
-import '../../modules/animes/repositories/anime_repository.dart';
-import '../../modules/animes/repositories/animes_repository.dart';
 import '../../shared/controllers/listagem_principal.dart';
 import '../../shared/controllers/listagem_titulo.dart';
 import '../../shared/interfaces/repository_principal.dart';
 import '../../shared/interfaces/repository_unique.dart';
+import 'animes_controller.dart';
+import 'animes_page.dart';
+import 'pages/anime/anime_controller.dart';
 import 'pages/anime/anime_page.dart';
+import 'repositories/anime_repository.dart';
+import 'repositories/animes_repository.dart';
 
 class AnimesModule extends ChildModule {
   @override

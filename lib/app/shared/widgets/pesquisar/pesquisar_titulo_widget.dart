@@ -33,7 +33,7 @@ class PesquisarTitulo extends Pesquisar {
         return ItemListagemPrincipal(
           titulo: titulos[index],
           onPressed: controller.addFavorito,
-          rota: '/mangas/manga',
+          rota: rota,
         );
       },
       separatorBuilder: (_, index) => Divider(),

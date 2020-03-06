@@ -84,14 +84,14 @@ packages:
       name: build_runner
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.7.4"
+    version: "1.8.0"
   build_runner_core:
     dependency: transitive
     description:
       name: build_runner_core
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "4.4.0"
+    version: "4.5.1"
   built_collection:
     dependency: transitive
     description:
@@ -224,7 +224,7 @@ packages:
       name: dio_http_cache
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.5"
+    version: "0.2.6"
   draggable_scrollbar:
     dependency: "direct main"
     description:
@@ -346,7 +346,7 @@ packages:
       name: flutter_modular
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.5.2"
+    version: "0.5.3"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -368,7 +368,7 @@ packages:
       name: get
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.10.5"
+    version: "1.11.1"
   glob:
     dependency: transitive
     description:
@@ -543,7 +543,7 @@ packages:
       name: mobx
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.0.2+1"
   mobx_codegen:
     dependency: "direct dev"
     description:
