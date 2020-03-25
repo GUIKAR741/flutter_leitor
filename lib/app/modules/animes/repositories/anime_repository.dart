@@ -12,13 +12,16 @@ import '../../../shared/utils/constants.dart';
 
 class AnimeRepository extends IRepositoryUnique with IRepositoryAssistir {
   @override
-  Future<List<CapEpModel>> listarTitulo(TituloModel anime,
-      {CancelToken cancel}) async {
+  Future<List<CapEpModel>> listarTitulo(
+    TituloModel anime, {
+    bool refresh = false,
+    CancelToken cancel,
+  }) async {
     String data;
     try {
       data = await dio.getLink(anime.link,
           contextError: 'Titulos Não Carregaram',
-          refresh: true,
+          refresh: refresh,
           cancelToken: cancel);
     } on DioError catch (e) {
       anime.descricao = 'Erro ao Carregar';
@@ -129,7 +132,12 @@ class AnimeRepository extends IRepositoryUnique with IRepositoryAssistir {
 
   /// Função Não Necessaria Neste Modulo
   @override
-  Future<List<String>> imagens(String link, {CancelToken cancel}) {
+  @deprecated
+  Future<List<String>> imagens(
+    String link, {
+    bool refresh,
+    CancelToken cancel,
+  }) {
     return null;
   }
 

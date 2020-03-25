@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_leitor/app/shared/utils/requisicao_mixin.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 
@@ -6,43 +7,21 @@ import '../../../shared/interfaces/repository_unique.dart';
 import '../../../shared/models/capitulo_episodio_model.dart';
 import '../../../shared/models/titulo_model.dart';
 
-class MangaRepository extends IRepositoryUnique {
-  Future<String> _requisicaoErroDb(
-    String link, {
-    CancelToken cancel,
-  }) async {
-    String data;
-    try {
-      data = await dio.getLink(
-        link,
-        refresh: true,
-        cancelToken: cancel,
-        contextError: "Falha ao Listar Titulos",
-      );
-      if (!data.contains("Erro ao conectar ao banco de dados")) return data;
-      return _requisicaoErroDb(link);
-    } catch (e) {
-      if (e.runtimeType == DioError && e.request != null) throw e;
-      return _requisicaoErroDb(link);
-    }
-  }
-
+class MangaRepository extends IRepositoryUnique with RequisicaoMixin {
   @override
   Future<List<CapEpModel>> listarTitulo(
     TituloModel manga, {
+    bool refresh = false,
     CancelToken cancel,
   }) async {
     String data;
     try {
-      data = await _requisicaoErroDb(
+      data = await requisicaoErroDb(
+        dio,
         manga.link,
+        refresh: refresh,
         cancel: cancel,
       );
-      // data = await dio.getLink(
-      //   manga.link,
-      //   refresh: true,
-      //   contextError: "Falha ao Listar Titulos",
-      // );
     } on DioError catch (e) {
       manga.descricao = 'Erro ao Carregar';
       if (e.request == null) return [];
@@ -58,24 +37,22 @@ class MangaRepository extends IRepositoryUnique {
           link: data.querySelector('a').attributes['href'],
           info: data.querySelector('a').nextElementSibling.innerHtml));
     });
-    return capitulos;
+    return capitulos.reversed.toList();
   }
 
   Future<List<String>> imagens(
     String link, {
+    bool refresh,
     CancelToken cancel,
   }) async {
     String data;
     try {
-      data = await _requisicaoErroDb(
+      data = await requisicaoErroDb(
+        dio,
         link,
+        refresh: refresh,
         cancel: cancel,
       );
-      // data = await dio.getLink(
-      //   link,
-      //   refresh: true,
-      //   contextError: "Falha ao Pegar Imagens",
-      // );
     } on DioError catch (e) {
       if (e.request == null) return [];
     }

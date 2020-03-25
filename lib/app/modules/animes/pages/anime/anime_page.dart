@@ -1,7 +1,7 @@
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:indexed_list_view/indexed_list_view.dart';
 
 import '../../../../shared/models/capitulo_episodio_model.dart';
 import '../../../../shared/widgets/card/card_widget.dart';
@@ -58,30 +58,28 @@ class AnimePage extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: RefreshIndicator(
-                  onRefresh: () async => controller.listarTitulo(),
+                  onRefresh: () async => controller.listarTitulo(refresh: true),
                   child: episodios.length > 0
-                      ? DraggableScrollbar.semicircle(
+                      ? IndexedListView.separated(
                           controller: controller.scroll,
-                          child: ListView.separated(
-                            controller: controller.scroll,
-                            itemCount: episodios.length + 1,
-                            itemBuilder: (_, index) {
-                              return index == 0
-                                  ? CardWidget(
-                                      titulo: controller.titulo,
-                                    )
-                                  : ItemListagemTitulo(
-                                      capEp: episodios[index-1],
-                                      onPressed: controller.addLista,
-                                      rota: '/assistir',
-                                      onLongPress: () async =>
-                                          await controller.videoExterno(
-                                        episodios[index-1],
-                                      ),
-                                    );
-                            },
-                            separatorBuilder: (_, index) => Divider(),
-                          ),
+                          minItemCount: 0,
+                          maxItemCount: episodios.length,
+                          itemBuilder: (_, index) {
+                            return index == 0
+                                ? CardWidget(
+                                    titulo: controller.titulo,
+                                  )
+                                : ItemListagemTitulo(
+                                    capEp: episodios[index - 1],
+                                    onPressed: controller.addLista,
+                                    rota: '/assistir',
+                                    onLongPress: () async =>
+                                        await controller.videoExterno(
+                                      episodios[index - 1],
+                                    ),
+                                  );
+                          },
+                          separatorBuilder: (_, index) => Divider(),
                         )
                       : Column(
                           children: <Widget>[
@@ -91,7 +89,8 @@ class AnimePage extends StatelessWidget {
                             Center(
                               child: RaisedButton(
                                 child: Text("Recarregar"),
-                                onPressed: controller.listarTitulo,
+                                onPressed: () =>
+                                    controller.listarTitulo(refresh: true),
                               ),
                             )
                           ],

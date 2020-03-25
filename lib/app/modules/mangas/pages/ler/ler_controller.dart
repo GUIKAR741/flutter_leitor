@@ -18,13 +18,19 @@ abstract class _LerBase extends Ler with Store {
 
   @override
   @action
-  void listarImagens() {
+  void listarImagens({bool refresh = false}) {
     if (capitulo == null) capitulo = Modular.args.data;
     icone = Icons.pause;
     pagina = '';
     imagens = null;
     paginacao = true;
-    imagens = _repo.imagens(capitulo.link, cancel: cancel).then(
+    imagens = _repo
+        .imagens(
+      capitulo.link,
+      refresh: refresh,
+      cancel: cancel,
+    )
+        .then(
       (data) {
         index = data.length > 0 ? 0 : -1;
         pagina = "${index + 1}/${data.length}";
@@ -33,7 +39,7 @@ abstract class _LerBase extends Ler with Store {
             Center(
               child: RaisedButton(
                 child: Text("Recarregar Imagens"),
-                onPressed: listarImagens,
+                onPressed: () => listarImagens(refresh: true),
               ),
             )
           ];

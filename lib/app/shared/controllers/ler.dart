@@ -104,7 +104,7 @@ abstract class _LerBase extends Disposable with Store {
       pagina = "${_index + 1}/${imagens.value.length}";
   }
 
-  void listarImagens();
+  void listarImagens({bool refresh = false});
 
   @action
   void listenerPage() {
@@ -126,12 +126,13 @@ abstract class _LerBase extends Disposable with Store {
                   child: Text("Sim"),
                   onPressed: () {
                     if (indice < len - 1 && !rev)
-                      capitulo = _controller.listagem[indice + 1];
-                    if (indice > 0 && rev)
                       capitulo = _controller.listagem[indice - 1];
+                    if (indice > 0 && rev)
+                      capitulo = _controller.listagem[indice + 1];
                     listarImagens();
                     Modular.to.pop();
-                    _controller.addLista(capitulo.tituloFormatado, capitulo, add: true);
+                    _controller.addLista(capitulo.tituloFormatado, capitulo,
+                        add: true);
                   },
                 )
               ],
@@ -154,12 +155,13 @@ abstract class _LerBase extends Disposable with Store {
                   child: Text("Sim"),
                   onPressed: () {
                     if (indice > 0 && !rev)
-                      capitulo = _controller.listagem[indice - 1];
-                    if (indice < len - 1 && rev)
                       capitulo = _controller.listagem[indice + 1];
+                    if (indice < len - 1 && rev)
+                      capitulo = _controller.listagem[indice - 1];
                     listarImagens();
                     Modular.to.pop();
-                    _controller.addLista(capitulo.tituloFormatado, capitulo, add: true);
+                    _controller.addLista(capitulo.tituloFormatado, capitulo,
+                        add: true);
                   },
                 )
               ],

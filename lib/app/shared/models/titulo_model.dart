@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 
@@ -42,7 +43,7 @@ class TituloModel extends _TituloModelBase with _$TituloModel {
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _TituloModelBase extends HiveObject with Store {
+abstract class _TituloModelBase extends HiveObject with Store, EquatableMixin {
   @HiveField(0)
   @observable
   String nome;
@@ -84,9 +85,5 @@ abstract class _TituloModelBase extends HiveObject with Store {
   String toString() => nome;
 
   @override
-  operator ==(o) => o.nome == nome && o.imagem == imagem && o.link == link;
-
-  @override
-  int get hashCode =>
-      nome.hashCode ^ imagem.hashCode ^ link.hashCode ^ descricao.hashCode;
+  List<Object> get props => [nome, imagem, link, descricao];
 }

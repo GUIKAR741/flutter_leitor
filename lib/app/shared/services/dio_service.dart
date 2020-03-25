@@ -1,17 +1,20 @@
 import 'package:dio/dio.dart';
 import 'package:dio_http_cache/dio_http_cache.dart';
+import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 class DioService extends Disposable {
   final Dio client = Dio();
   Interceptor _interceptor;
+  Crashlytics _crashlytics;
 
   @protected
   void initInterceptor() {
     _interceptor = DioCacheManager(
       CacheConfig(),
     ).interceptor;
+    _crashlytics = Modular.get<Crashlytics>();
   }
 
   DioService() {
@@ -23,12 +26,14 @@ class DioService extends Disposable {
 
   bool get hasInterceptor => client.interceptors.contains(_interceptor);
 
-  Future getLink(String link,
-      {bool returnResponse = false,
-      bool refresh = false,
-      Options options,
-      String contextError,
-      CancelToken cancelToken}) async {
+  Future getLink(
+    String link, {
+    bool returnResponse = false,
+    bool refresh = false,
+    Options options,
+    String contextError,
+    CancelToken cancelToken,
+  }) async {
     Response response;
     try {
       response = await client.get(
@@ -44,24 +49,24 @@ class DioService extends Disposable {
             : null,
       );
     } on DioError catch (e) {
-      // if (hasInterceptor)
-      //   Modular.get<Crashlytics>().recordError(
-      //     e,
-      //     s,
-      //     context: contextError,
-      //   );
+      if (hasInterceptor)
+        _crashlytics.log(
+          contextError,
+        );
       throw e;
     }
     return returnResponse ? response : response.data;
   }
 
-  Future postLink(String link,
-      {dynamic data,
-      bool returnResponse = false,
-      bool refresh = false,
-      Options options,
-      String contextError,
-      CancelToken cancelToken}) async {
+  Future postLink(
+    String link, {
+    dynamic data,
+    bool returnResponse = false,
+    bool refresh = false,
+    Options options,
+    String contextError,
+    CancelToken cancelToken,
+  }) async {
     Response response;
     try {
       response = await client.post(
@@ -78,12 +83,10 @@ class DioService extends Disposable {
             : null,
       );
     } on DioError catch (e) {
-      // if (hasInterceptor)
-      //   Modular.get<Crashlytics>().recordError(
-      //     e,
-      //     s,
-      //     context: contextError,
-      //   );
+      if (hasInterceptor)
+        _crashlytics.log(
+          contextError,
+        );
       throw e;
     }
     return returnResponse ? response : response.data;

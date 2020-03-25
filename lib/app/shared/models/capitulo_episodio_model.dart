@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
 import 'package:mobx/mobx.dart';
 
@@ -33,7 +34,7 @@ class CapEpModel extends _CapEpModelBase with _$CapEpModel {
   String toRawJson() => json.encode(toJson());
 }
 
-abstract class _CapEpModelBase with Store {
+abstract class _CapEpModelBase extends HiveObject with Store, EquatableMixin {
   @HiveField(0)
   @observable
   String titulo;
@@ -63,9 +64,5 @@ abstract class _CapEpModelBase with Store {
   String toString() => titulo;
 
   @override
-  operator ==(o) => o.titulo == titulo && o.imagem == imagem && o.link == link;
-
-  @override
-  int get hashCode =>
-      titulo.hashCode ^ imagem.hashCode ^ link.hashCode ^ info.hashCode;
+  List<Object> get props => [titulo, imagem, link, info];
 }

@@ -12,10 +12,10 @@ mixin _$LerController on _LerBase, Store {
   final _$_LerBaseActionController = ActionController(name: '_LerBase');
 
   @override
-  void listarImagens() {
+  void listarImagens({bool refresh = false}) {
     final _$actionInfo = _$_LerBaseActionController.startAction();
     try {
-      return super.listarImagens();
+      return super.listarImagens(refresh: refresh);
     } finally {
       _$_LerBaseActionController.endAction(_$actionInfo);
     }

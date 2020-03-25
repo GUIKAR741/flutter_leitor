@@ -12,11 +12,12 @@ part 'firestore_controller.g.dart';
 
 class FirestoreController = _FirestoreControllerBase with _$FirestoreController;
 
-extension S on String{
-  String format(){
+extension S on String {
+  String format() {
     return this.replaceAll('.', '').replaceAll('/', '');
   }
 }
+
 abstract class _FirestoreControllerBase with Store {
   final Firestore _firestore = Firestore.instance;
   final AuthController _authController = Modular.get();
@@ -37,10 +38,8 @@ abstract class _FirestoreControllerBase with Store {
           (await _colecoes(colecao).document(titulo.nomeFormatado).get())?.data;
       if (documento != null) {
         documento.forEach((String key, dynamic value) {
-          if (titulo.lista
-              .containsKey(key.format()))
-            titulo.lista[key.format()].status =
-                value;
+          if (titulo.lista.containsKey(key.format()))
+            titulo.lista[key.format()].status = value;
           else {
             CapEpModel capEp = CapEpModel();
             capEp.titulo = key.format();

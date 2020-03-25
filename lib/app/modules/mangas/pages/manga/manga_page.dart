@@ -1,7 +1,7 @@
-import 'package:draggable_scrollbar/draggable_scrollbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:indexed_list_view/indexed_list_view.dart';
 
 import '../../../../modules/mangas/pages/manga/manga_controller.dart';
 import '../../../../shared/models/capitulo_episodio_model.dart';
@@ -59,26 +59,24 @@ class MangaPage extends StatelessWidget {
             children: <Widget>[
               Expanded(
                 child: RefreshIndicator(
-                  onRefresh: () async => controller.listarTitulo(),
+                  onRefresh: () async => controller.listarTitulo(refresh: true),
                   child: capitulos.length > 0
-                      ? DraggableScrollbar.semicircle(
+                      ? IndexedListView.separated(
                           controller: controller.scroll,
-                          child: ListView.separated(
-                            controller: controller.scroll,
-                            itemCount: capitulos.length + 1,
-                            itemBuilder: (_, index) {
-                              return index == 0
-                                  ? CardWidget(
-                                      titulo: controller.titulo,
-                                    )
-                                  : ItemListagemTitulo(
-                                      capEp: capitulos[index - 1],
-                                      onPressed: controller.addLista,
-                                      rota: '/mangas/ler_manga',
-                                    );
-                            },
-                            separatorBuilder: (_, index) => Divider(),
-                          ),
+                          minItemCount: 0,
+                          maxItemCount: capitulos.length,
+                          itemBuilder: (_, index) {
+                            return index == 0
+                                ? CardWidget(
+                                    titulo: controller.titulo,
+                                  )
+                                : ItemListagemTitulo(
+                                    capEp: capitulos[index - 1],
+                                    onPressed: controller.addLista,
+                                    rota: '/mangas/ler_manga',
+                                  );
+                          },
+                          separatorBuilder: (_, index) => Divider(),
                         )
                       : Column(
                           children: <Widget>[
@@ -88,7 +86,8 @@ class MangaPage extends StatelessWidget {
                             Center(
                               child: RaisedButton(
                                 child: Text("Recarregar"),
-                                onPressed: controller.listarTitulo,
+                                onPressed: () =>
+                                    controller.listarTitulo(refresh: true),
                               ),
                             )
                           ],

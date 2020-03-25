@@ -11,5 +11,5 @@ class DioServiceMock extends DioService {
   }
 
   @override
-  bool get hasInterceptor => interceptorValidate ? super.hasInterceptor : true;
+  bool get hasInterceptor => interceptorValidate ? super.hasInterceptor : false;
 }

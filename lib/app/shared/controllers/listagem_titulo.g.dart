@@ -62,10 +62,10 @@ mixin _$ListagemTitulo on _ListagemTituloBase, Store {
       ActionController(name: '_ListagemTituloBase');
 
   @override
-  void listarTitulo() {
+  void listarTitulo({bool refresh}) {
     final _$actionInfo = _$_ListagemTituloBaseActionController.startAction();
     try {
-      return super.listarTitulo();
+      return super.listarTitulo(refresh: refresh);
     } finally {
       _$_ListagemTituloBaseActionController.endAction(_$actionInfo);
     }

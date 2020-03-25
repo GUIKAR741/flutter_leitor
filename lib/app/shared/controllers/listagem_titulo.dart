@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:indexed_list_view/indexed_list_view.dart';
 import 'package:mobx/mobx.dart';
 
 import '../controllers/firestore_controller.dart';
@@ -23,7 +24,7 @@ class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
 
 abstract class _ListagemTituloBase extends Disposable with Store {
   final IRepositoryUnique _repo = Modular.get<IRepositoryUnique>();
-  final ScrollController scroll = ScrollController();
+  final IndexedScrollController scroll = IndexedScrollController();
   final CancelToken _cancel = CancelToken();
   final FirestoreController _firestoreController =
       Modular.get<FirestoreController>();
@@ -55,16 +56,23 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   set box(Future<Box<TituloModel>> value) => _box = value;
 
   @action
-  void listarTitulo(){
+  void listarTitulo({bool refresh}) {
     titulo = Modular.args.data;
     lista = null;
     _isReversed = false;
-    lista = _repo.listarTitulo(_titulo, cancel: _cancel).asObservable();
+    // scroll.jumpTo(0);
+    lista = _repo
+        .listarTitulo(
+          _titulo,
+          refresh: refresh,
+          cancel: _cancel,
+        )
+        .asObservable();
     iniciaBox();
   }
 
   @action
-  void iniciaBox(){
+  void iniciaBox() {
     lista.then(
       (List<CapEpModel> data) async {
         Box<TituloModel> boxHive = (await _box);
@@ -78,12 +86,20 @@ abstract class _ListagemTituloBase extends Disposable with Store {
         );
         if (boxHive.containsKey(titulo.nomeFormatado)) {
           if (titulo.lista.isNotEmpty) {
-            for (CapEpModel i in lista.value) {
-              if (titulo.lista.containsKey(i.tituloFormatado))
+            CapEpModel i, ind;
+            for (i in lista.value)
+              if (titulo.lista.containsKey(i.tituloFormatado)) {
                 i.status = titulo.lista[i.tituloFormatado].status;
-            }
-          }
-        }
+                ind = i.status ? i : ind;
+              }
+            if (ind != null)
+              scroll.animateToIndex(
+                lista.value.lastIndexOf(ind) + 1,
+              );
+          } else
+            scroll.animateToIndex(0);
+        } else
+          scroll.animateToIndex(0);
         _firestoreController
             .copiarDadosParaNuvem(
           colecao: _colecao,
@@ -100,7 +116,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   }
 
   @action
-  Future<void> addLista(String key, CapEpModel value, {bool add = false}) async {
+  Future<void> addLista(String key, CapEpModel value,
+      {bool add = false}) async {
     value.mudarStatus(add: add);
     titulo.addLista(key, value, add: add);
     Box<TituloModel> boxHive = (await _box);
@@ -121,12 +138,15 @@ abstract class _ListagemTituloBase extends Disposable with Store {
 
   @action
   List<CapEpModel> pesquisar(res) {
+    if (lista.value?.length == null) return [];
     List<CapEpModel> pesquisa = lista.value is List<CapEpModel>
         ? lista.value
             .where((t) => t.titulo.toLowerCase().contains(res.toLowerCase()))
             .toList()
         : [];
     if (pesquisa == null || pesquisa?.length == null) return [];
-    return pesquisa.length > 0 ? pesquisa : lista.value;
+    return pesquisa?.length != null && pesquisa.length > 0
+        ? pesquisa
+        : lista.value;
   }
 }

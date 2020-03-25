@@ -8,6 +8,14 @@ import '../services/dio_service.dart';
 abstract class IRepositoryUnique extends Disposable {
   final DioService dio = Modular.get<DioService>();
 
-  Future<List<CapEpModel>> listarTitulo(TituloModel titulo, {CancelToken cancel});
-  Future<List<String>> imagens(String link, {CancelToken cancel});
+  Future<List<CapEpModel>> listarTitulo(
+    TituloModel titulo, {
+    bool refresh,
+    CancelToken cancel,
+  });
+  Future<List<String>> imagens(
+    String link, {
+    bool refresh,
+    CancelToken cancel,
+  });
 }
