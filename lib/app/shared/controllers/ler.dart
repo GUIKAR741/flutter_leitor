@@ -18,7 +18,7 @@ abstract class Ler extends _LerBase with _$Ler {
   @override
   @mustCallSuper
   void dispose() {
-    if (!_cancel.isCancelled) _cancel.isCancelled;
+    if (!_cancel.isCancelled) _cancel.cancel();
     pageController.dispose();
   }
 }
@@ -110,10 +110,8 @@ abstract class _LerBase extends Disposable with Store {
   void listenerPage() {
     if (pageController.position.atEdge && paginacao) {
       if (pageController.position.extentBefore == 0) {
-        int len = _controller.listagem.length;
-        bool rev = _controller.isReversed;
-        int indice = _controller.listagem.indexOf(capitulo);
-        if ((indice < len - 1 && !rev) || (indice > 0 && rev))
+        int indice = _controller.lista.value.indexOf(capitulo);
+        if (indice > 0)
           Get.dialog(
             AlertDialog(
               title: Text("Ir para o Capitulo Anterior"),
@@ -125,24 +123,23 @@ abstract class _LerBase extends Disposable with Store {
                 RaisedButton(
                   child: Text("Sim"),
                   onPressed: () {
-                    if (indice < len - 1 && !rev)
-                      capitulo = _controller.listagem[indice - 1];
-                    if (indice > 0 && rev)
-                      capitulo = _controller.listagem[indice + 1];
+                    capitulo = _controller.lista.value[indice - 1];
                     listarImagens();
                     Modular.to.pop();
-                    _controller.addLista(capitulo.tituloFormatado, capitulo,
-                        add: true);
+                    _controller.addLista(
+                      capitulo.tituloFormatado,
+                      capitulo,
+                      add: true,
+                    );
                   },
                 )
               ],
             ),
           );
       } else {
-        int len = _controller.listagem.length;
-        bool rev = _controller.isReversed;
-        int indice = _controller.listagem.indexOf(capitulo);
-        if ((indice > 0 && !rev) || (indice < len - 1 && rev))
+        int len = _controller.lista.value.length;
+        int indice = _controller.lista.value.indexOf(capitulo);
+        if (indice < len - 1)
           Get.dialog(
             AlertDialog(
               title: Text("Ir para o Proximo Capitulo"),
@@ -154,14 +151,14 @@ abstract class _LerBase extends Disposable with Store {
                 RaisedButton(
                   child: Text("Sim"),
                   onPressed: () {
-                    if (indice > 0 && !rev)
-                      capitulo = _controller.listagem[indice + 1];
-                    if (indice < len - 1 && rev)
-                      capitulo = _controller.listagem[indice - 1];
+                    capitulo = _controller.lista.value[indice + 1];
                     listarImagens();
                     Modular.to.pop();
-                    _controller.addLista(capitulo.tituloFormatado, capitulo,
-                        add: true);
+                    _controller.addLista(
+                      capitulo.tituloFormatado,
+                      capitulo,
+                      add: true,
+                    );
                   },
                 )
               ],

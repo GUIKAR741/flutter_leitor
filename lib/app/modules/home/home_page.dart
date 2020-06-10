@@ -1,5 +1,6 @@
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_leitor/app/shared/services/dio_service.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
@@ -23,6 +24,7 @@ class HomePage extends StatelessWidget {
             icon: Icon(Icons.clear),
             tooltip: "Limpar Imagens",
             onPressed: () {
+              Modular.get<DioService>().interceptor.clearAll();
               clearDiskCachedImages();
               clearMemoryImageCache();
             },

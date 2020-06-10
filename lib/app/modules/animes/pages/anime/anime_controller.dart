@@ -38,6 +38,7 @@ abstract class _AnimeBase extends ListagemTitulo with Store {
       action: "action_view",
       data: link,
       type: "video/*",
+      arguments: {'title': ep.titulo}
     );
     await intent.launch();
   }

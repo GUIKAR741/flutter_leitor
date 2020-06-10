@@ -52,12 +52,13 @@ abstract class _ListagemPrincipalBase extends Disposable with Store {
   void iniciaBox() {
     titulos.then((List<TituloModel> data) async {
       Box<TituloModel> boxHive = (await _box);
+      int i = 0;
       for (TituloModel t in data) {
         if (boxHive.containsKey(t.nomeFormatado)) {
           t.favorito = boxHive.get(t.nomeFormatado).favorito ?? false;
           if (t.favorito) {
             data.remove(t);
-            data.insert(0, t);
+            data.insert(i++, t);
           }
         }
       }

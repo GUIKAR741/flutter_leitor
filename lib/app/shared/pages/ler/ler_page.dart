@@ -50,7 +50,7 @@ class _LerPageState extends ModularState<LerPage, Ler> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  style: Theme.of(context).primaryTextTheme.title,
+                  style: Theme.of(context).primaryTextTheme.headline6,
                 ),
                 onPressed: controller.lerController.esconderControle ||
                         controller.imagens.value.length <= 1
@@ -96,7 +96,7 @@ class _LerPageState extends ModularState<LerPage, Ler> {
                   title: Observer(
                     builder: (_) {
                       return DefaultTextStyle(
-                        style: Theme.of(context).primaryTextTheme.title,
+                        style: Theme.of(context).primaryTextTheme.headline6,
                         child: Text(
                           controller.capitulo != null
                               ? controller.capitulo.titulo

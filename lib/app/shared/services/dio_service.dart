@@ -6,25 +6,25 @@ import 'package:flutter_modular/flutter_modular.dart';
 
 class DioService extends Disposable {
   final Dio client = Dio();
-  Interceptor _interceptor;
+  DioCacheManager interceptor;
   Crashlytics _crashlytics;
 
   @protected
   void initInterceptor() {
-    _interceptor = DioCacheManager(
+    interceptor = DioCacheManager(
       CacheConfig(),
-    ).interceptor;
+    );
     _crashlytics = Modular.get<Crashlytics>();
   }
 
   DioService() {
     initInterceptor();
     this.client.interceptors.add(
-          _interceptor,
+          interceptor.interceptor,
         );
   }
 
-  bool get hasInterceptor => client.interceptors.contains(_interceptor);
+  bool get hasInterceptor => client.interceptors.contains(interceptor.interceptor);
 
   Future getLink(
     String link, {

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:indexed_list_view/indexed_list_view.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../../../../shared/models/capitulo_episodio_model.dart';
 import '../../../../shared/widgets/card/card_widget.dart';
@@ -60,24 +60,11 @@ class AnimePage extends StatelessWidget {
                 child: RefreshIndicator(
                   onRefresh: () async => controller.listarTitulo(refresh: true),
                   child: episodios.length > 0
-                      ? IndexedListView.separated(
+                      ? ListView.separated(
                           controller: controller.scroll,
-                          minItemCount: 0,
-                          maxItemCount: episodios.length,
+                          itemCount: episodios.length + 1,
                           itemBuilder: (_, index) {
-                            return index == 0
-                                ? CardWidget(
-                                    titulo: controller.titulo,
-                                  )
-                                : ItemListagemTitulo(
-                                    capEp: episodios[index - 1],
-                                    onPressed: controller.addLista,
-                                    rota: '/assistir',
-                                    onLongPress: () async =>
-                                        await controller.videoExterno(
-                                      episodios[index - 1],
-                                    ),
-                                  );
+                            return _autoTag(index, episodios);
                           },
                           separatorBuilder: (_, index) => Divider(),
                         )
@@ -101,6 +88,27 @@ class AnimePage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  AutoScrollTag _autoTag(int index, List<CapEpModel> episodios) {
+    return AutoScrollTag(
+      key: ValueKey(index),
+      controller: controller.scroll,
+      index: index,
+      child: index == 0
+          ? CardWidget(
+              titulo: controller.titulo,
+            )
+          : ItemListagemTitulo(
+              capEp: episodios[index - 1],
+              onPressed: controller.addLista,
+              rota: '/assistir',
+              onLongPress: () async => await controller.videoExterno(
+                episodios[index - 1],
+              ),
+            ),
+      highlightColor: Colors.black.withOpacity(0.1),
     );
   }
 }

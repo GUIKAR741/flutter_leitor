@@ -2,8 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
-import 'package:indexed_list_view/indexed_list_view.dart';
 import 'package:mobx/mobx.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../controllers/firestore_controller.dart';
 import '../interfaces/repository_unique.dart';
@@ -24,7 +24,10 @@ class ListagemTitulo extends _ListagemTituloBase with _$ListagemTitulo {
 
 abstract class _ListagemTituloBase extends Disposable with Store {
   final IRepositoryUnique _repo = Modular.get<IRepositoryUnique>();
-  final IndexedScrollController scroll = IndexedScrollController();
+  final AutoScrollController scroll = AutoScrollController(
+      viewportBoundaryGetter: () => Rect.fromLTRB(0, 0, 0,
+          MediaQuery.of(Modular.navigatorKey.currentContext).padding.bottom),
+      axis: Axis.vertical);
   final CancelToken _cancel = CancelToken();
   final FirestoreController _firestoreController =
       Modular.get<FirestoreController>();
@@ -93,13 +96,11 @@ abstract class _ListagemTituloBase extends Disposable with Store {
                 ind = i.status ? i : ind;
               }
             if (ind != null)
-              scroll.animateToIndex(
-                lista.value.lastIndexOf(ind) + 1,
-              );
+              scroll.scrollToIndex(lista.value.lastIndexOf(ind) + 1);
           } else
-            scroll.animateToIndex(0);
+            scroll.scrollToIndex(0);
         } else
-          scroll.animateToIndex(0);
+          scroll.scrollToIndex(0);
         _firestoreController
             .copiarDadosParaNuvem(
           colecao: _colecao,

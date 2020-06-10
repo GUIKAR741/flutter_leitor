@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-import 'package:indexed_list_view/indexed_list_view.dart';
+import 'package:scroll_to_index/scroll_to_index.dart';
 
 import '../../../../modules/hqs/pages/hq/hq_controller.dart';
 import '../../../../shared/models/capitulo_episodio_model.dart';
@@ -60,20 +60,11 @@ class HqPage extends StatelessWidget {
                 child: RefreshIndicator(
                   onRefresh: () async => controller.listarTitulo(refresh: true),
                   child: capitulos.length > 0
-                      ? IndexedListView.separated(
+                      ? ListView.separated(
                           controller: controller.scroll,
-                          minItemCount: 0,
-                          maxItemCount: capitulos.length,
+                          itemCount: capitulos.length + 1,
                           itemBuilder: (_, index) {
-                            return index == 0
-                                ? CardWidget(
-                                    titulo: controller.titulo,
-                                  )
-                                : ItemListagemTitulo(
-                                    capEp: capitulos[index - 1],
-                                    onPressed: controller.addLista,
-                                    rota: '/hqs/ler_hq',
-                                  );
+                            return _autoTag(index, capitulos);
                           },
                           separatorBuilder: (_, index) => Divider(),
                         )
@@ -97,6 +88,24 @@ class HqPage extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  AutoScrollTag _autoTag(int index, List<CapEpModel> capitulos) {
+    return AutoScrollTag(
+      key: ValueKey(index),
+      controller: controller.scroll,
+      index: index,
+      child: index == 0
+          ? CardWidget(
+              titulo: controller.titulo,
+            )
+          : ItemListagemTitulo(
+              capEp: capitulos[index - 1],
+              onPressed: controller.addLista,
+              rota: '/hqs/ler_hq',
+            ),
+      highlightColor: Colors.black.withOpacity(0.1),
     );
   }
 }

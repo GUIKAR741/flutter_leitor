@@ -41,7 +41,7 @@ main() {
             (widget.child as Text).data == 'Ler HQs',
       );
       await (await tester.press(hqs)).up();
-      expect('/hqs', Modular.actualRoute);
+      expect('/hqs', Modular.to.path);
     });
     testWidgets('Ir para pagina mangas', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(home));
@@ -52,7 +52,7 @@ main() {
             (widget.child as Text).data == 'Ler Mangás',
       );
       await (await tester.press(mangas)).up();
-      expect('/mangas', Modular.actualRoute);
+      expect('/mangas', Modular.to.path);
     });
     testWidgets('Ir para pagina animes', (WidgetTester tester) async {
       await tester.pumpWidget(buildTestableWidget(home));
@@ -63,7 +63,7 @@ main() {
             (widget.child as Text).data == 'Assistir Animes',
       );
       await (await tester.press(animes)).up();
-      expect('/animes', Modular.actualRoute);
+      expect('/animes', Modular.to.path);
     });
   });
 }

@@ -154,7 +154,7 @@ class _MaterialControlsState extends State<ControlesWidget> {
               color: Theme.of(context).primaryIconTheme.color,
             ),
             DefaultTextStyle(
-              style: Theme.of(context).primaryTextTheme.title,
+              style: Theme.of(context).primaryTextTheme.headline6,
               child: Text(widget.title),
             )
           ],

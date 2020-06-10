@@ -22,7 +22,7 @@ mixin RequisicaoMixin {
       return requisicaoErroDb(
         dio,
         link,
-        refresh: refresh,
+        refresh: true,
         cancel: cancel,
       );
     } catch (e) {
@@ -30,7 +30,7 @@ mixin RequisicaoMixin {
       return requisicaoErroDb(
         dio,
         link,
-        refresh: refresh,
+        refresh: true,
         cancel: cancel,
       );
     }
