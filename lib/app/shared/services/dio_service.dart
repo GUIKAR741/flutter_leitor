@@ -11,6 +11,12 @@ class DioService extends Disposable {
   DioCacheInterceptor? interceptor;
   CacheOptions? optionsCache;
   FirebaseCrashlytics? _crashlytics;
+  final Map<String, dynamic> headers = {
+    'Access-Control-Allow-Methods': '*',
+    'Access-Control-Allow-Origin': '*',
+    'Access-Control-Allow-Headers': '*',
+    'Sec-Fetch-Mode':'no-cors',
+  };
 
   @protected
   Future<void> initInterceptor() async {
@@ -55,11 +61,6 @@ class DioService extends Disposable {
   }) async {
     Response response;
     try {
-      Map<String, dynamic> headers = {
-        'Access-Control-Allow-Methods': '*',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-      };
       options?.headers?.addAll(headers);
       response = await client.get(
         link,
@@ -113,11 +114,6 @@ class DioService extends Disposable {
   }) async {
     Response response;
     try {
-      Map<String, dynamic> headers = {
-        'Access-Control-Allow-Methods': '*',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*',
-      };
       response = await client.post(
         link,
         data: data,
