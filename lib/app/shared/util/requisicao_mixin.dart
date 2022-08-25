@@ -7,6 +7,7 @@ mixin RequisicaoMixin {
   Future<String> requisicaoErroDb(
     DioService dio,
     String link, {
+    Options? options,
     bool? refresh = false,
     CancelToken? cancel,
   }) async {
@@ -16,6 +17,7 @@ mixin RequisicaoMixin {
         link,
         refresh: refresh,
         cancelToken: cancel,
+        options: options,
         contextError: "Falha ao Listar Titulos",
       );
       if (!data.contains("Erro ao conectar ao banco de dados")) return data;

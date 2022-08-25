@@ -19,6 +19,10 @@ class HqRepository extends IRepositoryUnique with RequisicaoMixin {
         dio,
         titulo.link!,
         refresh: refresh,
+        options: Options(headers: {
+          'host': 'hqultimate.site',
+          'origin': 'hqultimate.site'
+        }),
         cancel: cancel,
       );
     } on DioError catch (e) {

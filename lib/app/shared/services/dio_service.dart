@@ -58,7 +58,7 @@ class DioService extends Disposable {
       Map<String, dynamic> headers = {
         'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*'
+        'Access-Control-Allow-Headers': '*',
       };
       options?.headers?.addAll(headers);
       response = await client.get(
@@ -116,7 +116,7 @@ class DioService extends Disposable {
       Map<String, dynamic> headers = {
         'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': '*'
+        'Access-Control-Allow-Headers': '*',
       };
       response = await client.post(
         link,
