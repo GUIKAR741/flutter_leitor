@@ -89,7 +89,7 @@ class DioService extends Disposable {
                   sendTimeout: options?.sendTimeout,
                   validateStatus: options?.validateStatus,
                 )
-            : null,
+            : Options(headers: headers),
       );
     } on DioError {
       if (hasInterceptor) {
@@ -113,6 +113,11 @@ class DioService extends Disposable {
   }) async {
     Response response;
     try {
+      Map<String, dynamic> headers = {
+        'Access-Control-Allow-Methods': '*',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*'
+      };
       response = await client.post(
         link,
         data: data,
@@ -129,7 +134,7 @@ class DioService extends Disposable {
                   contentType: options?.contentType,
                   extra: options?.extra,
                   followRedirects: options?.followRedirects,
-                  headers: options?.headers,
+                  headers: options?.headers ?? (kIsWeb ? headers : {}),
                   listFormat: options?.listFormat,
                   maxRedirects: options?.maxRedirects,
                   method: options?.method,
@@ -142,7 +147,7 @@ class DioService extends Disposable {
                   sendTimeout: options?.sendTimeout,
                   validateStatus: options?.validateStatus,
                 )
-            : null,
+            : Options(headers: headers),
       );
     } on DioError {
       if (hasInterceptor) {
