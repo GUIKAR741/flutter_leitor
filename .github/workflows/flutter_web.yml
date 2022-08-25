@@ -33,7 +33,7 @@ jobs:
           git config --global user.email guilhermenepomuceno46@gmail.com
           git config --global user.name "Guilherme Nepomuceno de Carvalho"
           git status
-          git remote add origin https://${{secrets.token}}@github.com/GUIKAR741/flutter_leitor.github.io.git
+          git remote add origin https://${{secrets.token}}@github.com/flutter-leitor/flutter-leitor.github.io.git
           git checkout -b gh-pages
           git add --all
           git commit -m "update"
