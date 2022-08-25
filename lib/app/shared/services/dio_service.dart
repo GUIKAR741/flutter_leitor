@@ -55,6 +55,10 @@ class DioService extends Disposable {
   }) async {
     Response response;
     try {
+      Map<String, dynamic> headers = {
+        'Access-Control-Allow-Origin': '*',
+      };
+      options?.headers?.addAll(headers);
       response = await client.get(
         link,
         cancelToken: cancelToken,
@@ -70,13 +74,7 @@ class DioService extends Disposable {
                   contentType: options?.contentType,
                   extra: options?.extra,
                   followRedirects: options?.followRedirects,
-                  headers: options?.headers ??
-                      (kIsWeb
-                          ? {
-                              // 'User-Agent':
-                              //     'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36'
-                            }
-                          : {}),
+                  headers: options?.headers ?? (kIsWeb ? headers : {}),
                   listFormat: options?.listFormat,
                   maxRedirects: options?.maxRedirects,
                   method: options?.method,
