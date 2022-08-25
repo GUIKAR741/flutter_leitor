@@ -6,56 +6,60 @@ part of 'auth_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$AuthController on _AuthBase, Store {
-  Computed<AuthStatus> _$statusComputed;
+  Computed<AuthStatus>? _$statusComputed;
 
   @override
-  AuthStatus get status =>
-      (_$statusComputed ??= Computed<AuthStatus>(() => super.status)).value;
-  Computed<String> _$userIDComputed;
+  AuthStatus get status => (_$statusComputed ??=
+          Computed<AuthStatus>(() => super.status, name: '_AuthBase.status'))
+      .value;
+  Computed<String?>? _$userIDComputed;
 
   @override
-  String get userID =>
-      (_$userIDComputed ??= Computed<String>(() => super.userID)).value;
+  String? get userID => (_$userIDComputed ??=
+          Computed<String?>(() => super.userID, name: '_AuthBase.userID'))
+      .value;
 
-  final _$userAtom = Atom(name: '_AuthBase.user');
+  late final _$userAtom = Atom(name: '_AuthBase.user', context: context);
 
   @override
-  FirebaseUser get user {
-    _$userAtom.context.enforceReadPolicy(_$userAtom);
-    _$userAtom.reportObserved();
+  User? get user {
+    _$userAtom.reportRead();
     return super.user;
   }
 
   @override
-  set user(FirebaseUser value) {
-    _$userAtom.context.conditionallyRunInAction(() {
+  set user(User? value) {
+    _$userAtom.reportWrite(value, super.user, () {
       super.user = value;
-      _$userAtom.reportChanged();
-    }, _$userAtom, name: '${_$userAtom.name}_set');
+    });
   }
 
-  final _$loginWithGoogleAsyncAction = AsyncAction('loginWithGoogle');
+  late final _$loginWithGoogleAsyncAction =
+      AsyncAction('_AuthBase.loginWithGoogle', context: context);
 
   @override
   Future<dynamic> loginWithGoogle() {
     return _$loginWithGoogleAsyncAction.run(() => super.loginWithGoogle());
   }
 
-  final _$logoutAsyncAction = AsyncAction('logout');
+  late final _$logoutAsyncAction =
+      AsyncAction('_AuthBase.logout', context: context);
 
   @override
   Future<void> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
-  final _$_AuthBaseActionController = ActionController(name: '_AuthBase');
+  late final _$_AuthBaseActionController =
+      ActionController(name: '_AuthBase', context: context);
 
   @override
-  dynamic setUser(FirebaseUser value) {
-    final _$actionInfo = _$_AuthBaseActionController.startAction();
+  dynamic setUser(User? value) {
+    final _$actionInfo =
+        _$_AuthBaseActionController.startAction(name: '_AuthBase.setUser');
     try {
       return super.setUser(value);
     } finally {
@@ -65,7 +69,8 @@ mixin _$AuthController on _AuthBase, Store {
 
   @override
   void _initUser() {
-    final _$actionInfo = _$_AuthBaseActionController.startAction();
+    final _$actionInfo =
+        _$_AuthBaseActionController.startAction(name: '_AuthBase._initUser');
     try {
       return super._initUser();
     } finally {
@@ -75,8 +80,10 @@ mixin _$AuthController on _AuthBase, Store {
 
   @override
   String toString() {
-    final string =
-        'user: ${user.toString()},status: ${status.toString()},userID: ${userID.toString()}';
-    return '{$string}';
+    return '''
+user: ${user},
+status: ${status},
+userID: ${userID}
+    ''';
   }
 }

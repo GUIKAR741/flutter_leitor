@@ -6,39 +6,48 @@ part of 'listagem_principal.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$ListagemPrincipal on _ListagemPrincipalBase, Store {
-  final _$titulosAtom = Atom(name: '_ListagemPrincipalBase.titulos');
+  late final _$titulosAtom =
+      Atom(name: '_ListagemPrincipalBase.titulos', context: context);
 
   @override
-  ObservableFuture<List<TituloModel>> get titulos {
-    _$titulosAtom.context.enforceReadPolicy(_$titulosAtom);
-    _$titulosAtom.reportObserved();
+  ObservableFuture<List<TituloModel>?>? get titulos {
+    _$titulosAtom.reportRead();
     return super.titulos;
   }
 
   @override
-  set titulos(ObservableFuture<List<TituloModel>> value) {
-    _$titulosAtom.context.conditionallyRunInAction(() {
+  set titulos(ObservableFuture<List<TituloModel>?>? value) {
+    _$titulosAtom.reportWrite(value, super.titulos, () {
       super.titulos = value;
-      _$titulosAtom.reportChanged();
-    }, _$titulosAtom, name: '${_$titulosAtom.name}_set');
+    });
   }
 
-  final _$addFavoritoAsyncAction = AsyncAction('addFavorito');
+  late final _$iniciaBoxAsyncAction =
+      AsyncAction('_ListagemPrincipalBase.iniciaBox', context: context);
+
+  @override
+  Future<void> iniciaBox() {
+    return _$iniciaBoxAsyncAction.run(() => super.iniciaBox());
+  }
+
+  late final _$addFavoritoAsyncAction =
+      AsyncAction('_ListagemPrincipalBase.addFavorito', context: context);
 
   @override
   Future<void> addFavorito(TituloModel titulo) {
     return _$addFavoritoAsyncAction.run(() => super.addFavorito(titulo));
   }
 
-  final _$_ListagemPrincipalBaseActionController =
-      ActionController(name: '_ListagemPrincipalBase');
+  late final _$_ListagemPrincipalBaseActionController =
+      ActionController(name: '_ListagemPrincipalBase', context: context);
 
   @override
   void listar({bool refresh = false}) {
-    final _$actionInfo = _$_ListagemPrincipalBaseActionController.startAction();
+    final _$actionInfo = _$_ListagemPrincipalBaseActionController.startAction(
+        name: '_ListagemPrincipalBase.listar');
     try {
       return super.listar(refresh: refresh);
     } finally {
@@ -47,18 +56,9 @@ mixin _$ListagemPrincipal on _ListagemPrincipalBase, Store {
   }
 
   @override
-  void iniciaBox() {
-    final _$actionInfo = _$_ListagemPrincipalBaseActionController.startAction();
-    try {
-      return super.iniciaBox();
-    } finally {
-      _$_ListagemPrincipalBaseActionController.endAction(_$actionInfo);
-    }
-  }
-
-  @override
-  List<TituloModel> pesquisar(dynamic res) {
-    final _$actionInfo = _$_ListagemPrincipalBaseActionController.startAction();
+  List<TituloModel>? pesquisar(dynamic res) {
+    final _$actionInfo = _$_ListagemPrincipalBaseActionController.startAction(
+        name: '_ListagemPrincipalBase.pesquisar');
     try {
       return super.pesquisar(res);
     } finally {
@@ -68,7 +68,8 @@ mixin _$ListagemPrincipal on _ListagemPrincipalBase, Store {
 
   @override
   String toString() {
-    final string = 'titulos: ${titulos.toString()}';
-    return '{$string}';
+    return '''
+titulos: ${titulos}
+    ''';
   }
 }

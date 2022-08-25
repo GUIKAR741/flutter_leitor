@@ -8,11 +8,19 @@ part 'capitulo_episodio_model.g.dart';
 
 @HiveType(typeId: 1)
 class CapEpModel extends _CapEpModelBase with _$CapEpModel {
-  CapEpModel({String titulo, String link, String info, String imagem})
-      : super(titulo: titulo, link: link, info: info, imagem: imagem);
+  CapEpModel({
+    String? titulo,
+    String? link,
+    String? info,
+    String? imagem,
+  }) : super(
+          titulo: titulo,
+          link: link,
+          info: info,
+          imagem: imagem,
+        );
 
   factory CapEpModel.fromJson(Map<String, dynamic> json) {
-    if (json == null) return null;
     return CapEpModel(
       titulo: json['titulo'],
       link: json['link'],
@@ -22,10 +30,10 @@ class CapEpModel extends _CapEpModelBase with _$CapEpModel {
   }
 
   Map<String, dynamic> toJson() => {
-        'titulo': this.titulo,
-        'link': this.link,
-        'info': this.info,
-        'imagem': this.imagem,
+        'titulo': titulo,
+        'link': link,
+        'info': info,
+        'imagem': imagem,
       };
 
   factory CapEpModel.fromRawJson(String str) =>
@@ -37,17 +45,17 @@ class CapEpModel extends _CapEpModelBase with _$CapEpModel {
 abstract class _CapEpModelBase extends HiveObject with Store, EquatableMixin {
   @HiveField(0)
   @observable
-  String titulo;
+  String? titulo;
 
   @HiveField(1)
   @observable
-  String link;
+  String? link;
 
   @observable
-  String info;
+  String? info;
 
   @observable
-  String imagem;
+  String? imagem;
 
   @observable
   bool status = false;
@@ -55,14 +63,20 @@ abstract class _CapEpModelBase extends HiveObject with Store, EquatableMixin {
   _CapEpModelBase({this.titulo, this.link, this.info, this.imagem});
 
   @computed
-  String get tituloFormatado => titulo.replaceAll('.', '').replaceAll('/', '');
+  String? get tituloFormatado =>
+      titulo?.replaceAll('.', ' ').replaceAll('/', '');
 
   @action
   void mudarStatus({bool add = false}) => status = !add ? !status : add;
 
   @override
-  String toString() => titulo;
+  String toString() => titulo!;
 
   @override
-  List<Object> get props => [titulo, imagem, link, info];
+  List<Object?> get props => [
+        titulo,
+        imagem,
+        link,
+        info,
+      ];
 }

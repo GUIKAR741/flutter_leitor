@@ -2,8 +2,7 @@ import 'package:extended_image/extended_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import '../../models/titulo_model.dart';
+import 'package:leitor/app/shared/models/titulo_model.dart';
 
 class ItemListagemPrincipal extends StatelessWidget {
   final TituloModel titulo;
@@ -11,29 +10,29 @@ class ItemListagemPrincipal extends StatelessWidget {
   final String rota;
 
   const ItemListagemPrincipal({
-    Key key,
-    @required this.titulo,
-    @required this.onPressed,
-    @required this.rota,
+    Key? key,
+    required this.titulo,
+    required this.onPressed,
+    required this.rota,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      contentPadding: EdgeInsets.symmetric(
+      contentPadding: const EdgeInsets.symmetric(
         vertical: 2,
         horizontal: 5,
       ),
-      leading: Container(
+      leading: SizedBox(
         height: 100,
         width: 50,
         child: ExtendedImage.network(
-          titulo.imagem,
+          titulo.imagem!,
           cache: true,
           fit: BoxFit.fill,
         ),
       ),
-      title: Text(titulo.nome),
+      title: Text(titulo.nome!),
       trailing: Observer(builder: (_) {
         return IconButton(
           icon: Icon(

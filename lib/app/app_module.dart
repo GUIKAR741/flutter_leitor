@@ -1,63 +1,44 @@
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_leitor/app/shared/controllers/firestore_controller.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/modules/home/home_module.dart';
+import 'package:leitor/app/modules/hqs/hqs_module.dart';
+import 'package:leitor/app/modules/mangas/mangas_module.dart';
+import 'package:leitor/app/shared/controllers/auth_controller.dart';
+import 'package:leitor/app/shared/controllers/firestore_controller.dart';
+import 'package:leitor/app/shared/controllers/theme_store.dart';
+import 'package:leitor/app/shared/repositories/auth_repository.dart';
+import 'package:leitor/app/shared/services/dio_service.dart';
+import 'package:leitor/app/shared/widgets/drawer/drawer_custom_controller.dart';
 
-import 'app_controller.dart';
-import 'app_widget.dart';
-import 'modules/animes/animes_module.dart';
-import 'modules/assistir/assistir_module.dart';
-import 'modules/home/home_module.dart';
-import 'modules/hqs/hqs_module.dart';
-import 'modules/mangas/mangas_module.dart';
-import 'shared/controllers/auth_controller.dart';
-import 'shared/interfaces/auth.dart';
-import 'shared/repositories/auth_repository.dart';
-import 'shared/services/dio_service.dart';
-import 'shared/services/notification_service.dart';
-import 'shared/widgets/drawer/drawer_custom_controller.dart';
-
-class AppModule extends MainModule {
+class AppModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind<NotificationService>((i) => NotificationService()),
-        Bind<IAuthRepository>((i) => AuthRepository()),
-        Bind<AuthController>((i) => AuthController()),
-        Bind<FirestoreController>((i) => FirestoreController()),
-        Bind<DioService>((i) => DioService()),
-        Bind<AppController>((i) => AppController()),
-        Bind<DrawerCustomController>((i) => DrawerCustomController()),
-        Bind<FirebaseAnalytics>((i) => FirebaseAnalytics()),
-        Bind<Crashlytics>((i) => Crashlytics.instance),
-      ];
+  final List<Bind> binds = [
+    Bind.lazySingleton((i) => AuthController()),
+    Bind.lazySingleton((i) => FirestoreController()),
+    Bind.lazySingleton((i) => DioService()),
+    Bind.lazySingleton((i) => ThemeStore()),
+    Bind.lazySingleton((i) => DrawerCustomController()),
+    Bind.lazySingleton((i) => AuthRepository()),
+    Bind.singleton((i) => FirebaseAnalytics.instance),
+    Bind.singleton((i) => FirebaseAnalyticsObserver(analytics: i.get())),
+    if (!kIsWeb) Bind.singleton((i) => FirebaseCrashlytics.instance),
+  ];
 
   @override
-  List<Router> get routers => [
-        Router(
-          Modular.initialRoute,
-          module: HomeModule(),
-        ),
-        Router(
-          '/mangas',
-          module: MangasModule(),
-        ),
-        Router(
-          '/animes',
-          module: AnimesModule(),
-        ),
-        Router(
-          '/assistir',
-          module: AssistirModule(),
-        ),
-        Router(
-          '/hqs',
-          module: HqsModule(),
-        ),
-      ];
-
-  @override
-  Widget get bootstrap => App();
-
-  static Inject get to => Inject<AppModule>.of();
+  final List<ModularRoute> routes = [
+    ModuleRoute(
+      Modular.initialRoute,
+      module: HomeModule(),
+    ),
+    ModuleRoute(
+      '/hqs',
+      module: HqsModule(),
+    ),
+    ModuleRoute(
+      '/mangas',
+      module: MangasModule(),
+    ),
+  ];
 }

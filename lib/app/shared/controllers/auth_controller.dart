@@ -6,28 +6,26 @@ import '../interfaces/auth.dart';
 
 part 'auth_controller.g.dart';
 
-class AuthController = _AuthBase with _$AuthController;
+class AuthController extends _AuthBase with _$AuthController {}
 
 abstract class _AuthBase with Store {
-  final IAuthRepository _authRepository = Modular.get<IAuthRepository>();
+  final IAuthRepository _authRepository = Modular.get();
 
   @observable
-  FirebaseUser user;
+  User? user;
 
   @computed
   AuthStatus get status => user == null ? AuthStatus.logoff : AuthStatus.logged;
 
   @computed
-  String get userID => user?.uid;
+  String? get userID => user?.uid;
 
   @action
-  setUser(FirebaseUser value) => user = value;
+  setUser(User? value) => user = value;
 
   @action
   void _initUser() {
-    _authRepository.getUser().then(setUser).catchError((e) {
-      print(e);
-    });
+    setUser(_authRepository.getUser());
   }
 
   void _sincronizarUser() {

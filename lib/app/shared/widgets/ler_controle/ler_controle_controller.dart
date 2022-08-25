@@ -3,7 +3,8 @@ import 'package:mobx/mobx.dart';
 
 part 'ler_controle_controller.g.dart';
 
-class LerControleController = _LerControleBase with _$LerControleController;
+class LerControleController extends _LerControleBase
+    with _$LerControleController {}
 
 abstract class _LerControleBase with Store {
   @observable
@@ -12,9 +13,16 @@ abstract class _LerControleBase with Store {
   @action
   void mudar() {
     esconderControle = !esconderControle;
-    if (esconderControle)
-      SystemChrome.setEnabledSystemUIOverlays([]);
-    else
-      SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    if (esconderControle) {
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: [],
+      );
+    } else {
+      SystemChrome.setEnabledSystemUIMode(
+        SystemUiMode.manual,
+        overlays: SystemUiOverlay.values,
+      );
+    }
   }
 }

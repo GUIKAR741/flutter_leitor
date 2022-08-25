@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 import '../interfaces/auth.dart';
@@ -8,23 +9,27 @@ class AuthRepository implements IAuthRepository {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
-  Future<FirebaseUser> getLogin() async {
-    GoogleSignInAccount googleUser = await _googleSignIn.signIn();
-    final GoogleSignInAuthentication googleAuth =
+  Future<User?> getLogin() async {
+    GoogleSignInAccount? googleUser;
+    try {
+      googleUser = await _googleSignIn.signIn();
+    } catch (error) {
+      debugPrint(error.toString());
+    }
+    final GoogleSignInAuthentication? googleAuth =
         await googleUser?.authentication;
-    final AuthCredential credential = GoogleAuthProvider.getCredential(
+    final AuthCredential credential = GoogleAuthProvider.credential(
       accessToken: googleAuth?.accessToken,
       idToken: googleAuth?.idToken,
     );
 
-    final FirebaseUser user =
-        (await _auth.signInWithCredential(credential))?.user;
+    final User? user = (await _auth.signInWithCredential(credential)).user;
     return user;
   }
 
   @override
-  Future<FirebaseUser> getUser() {
-    return _auth.currentUser();
+  User? getUser() {
+    return _auth.currentUser;
   }
 
   @override

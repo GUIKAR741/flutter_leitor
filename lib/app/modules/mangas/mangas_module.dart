@@ -1,35 +1,31 @@
-import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
+
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/modules/hqs/pages/ler/ler_store.dart';
+import 'package:leitor/app/modules/mangas/pages/manga/manga_page.dart';
+import 'package:leitor/app/modules/mangas/pages/manga/manga_store.dart';
+import 'package:leitor/app/modules/mangas/pages/mangas/mangas_page.dart';
+import 'package:leitor/app/modules/mangas/pages/mangas/mangas_store.dart';
+import 'package:leitor/app/shared/pages/ler/ler_page.dart';
+import 'package:leitor/app/shared/repositories/mangas/manga_repository.dart';
+import 'package:leitor/app/shared/repositories/mangas/mangas_repository.dart';
 
-import '../../shared/controllers/ler.dart';
-import '../../shared/controllers/listagem_principal.dart';
-import '../../shared/interfaces/repository_principal.dart';
-import '../../shared/interfaces/repository_unique.dart';
-import '../../shared/pages/ler/ler_page.dart';
-import 'mangas_controller.dart';
-import 'mangas_page.dart';
-import 'pages/ler/ler_controller.dart';
-import 'pages/manga/manga_controller.dart';
-import 'pages/manga/manga_page.dart';
-import 'repositories/manga_repository.dart';
-import 'repositories/mangas_repository.dart';
-
-class MangasModule extends ChildModule {
+class MangasModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind<ListagemPrincipal>((i) => MangasController()),
-        Bind<ListagemTitulo>((i) => MangaController()),
-        Bind<Ler>((i) => LerController(i.get<MangaController>())),
-        Bind<IRepositoryPrincipal>((i) => MangasRepository()),
-        Bind<IRepositoryUnique>((i) => MangaRepository()),
-      ];
+  final List<Bind> binds = [
+    Bind.lazySingleton((i) => MangasStore()),
+    Bind.lazySingleton((i) => MangaStore()),
+    Bind.factory((i) => LerStore(
+      i.args.data['controller'],
+      i.args.data['capEp'],
+    )),
+    Bind.lazySingleton((i) => MangasRepository()),
+    Bind.lazySingleton((i) => MangaRepository()),
+  ];
 
   @override
-  List<Router> get routers => [
-        Router('/', child: (_, args) => MangasPage()),
-        Router('/manga', child: (_, args) => MangaPage()),
-        Router('/ler_manga', child: (_, args) => LerPage()),
-      ];
-
-  static Inject get to => Inject<MangasModule>.of();
+  final List<ModularRoute> routes = [
+    ChildRoute('/', child: (_, args) => const MangasPage()),
+    ChildRoute('/manga', child: (_, args) => const MangaPage()),
+    ChildRoute('/ler_manga', child: (_, args) => const LerPage()),
+  ];
 }

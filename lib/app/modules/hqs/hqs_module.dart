@@ -1,35 +1,31 @@
-import 'package:flutter_leitor/app/shared/controllers/listagem_titulo.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/modules/hqs/pages/hq/hq_page.dart';
+import 'package:leitor/app/modules/hqs/pages/hq/hq_store.dart';
+import 'package:leitor/app/modules/hqs/pages/hqs/hqs_store.dart';
+import 'package:leitor/app/modules/hqs/pages/ler/ler_store.dart';
+import 'package:leitor/app/shared/pages/ler/ler_page.dart';
+import 'package:leitor/app/shared/repositories/hqs/hq_repository.dart';
+import 'package:leitor/app/shared/repositories/hqs/hqs_repository.dart';
 
-import '../../shared/controllers/ler.dart';
-import '../../shared/controllers/listagem_principal.dart';
-import '../../shared/interfaces/repository_principal.dart';
-import '../../shared/interfaces/repository_unique.dart';
-import '../../shared/pages/ler/ler_page.dart';
-import 'hqs_controller.dart';
-import 'hqs_page.dart';
-import 'pages/hq/hq_controller.dart';
-import 'pages/hq/hq_page.dart';
-import 'pages/ler/ler_controller.dart';
-import 'repositories/hq_repository.dart';
-import 'repositories/hqs_repository.dart';
+import 'pages/hqs/hqs_page.dart';
 
-class HqsModule extends ChildModule {
+class HqsModule extends Module {
   @override
-  List<Bind> get binds => [
-        Bind<ListagemPrincipal>((i) => HqsController()),
-        Bind<ListagemTitulo>((i) => HqController()),
-        Bind<Ler>((i) => LerController(i.get<HqController>())),
-        Bind<IRepositoryPrincipal>((i) => HqsRepository()),
-        Bind<IRepositoryUnique>((i) => HqRepository()),
-      ];
+  final List<Bind> binds = [
+    Bind.lazySingleton((i) => HqsStore()),
+    Bind.lazySingleton((i) => HqStore()),
+    Bind.factory((i) => LerStore(
+          i.args.data['controller'],
+          i.args.data['capEp'],
+        )),
+    Bind.lazySingleton((i) => HqsRepository()),
+    Bind.lazySingleton((i) => HqRepository()),
+  ];
 
   @override
-  List<Router> get routers => [
-        Router('/', child: (_, args) => HqsPage()),
-        Router('/hq', child: (_, args) => HqPage()),
-        Router('/ler_hq', child: (_, args) => LerPage()),
-      ];
-
-  static Inject get to => Inject<HqsModule>.of();
+  final List<ModularRoute> routes = [
+    ChildRoute('/', child: (_, args) => const HqsPage()),
+    ChildRoute('/hq', child: (_, args) => const HqPage()),
+    ChildRoute('/ler_hq', child: (_, args) => const LerPage()),
+  ];
 }

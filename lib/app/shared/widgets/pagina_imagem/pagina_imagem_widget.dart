@@ -7,8 +7,8 @@ class PaginaImagemWidget extends StatelessWidget {
   final String url;
 
   const PaginaImagemWidget({
-    Key key,
-    @required this.url,
+    Key? key,
+    required this.url,
   }) : super(key: key);
 
   @override
@@ -34,24 +34,20 @@ class PaginaImagemWidget extends StatelessWidget {
       loadStateChanged: (ExtendedImageState state) {
         switch (state.extendedImageLoadState) {
           case LoadState.loading:
-            return Container(
-              child: Center(
-                child: CircularProgressIndicator(),
-              ),
+            return const Center(
+              child: CircularProgressIndicator(),
             );
-            break;
           case LoadState.completed:
             return state.completedWidget;
-            break;
           case LoadState.failed:
-            Modular.get<Crashlytics>().log('Erro ao Carregar Imagem $url');
+            Modular.get<FirebaseCrashlytics>()
+                .log('Erro ao Carregar Imagem $url');
             return Center(
-              child: RaisedButton(
-                child: Text('Erro ao carregar'),
+              child: ElevatedButton(
                 onPressed: state.reLoadImage,
+                child: const Text('Erro ao carregar'),
               ),
             );
-            break;
           default:
             return null;
         }

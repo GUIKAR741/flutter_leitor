@@ -6,62 +6,64 @@ part of 'drawer_custom_controller.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$DrawerCustomController on _DrawerBase, Store {
-  final _$loadingAtom = Atom(name: '_DrawerBase.loading');
+  late final _$loadingAtom =
+      Atom(name: '_DrawerBase.loading', context: context);
 
   @override
   bool get loading {
-    _$loadingAtom.context.enforceReadPolicy(_$loadingAtom);
-    _$loadingAtom.reportObserved();
+    _$loadingAtom.reportRead();
     return super.loading;
   }
 
   @override
   set loading(bool value) {
-    _$loadingAtom.context.conditionallyRunInAction(() {
+    _$loadingAtom.reportWrite(value, super.loading, () {
       super.loading = value;
-      _$loadingAtom.reportChanged();
-    }, _$loadingAtom, name: '${_$loadingAtom.name}_set');
+    });
   }
 
-  final _$esconderLogoutAtom = Atom(name: '_DrawerBase.esconderLogout');
+  late final _$esconderLogoutAtom =
+      Atom(name: '_DrawerBase.esconderLogout', context: context);
 
   @override
   bool get esconderLogout {
-    _$esconderLogoutAtom.context.enforceReadPolicy(_$esconderLogoutAtom);
-    _$esconderLogoutAtom.reportObserved();
+    _$esconderLogoutAtom.reportRead();
     return super.esconderLogout;
   }
 
   @override
   set esconderLogout(bool value) {
-    _$esconderLogoutAtom.context.conditionallyRunInAction(() {
+    _$esconderLogoutAtom.reportWrite(value, super.esconderLogout, () {
       super.esconderLogout = value;
-      _$esconderLogoutAtom.reportChanged();
-    }, _$esconderLogoutAtom, name: '${_$esconderLogoutAtom.name}_set');
+    });
   }
 
-  final _$loginWithGoogleAsyncAction = AsyncAction('loginWithGoogle');
+  late final _$loginWithGoogleAsyncAction =
+      AsyncAction('_DrawerBase.loginWithGoogle', context: context);
 
   @override
   Future<dynamic> loginWithGoogle() {
     return _$loginWithGoogleAsyncAction.run(() => super.loginWithGoogle());
   }
 
-  final _$logoutAsyncAction = AsyncAction('logout');
+  late final _$logoutAsyncAction =
+      AsyncAction('_DrawerBase.logout', context: context);
 
   @override
   Future<dynamic> logout() {
     return _$logoutAsyncAction.run(() => super.logout());
   }
 
-  final _$_DrawerBaseActionController = ActionController(name: '_DrawerBase');
+  late final _$_DrawerBaseActionController =
+      ActionController(name: '_DrawerBase', context: context);
 
   @override
-  void mostrarLogout({bool value}) {
-    final _$actionInfo = _$_DrawerBaseActionController.startAction();
+  void mostrarLogout({bool? value}) {
+    final _$actionInfo = _$_DrawerBaseActionController.startAction(
+        name: '_DrawerBase.mostrarLogout');
     try {
       return super.mostrarLogout(value: value);
     } finally {
@@ -71,8 +73,9 @@ mixin _$DrawerCustomController on _DrawerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'loading: ${loading.toString()},esconderLogout: ${esconderLogout.toString()}';
-    return '{$string}';
+    return '''
+loading: ${loading},
+esconderLogout: ${esconderLogout}
+    ''';
   }
 }

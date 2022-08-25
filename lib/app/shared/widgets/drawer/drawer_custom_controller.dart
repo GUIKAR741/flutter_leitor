@@ -1,14 +1,14 @@
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/shared/controllers/auth_controller.dart';
 import 'package:mobx/mobx.dart';
-
-import '../../controllers/auth_controller.dart';
 
 part 'drawer_custom_controller.g.dart';
 
-class DrawerCustomController = _DrawerBase with _$DrawerCustomController;
+class DrawerCustomController extends _DrawerBase with _$DrawerCustomController {
+}
 
 abstract class _DrawerBase with Store {
-  final AuthController authController = Modular.get<AuthController>();
+  final AuthController authController = Modular.get();
 
   @observable
   bool loading = false;
@@ -39,5 +39,6 @@ abstract class _DrawerBase with Store {
   bool esconderLogout = true;
 
   @action
-  void mostrarLogout({bool value}) => esconderLogout = value ?? !esconderLogout;
+  void mostrarLogout({bool? value}) =>
+      esconderLogout = value ?? !esconderLogout;
 }

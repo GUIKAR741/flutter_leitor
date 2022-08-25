@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/shared/controllers/listagem_titulo.dart';
+import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
+import 'package:leitor/app/shared/widgets/item_lista/item_listagem_titulo.dart';
 
-import '../../../modules/animes/pages/anime/anime_controller.dart';
-import '../../../shared/controllers/listagem_titulo.dart';
-import '../../../shared/models/capitulo_episodio_model.dart';
-import '../../../shared/widgets/item_lista/item_listagem_titulo.dart';
 import 'pesquisar_widget.dart';
 
 class PesquisarCapituloEpisodio extends Pesquisar {
   final String rota;
-  final ListagemTitulo controller = Modular.get<ListagemTitulo>();
+  final ListagemTitulo controller = Modular.get();
 
   PesquisarCapituloEpisodio({
-    @required this.rota,
+    required this.rota,
     searchFieldLabel = 'Pesquisar',
     keyboardType,
     textInputAction = TextInputAction.search,
@@ -24,7 +23,7 @@ class PesquisarCapituloEpisodio extends Pesquisar {
   @override
   Widget buildLeading(BuildContext context) {
     return IconButton(
-        icon: Icon(Icons.arrow_back),
+        icon: const Icon(Icons.arrow_back),
         onPressed: () {
           controller.listarTitulo();
           close(context, '');
@@ -32,22 +31,23 @@ class PesquisarCapituloEpisodio extends Pesquisar {
   }
 
   Widget listCapEp() {
-    List<CapEpModel> capEp = controller.pesquisar(query);
+    List<CapEpModel> capEp = controller.pesquisar(query)!;
     return ListView.separated(
       itemCount: capEp.length,
       itemBuilder: (_, index) {
         return ItemListagemTitulo(
+          controller: controller,
           capEp: capEp[index],
           onPressed: controller.addLista,
           rota: rota,
-          onLongPress: controller.runtimeType == AnimeController
-              ? () async => await (controller as AnimeController).videoExterno(
-                    capEp[index],
-                  )
-              : null,
+          // onLongPress: controller.runtimeType == AnimeController
+          //     ? () async => await (controller as AnimeController).videoExterno(
+          //           capEp[index],
+          //         )
+          //     : null,
         );
       },
-      separatorBuilder: (_, index) => Divider(),
+      separatorBuilder: (_, index) => const Divider(),
     );
   }
 

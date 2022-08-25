@@ -8,18 +8,19 @@ part of 'titulo_model.dart';
 
 class TituloModelAdapter extends TypeAdapter<TituloModel> {
   @override
-  final typeId = 0;
+  final int typeId = 0;
 
   @override
   TituloModel read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return TituloModel()
-      ..nome = fields[0] as String
-      ..link = fields[1] as String
-      ..lista = (fields[2] as Map)?.cast<String, CapEpModel>()
+    return TituloModel(
+      link: fields[1] as String?,
+      nome: fields[0] as String?,
+    )
+      ..lista = (fields[2] as Map?)?.cast<String, CapEpModel>()
       ..favorito = fields[3] as bool;
   }
 
@@ -36,113 +37,118 @@ class TituloModelAdapter extends TypeAdapter<TituloModel> {
       ..writeByte(3)
       ..write(obj.favorito);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is TituloModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$TituloModel on _TituloModelBase, Store {
-  Computed<String> _$nomeFormatadoComputed;
+  Computed<String?>? _$nomeFormatadoComputed;
 
   @override
-  String get nomeFormatado =>
-      (_$nomeFormatadoComputed ??= Computed<String>(() => super.nomeFormatado))
+  String? get nomeFormatado =>
+      (_$nomeFormatadoComputed ??= Computed<String?>(() => super.nomeFormatado,
+              name: '_TituloModelBase.nomeFormatado'))
           .value;
 
-  final _$nomeAtom = Atom(name: '_TituloModelBase.nome');
+  late final _$nomeAtom = Atom(name: '_TituloModelBase.nome', context: context);
 
   @override
-  String get nome {
-    _$nomeAtom.context.enforceReadPolicy(_$nomeAtom);
-    _$nomeAtom.reportObserved();
+  String? get nome {
+    _$nomeAtom.reportRead();
     return super.nome;
   }
 
   @override
-  set nome(String value) {
-    _$nomeAtom.context.conditionallyRunInAction(() {
+  set nome(String? value) {
+    _$nomeAtom.reportWrite(value, super.nome, () {
       super.nome = value;
-      _$nomeAtom.reportChanged();
-    }, _$nomeAtom, name: '${_$nomeAtom.name}_set');
+    });
   }
 
-  final _$linkAtom = Atom(name: '_TituloModelBase.link');
+  late final _$linkAtom = Atom(name: '_TituloModelBase.link', context: context);
 
   @override
-  String get link {
-    _$linkAtom.context.enforceReadPolicy(_$linkAtom);
-    _$linkAtom.reportObserved();
+  String? get link {
+    _$linkAtom.reportRead();
     return super.link;
   }
 
   @override
-  set link(String value) {
-    _$linkAtom.context.conditionallyRunInAction(() {
+  set link(String? value) {
+    _$linkAtom.reportWrite(value, super.link, () {
       super.link = value;
-      _$linkAtom.reportChanged();
-    }, _$linkAtom, name: '${_$linkAtom.name}_set');
+    });
   }
 
-  final _$descricaoAtom = Atom(name: '_TituloModelBase.descricao');
+  late final _$descricaoAtom =
+      Atom(name: '_TituloModelBase.descricao', context: context);
 
   @override
-  String get descricao {
-    _$descricaoAtom.context.enforceReadPolicy(_$descricaoAtom);
-    _$descricaoAtom.reportObserved();
+  String? get descricao {
+    _$descricaoAtom.reportRead();
     return super.descricao;
   }
 
   @override
-  set descricao(String value) {
-    _$descricaoAtom.context.conditionallyRunInAction(() {
+  set descricao(String? value) {
+    _$descricaoAtom.reportWrite(value, super.descricao, () {
       super.descricao = value;
-      _$descricaoAtom.reportChanged();
-    }, _$descricaoAtom, name: '${_$descricaoAtom.name}_set');
+    });
   }
 
-  final _$imagemAtom = Atom(name: '_TituloModelBase.imagem');
+  late final _$imagemAtom =
+      Atom(name: '_TituloModelBase.imagem', context: context);
 
   @override
-  String get imagem {
-    _$imagemAtom.context.enforceReadPolicy(_$imagemAtom);
-    _$imagemAtom.reportObserved();
+  String? get imagem {
+    _$imagemAtom.reportRead();
     return super.imagem;
   }
 
   @override
-  set imagem(String value) {
-    _$imagemAtom.context.conditionallyRunInAction(() {
+  set imagem(String? value) {
+    _$imagemAtom.reportWrite(value, super.imagem, () {
       super.imagem = value;
-      _$imagemAtom.reportChanged();
-    }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
+    });
   }
 
-  final _$favoritoAtom = Atom(name: '_TituloModelBase.favorito');
+  late final _$favoritoAtom =
+      Atom(name: '_TituloModelBase.favorito', context: context);
 
   @override
   bool get favorito {
-    _$favoritoAtom.context.enforceReadPolicy(_$favoritoAtom);
-    _$favoritoAtom.reportObserved();
+    _$favoritoAtom.reportRead();
     return super.favorito;
   }
 
   @override
   set favorito(bool value) {
-    _$favoritoAtom.context.conditionallyRunInAction(() {
+    _$favoritoAtom.reportWrite(value, super.favorito, () {
       super.favorito = value;
-      _$favoritoAtom.reportChanged();
-    }, _$favoritoAtom, name: '${_$favoritoAtom.name}_set');
+    });
   }
 
-  final _$_TituloModelBaseActionController =
-      ActionController(name: '_TituloModelBase');
+  late final _$_TituloModelBaseActionController =
+      ActionController(name: '_TituloModelBase', context: context);
 
   @override
   dynamic setFavorito(bool value) {
-    final _$actionInfo = _$_TituloModelBaseActionController.startAction();
+    final _$actionInfo = _$_TituloModelBaseActionController.startAction(
+        name: '_TituloModelBase.setFavorito');
     try {
       return super.setFavorito(value);
     } finally {
@@ -152,8 +158,13 @@ mixin _$TituloModel on _TituloModelBase, Store {
 
   @override
   String toString() {
-    final string =
-        'nome: ${nome.toString()},link: ${link.toString()},descricao: ${descricao.toString()},imagem: ${imagem.toString()},favorito: ${favorito.toString()},nomeFormatado: ${nomeFormatado.toString()}';
-    return '{$string}';
+    return '''
+nome: ${nome},
+link: ${link},
+descricao: ${descricao},
+imagem: ${imagem},
+favorito: ${favorito},
+nomeFormatado: ${nomeFormatado}
+    ''';
   }
 }

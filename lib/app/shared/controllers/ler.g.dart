@@ -6,82 +6,76 @@ part of 'ler.dart';
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$Ler on _LerBase, Store {
-  final _$capituloAtom = Atom(name: '_LerBase.capitulo');
+  late final _$capituloAtom = Atom(name: '_LerBase.capitulo', context: context);
 
   @override
-  CapEpModel get capitulo {
-    _$capituloAtom.context.enforceReadPolicy(_$capituloAtom);
-    _$capituloAtom.reportObserved();
+  CapEpModel? get capitulo {
+    _$capituloAtom.reportRead();
     return super.capitulo;
   }
 
   @override
-  set capitulo(CapEpModel value) {
-    _$capituloAtom.context.conditionallyRunInAction(() {
+  set capitulo(CapEpModel? value) {
+    _$capituloAtom.reportWrite(value, super.capitulo, () {
       super.capitulo = value;
-      _$capituloAtom.reportChanged();
-    }, _$capituloAtom, name: '${_$capituloAtom.name}_set');
+    });
   }
 
-  final _$imagensAtom = Atom(name: '_LerBase.imagens');
+  late final _$imagensAtom = Atom(name: '_LerBase.imagens', context: context);
 
   @override
-  ObservableFuture<List<Widget>> get imagens {
-    _$imagensAtom.context.enforceReadPolicy(_$imagensAtom);
-    _$imagensAtom.reportObserved();
+  ObservableFuture<List<Widget>>? get imagens {
+    _$imagensAtom.reportRead();
     return super.imagens;
   }
 
   @override
-  set imagens(ObservableFuture<List<Widget>> value) {
-    _$imagensAtom.context.conditionallyRunInAction(() {
+  set imagens(ObservableFuture<List<Widget>>? value) {
+    _$imagensAtom.reportWrite(value, super.imagens, () {
       super.imagens = value;
-      _$imagensAtom.reportChanged();
-    }, _$imagensAtom, name: '${_$imagensAtom.name}_set');
+    });
   }
 
-  final _$iconeAtom = Atom(name: '_LerBase.icone');
+  late final _$iconeAtom = Atom(name: '_LerBase.icone', context: context);
 
   @override
-  IconData get icone {
-    _$iconeAtom.context.enforceReadPolicy(_$iconeAtom);
-    _$iconeAtom.reportObserved();
+  IconData? get icone {
+    _$iconeAtom.reportRead();
     return super.icone;
   }
 
   @override
-  set icone(IconData value) {
-    _$iconeAtom.context.conditionallyRunInAction(() {
+  set icone(IconData? value) {
+    _$iconeAtom.reportWrite(value, super.icone, () {
       super.icone = value;
-      _$iconeAtom.reportChanged();
-    }, _$iconeAtom, name: '${_$iconeAtom.name}_set');
+    });
   }
 
-  final _$paginaAtom = Atom(name: '_LerBase.pagina');
+  late final _$paginaAtom = Atom(name: '_LerBase.pagina', context: context);
 
   @override
-  String get pagina {
-    _$paginaAtom.context.enforceReadPolicy(_$paginaAtom);
-    _$paginaAtom.reportObserved();
+  String? get pagina {
+    _$paginaAtom.reportRead();
     return super.pagina;
   }
 
   @override
-  set pagina(String value) {
-    _$paginaAtom.context.conditionallyRunInAction(() {
+  set pagina(String? value) {
+    _$paginaAtom.reportWrite(value, super.pagina, () {
       super.pagina = value;
-      _$paginaAtom.reportChanged();
-    }, _$paginaAtom, name: '${_$paginaAtom.name}_set');
+    });
   }
 
-  final _$_LerBaseActionController = ActionController(name: '_LerBase');
+  late final _$_LerBaseActionController =
+      ActionController(name: '_LerBase', context: context);
 
   @override
   void pausar() {
-    final _$actionInfo = _$_LerBaseActionController.startAction();
+    final _$actionInfo =
+        _$_LerBaseActionController.startAction(name: '_LerBase.pausar');
     try {
       return super.pausar();
     } finally {
@@ -91,7 +85,8 @@ mixin _$Ler on _LerBase, Store {
 
   @override
   void mudar(int pagina) {
-    final _$actionInfo = _$_LerBaseActionController.startAction();
+    final _$actionInfo =
+        _$_LerBaseActionController.startAction(name: '_LerBase.mudar');
     try {
       return super.mudar(pagina);
     } finally {
@@ -100,10 +95,11 @@ mixin _$Ler on _LerBase, Store {
   }
 
   @override
-  void irPara(String valor) {
-    final _$actionInfo = _$_LerBaseActionController.startAction();
+  void irPara(BuildContext context, String valor) {
+    final _$actionInfo =
+        _$_LerBaseActionController.startAction(name: '_LerBase.irPara');
     try {
-      return super.irPara(valor);
+      return super.irPara(context, valor);
     } finally {
       _$_LerBaseActionController.endAction(_$actionInfo);
     }
@@ -111,7 +107,8 @@ mixin _$Ler on _LerBase, Store {
 
   @override
   void anterior() {
-    final _$actionInfo = _$_LerBaseActionController.startAction();
+    final _$actionInfo =
+        _$_LerBaseActionController.startAction(name: '_LerBase.anterior');
     try {
       return super.anterior();
     } finally {
@@ -121,7 +118,8 @@ mixin _$Ler on _LerBase, Store {
 
   @override
   void proximo() {
-    final _$actionInfo = _$_LerBaseActionController.startAction();
+    final _$actionInfo =
+        _$_LerBaseActionController.startAction(name: '_LerBase.proximo');
     try {
       return super.proximo();
     } finally {
@@ -131,7 +129,8 @@ mixin _$Ler on _LerBase, Store {
 
   @override
   void listenerPage() {
-    final _$actionInfo = _$_LerBaseActionController.startAction();
+    final _$actionInfo =
+        _$_LerBaseActionController.startAction(name: '_LerBase.listenerPage');
     try {
       return super.listenerPage();
     } finally {
@@ -141,8 +140,11 @@ mixin _$Ler on _LerBase, Store {
 
   @override
   String toString() {
-    final string =
-        'capitulo: ${capitulo.toString()},imagens: ${imagens.toString()},icone: ${icone.toString()},pagina: ${pagina.toString()}';
-    return '{$string}';
+    return '''
+capitulo: ${capitulo},
+imagens: ${imagens},
+icone: ${icone},
+pagina: ${pagina}
+    ''';
   }
 }

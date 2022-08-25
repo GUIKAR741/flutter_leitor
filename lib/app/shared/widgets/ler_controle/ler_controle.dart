@@ -11,18 +11,18 @@ class LerControle extends StatelessWidget {
 
   final Widget title;
 
-  LerControle({
-    Key key,
-    @required this.title,
-    @required this.actions,
-    @required this.controller,
+  const LerControle({
+    Key? key,
+    required this.title,
+    required this.actions,
+    required this.controller,
   }) : super(key: key);
 
   Widget _buildBottomBar(context) {
     return Observer(
       builder: (_) => AnimatedOpacity(
         opacity: controller.esconderControle ? 0.0 : 1.0,
-        duration: Duration(milliseconds: 300),
+        duration: const Duration(milliseconds: 300),
         child: Container(
           height: barHeight,
           color: Theme.of(context).primaryColor,
@@ -32,7 +32,7 @@ class LerControle extends StatelessWidget {
               Row(
                 children: <Widget>[
                   IconButton(
-                    icon: Icon(Icons.arrow_back),
+                    icon: const Icon(Icons.arrow_back),
                     onPressed: controller.esconderControle
                         ? null
                         : () => Modular.to.maybePop(),
@@ -54,17 +54,14 @@ class LerControle extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MouseRegion(
-      onHover: (_) => controller.mudar(),
-      child: GestureDetector(
-        onTap: controller.mudar,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: <Widget>[
-            _buildBottomBar(context),
-          ],
-        ),
-      ),
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.end,
+      children: <Widget>[
+        GestureDetector(
+          onTap: controller.mudar,
+          child: _buildBottomBar(context),
+        )
+      ],
     );
   }
 }

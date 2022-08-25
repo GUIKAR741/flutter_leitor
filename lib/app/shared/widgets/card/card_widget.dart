@@ -1,41 +1,42 @@
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
-import '../../models/titulo_model.dart';
+import 'package:leitor/app/shared/models/titulo_model.dart';
 
 class CardWidget extends StatelessWidget {
   final TituloModel titulo;
 
   const CardWidget({
-    Key key,
-    @required this.titulo,
+    Key? key,
+    required this.titulo,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        Container(
-          child: Row(
-            children: <Widget>[
-              Expanded(
-                child: ExtendedImage.network(
-                  titulo.imagem,
-                  height: 300,
-                  fit: BoxFit.fill,
-                ),
+        Row(
+          children: <Widget>[
+            Expanded(
+              child: kIsWeb ? ExtendedImage.network(
+                titulo.imagem!,
+                height: 300,
+              ): ExtendedImage.network(
+                titulo.imagem!,
+                height: 300,
+                fit: BoxFit.fill,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
         Container(
           color: Theme.of(context).backgroundColor,
-          padding: EdgeInsets.all(5),
+          padding: const EdgeInsets.all(5),
           alignment: Alignment.centerLeft,
           child: Text(
-            titulo.descricao,
+            titulo.descricao!,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
             ),
           ),

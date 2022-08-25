@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
 
 abstract class Pesquisar extends SearchDelegate<String> {
-  final String searchFieldLabel;
-  final TextInputType keyboardType;
-  final TextInputAction textInputAction;
-
   Pesquisar({
-    this.searchFieldLabel = 'Pesquisar',
-    this.keyboardType,
-    this.textInputAction = TextInputAction.search,
+    String searchFieldLabel = 'Pesquisar',
+    TextInputType? keyboardType,
+    TextInputAction textInputAction = TextInputAction.search,
   }) : super(
           searchFieldLabel: searchFieldLabel,
           keyboardType: keyboardType,
@@ -25,7 +21,7 @@ abstract class Pesquisar extends SearchDelegate<String> {
   List<Widget> buildActions(BuildContext context) {
     return [
       IconButton(
-        icon: Icon(Icons.clear),
+        icon: const Icon(Icons.clear),
         onPressed: () => query = '',
       ),
     ];
@@ -33,7 +29,7 @@ abstract class Pesquisar extends SearchDelegate<String> {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    return Center(
+    return const Center(
       child: Text("Faça uma Pesquisa!"),
     );
   }

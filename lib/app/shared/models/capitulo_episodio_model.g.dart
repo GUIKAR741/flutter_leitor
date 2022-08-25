@@ -8,17 +8,18 @@ part of 'capitulo_episodio_model.dart';
 
 class CapEpModelAdapter extends TypeAdapter<CapEpModel> {
   @override
-  final typeId = 1;
+  final int typeId = 1;
 
   @override
   CapEpModel read(BinaryReader reader) {
-    var numOfFields = reader.readByte();
-    var fields = <int, dynamic>{
-      for (var i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
+    final numOfFields = reader.readByte();
+    final fields = <int, dynamic>{
+      for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return CapEpModel()
-      ..titulo = fields[0] as String
-      ..link = fields[1] as String;
+    return CapEpModel(
+      titulo: fields[0] as String?,
+      link: fields[1] as String?,
+    );
   }
 
   @override
@@ -30,113 +31,118 @@ class CapEpModelAdapter extends TypeAdapter<CapEpModel> {
       ..writeByte(1)
       ..write(obj.link);
   }
+
+  @override
+  int get hashCode => typeId.hashCode;
+
+  @override
+  bool operator ==(Object other) =>
+      identical(this, other) ||
+      other is CapEpModelAdapter &&
+          runtimeType == other.runtimeType &&
+          typeId == other.typeId;
 }
 
 // **************************************************************************
 // StoreGenerator
 // **************************************************************************
 
-// ignore_for_file: non_constant_identifier_names, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic
+// ignore_for_file: non_constant_identifier_names, unnecessary_brace_in_string_interps, unnecessary_lambdas, prefer_expression_function_bodies, lines_longer_than_80_chars, avoid_as, avoid_annotating_with_dynamic, no_leading_underscores_for_local_identifiers
 
 mixin _$CapEpModel on _CapEpModelBase, Store {
-  Computed<String> _$tituloFormatadoComputed;
+  Computed<String?>? _$tituloFormatadoComputed;
 
   @override
-  String get tituloFormatado => (_$tituloFormatadoComputed ??=
-          Computed<String>(() => super.tituloFormatado))
+  String? get tituloFormatado => (_$tituloFormatadoComputed ??=
+          Computed<String?>(() => super.tituloFormatado,
+              name: '_CapEpModelBase.tituloFormatado'))
       .value;
 
-  final _$tituloAtom = Atom(name: '_CapEpModelBase.titulo');
+  late final _$tituloAtom =
+      Atom(name: '_CapEpModelBase.titulo', context: context);
 
   @override
-  String get titulo {
-    _$tituloAtom.context.enforceReadPolicy(_$tituloAtom);
-    _$tituloAtom.reportObserved();
+  String? get titulo {
+    _$tituloAtom.reportRead();
     return super.titulo;
   }
 
   @override
-  set titulo(String value) {
-    _$tituloAtom.context.conditionallyRunInAction(() {
+  set titulo(String? value) {
+    _$tituloAtom.reportWrite(value, super.titulo, () {
       super.titulo = value;
-      _$tituloAtom.reportChanged();
-    }, _$tituloAtom, name: '${_$tituloAtom.name}_set');
+    });
   }
 
-  final _$linkAtom = Atom(name: '_CapEpModelBase.link');
+  late final _$linkAtom = Atom(name: '_CapEpModelBase.link', context: context);
 
   @override
-  String get link {
-    _$linkAtom.context.enforceReadPolicy(_$linkAtom);
-    _$linkAtom.reportObserved();
+  String? get link {
+    _$linkAtom.reportRead();
     return super.link;
   }
 
   @override
-  set link(String value) {
-    _$linkAtom.context.conditionallyRunInAction(() {
+  set link(String? value) {
+    _$linkAtom.reportWrite(value, super.link, () {
       super.link = value;
-      _$linkAtom.reportChanged();
-    }, _$linkAtom, name: '${_$linkAtom.name}_set');
+    });
   }
 
-  final _$infoAtom = Atom(name: '_CapEpModelBase.info');
+  late final _$infoAtom = Atom(name: '_CapEpModelBase.info', context: context);
 
   @override
-  String get info {
-    _$infoAtom.context.enforceReadPolicy(_$infoAtom);
-    _$infoAtom.reportObserved();
+  String? get info {
+    _$infoAtom.reportRead();
     return super.info;
   }
 
   @override
-  set info(String value) {
-    _$infoAtom.context.conditionallyRunInAction(() {
+  set info(String? value) {
+    _$infoAtom.reportWrite(value, super.info, () {
       super.info = value;
-      _$infoAtom.reportChanged();
-    }, _$infoAtom, name: '${_$infoAtom.name}_set');
+    });
   }
 
-  final _$imagemAtom = Atom(name: '_CapEpModelBase.imagem');
+  late final _$imagemAtom =
+      Atom(name: '_CapEpModelBase.imagem', context: context);
 
   @override
-  String get imagem {
-    _$imagemAtom.context.enforceReadPolicy(_$imagemAtom);
-    _$imagemAtom.reportObserved();
+  String? get imagem {
+    _$imagemAtom.reportRead();
     return super.imagem;
   }
 
   @override
-  set imagem(String value) {
-    _$imagemAtom.context.conditionallyRunInAction(() {
+  set imagem(String? value) {
+    _$imagemAtom.reportWrite(value, super.imagem, () {
       super.imagem = value;
-      _$imagemAtom.reportChanged();
-    }, _$imagemAtom, name: '${_$imagemAtom.name}_set');
+    });
   }
 
-  final _$statusAtom = Atom(name: '_CapEpModelBase.status');
+  late final _$statusAtom =
+      Atom(name: '_CapEpModelBase.status', context: context);
 
   @override
   bool get status {
-    _$statusAtom.context.enforceReadPolicy(_$statusAtom);
-    _$statusAtom.reportObserved();
+    _$statusAtom.reportRead();
     return super.status;
   }
 
   @override
   set status(bool value) {
-    _$statusAtom.context.conditionallyRunInAction(() {
+    _$statusAtom.reportWrite(value, super.status, () {
       super.status = value;
-      _$statusAtom.reportChanged();
-    }, _$statusAtom, name: '${_$statusAtom.name}_set');
+    });
   }
 
-  final _$_CapEpModelBaseActionController =
-      ActionController(name: '_CapEpModelBase');
+  late final _$_CapEpModelBaseActionController =
+      ActionController(name: '_CapEpModelBase', context: context);
 
   @override
   void mudarStatus({bool add = false}) {
-    final _$actionInfo = _$_CapEpModelBaseActionController.startAction();
+    final _$actionInfo = _$_CapEpModelBaseActionController.startAction(
+        name: '_CapEpModelBase.mudarStatus');
     try {
       return super.mudarStatus(add: add);
     } finally {
@@ -146,8 +152,13 @@ mixin _$CapEpModel on _CapEpModelBase, Store {
 
   @override
   String toString() {
-    final string =
-        'titulo: ${titulo.toString()},link: ${link.toString()},info: ${info.toString()},imagem: ${imagem.toString()},status: ${status.toString()},tituloFormatado: ${tituloFormatado.toString()}';
-    return '{$string}';
+    return '''
+titulo: ${titulo},
+link: ${link},
+info: ${info},
+imagem: ${imagem},
+status: ${status},
+tituloFormatado: ${tituloFormatado}
+    ''';
   }
 }

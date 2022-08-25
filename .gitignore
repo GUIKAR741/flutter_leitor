@@ -8,7 +8,6 @@
 .buildlog/
 .history
 .svn/
-hive
 
 # IntelliJ related
 *.iml
@@ -23,6 +22,7 @@ hive
 
 # Flutter/Dart/Pub related
 **/doc/api/
+**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
@@ -34,11 +34,13 @@ hive
 # Web related
 lib/generated_plugin_registrant.dart
 
-# Exceptions to above rules.
-!/packages/flutter_tools/test/data/dart_dependencies_test/**/.packages
+# Symbolication related
+app.*.symbols
 
-coverage
-test/.test_coverage.dart
+# Obfuscation related
+app.*.map.json
 
-android/key.properties
-android/app/keystore
+# Android Studio will place build artifacts here
+/android/app/debug
+/android/app/profile
+/android/app/release

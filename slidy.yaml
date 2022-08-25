@@ -1,0 +1,77 @@
+slidy: '1'
+
+variables:
+  release: flutter build apk --release
+  clean: flutter clean
+  get: flutter pub get
+  runner: flutter pub run build_runner
+  icon: flutter pub run flutter_launcher_icons:main
+  splash: flutter pub run flutter_native_splash:create
+
+scripts:
+  release_build:
+    steps:
+      - name: "Build App Release"
+        run: ${Local.var.release}
+  icon_build:
+    steps:
+      - name: "Build AppIcon"
+        run: ${Local.var.icon}
+
+  splash_build:
+    steps:
+      - name: "Build SplashScreen"
+        run: ${Local.var.splash}
+
+  mobx_build: ${Local.var.runner} build
+  mobx_watch:
+    steps:
+      - name: "Clean"
+        run: ${Local.var.clean}
+
+      - name: "GetPackages"
+        description: "Get packages"
+        run: ${Local.var.get}
+
+      - name: "Buildrunner"
+        description: "Construir classes auto geradas"
+        run: ${Local.var.runner} watch --delete-conflicting-outputs --use-polling-watcher
+  mobx_build_clean:
+    steps:
+      - name: "Clean"
+        run: ${Local.var.clean}
+
+      - name: "GetPackages"
+        description: "Get packages"
+        run: ${Local.var.get}
+
+      - name: "Buildrunner"
+        description: "Construir classes auto geradas"
+        run: ${Local.var.runner} build --delete-conflicting-outputs --use-polling-watcher
+
+  doctor: flutter doctor
+
+  clean:
+    name: "Clean"
+    run: flutter clean
+
+  cleanup:
+    description: "cleanup project"
+    steps:
+      - name: "Clean"
+        run: flutter clean
+
+      - name: "GetPackages"
+        description: "Get packages"
+        run: flutter pub get
+
+      - name: "PodClean"
+        description: "Execute pod clean"
+        shell: bash   # default: command. options (command|bash|sh|zsh|pwsh)
+        condition: "${System.operatingSystem} == macos"
+        working-directory: ios
+        run: |-
+          rm Podfile.lock
+          pod deintegrate
+          pod update
+          pod install
