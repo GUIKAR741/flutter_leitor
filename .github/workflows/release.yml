@@ -25,8 +25,8 @@ jobs:
       run: flutter pub get
     - name: Analyze Project
       run: flutter analyze
-    - name: Run Tests
-      run: flutter test
+#    - name: Run Tests
+#      run: flutter test
     - name: Keystore Properties
       run: echo $KEYSTORE_PROPERTIES | base64 --decode > android/key.properties
       env:
@@ -58,7 +58,7 @@ jobs:
         asset_name: Flutter_Leitor.apk
         asset_content_type: application/vnd.android.package-archive
     - name: Upload Release to Firebase App Distribution
-      uses: wzieba/Firebase-Distribution-Github-Action@v1.2.1
+      uses: wzieba/Firebase-Distribution-Github-Action@v1.3.4
       with:
         appId: ${{secrets.FIREBASE_APP_ID}}
         token: ${{secrets.FIREBASE_TOKEN}}
