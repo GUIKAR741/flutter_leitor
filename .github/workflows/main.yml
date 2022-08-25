@@ -2,7 +2,7 @@ name: Analizes e Testes
 
 on:
   push:
-    branches:
+    branches-ignore:
       - '*'
     tags-ignore:
       - '*'
