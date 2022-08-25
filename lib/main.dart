@@ -10,6 +10,7 @@ import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:leitor/app/shared/models/titulo_model.dart';
 import 'package:leitor/firebase_options.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:url_strategy/url_strategy.dart';
 
 import 'app/app_module.dart';
 import 'app/app_widget.dart';
@@ -58,6 +59,7 @@ void main() async {
     await Hive.openBox<TituloModel>(hqs);
     await Hive.openBox<TituloModel>(mangas);
     await Hive.openBox<String>('data');
+    setPathUrlStrategy();
     runApp(ModularApp(
       module: AppModule(),
       child: const AppWidget(),
