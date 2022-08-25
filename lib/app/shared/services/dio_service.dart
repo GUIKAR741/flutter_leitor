@@ -56,7 +56,9 @@ class DioService extends Disposable {
     Response response;
     try {
       Map<String, dynamic> headers = {
+        'Access-Control-Allow-Methods': '*',
         'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': '*'
       };
       options?.headers?.addAll(headers);
       response = await client.get(
