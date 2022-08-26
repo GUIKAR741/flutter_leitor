@@ -15,10 +15,10 @@ class DioService extends Disposable {
   FirebaseCrashlytics? _crashlytics;
   final Map<String, dynamic> headers = kIsWeb
       ? {
-          'Access-Control-Allow-Methods': '*',
-          'Access-Control-Allow-Origin': '*',
-          'Access-Control-Allow-Headers': '*',
-          'Sec-Fetch-Mode': 'no-cors',
+          // 'Access-Control-Allow-Methods': '*',
+          // 'Access-Control-Allow-Origin': '*',
+          // 'Access-Control-Allow-Headers': '*',
+          // 'Sec-Fetch-Mode': 'no-cors',
         }
       : {};
 
