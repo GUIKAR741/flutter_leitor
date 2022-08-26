@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:html/dom.dart';
 import 'package:html/parser.dart';
 import 'package:leitor/app/shared/interfaces/repository_unique.dart';
@@ -17,7 +18,10 @@ class HqRepository extends IRepositoryUnique with RequisicaoMixin {
     try {
       data = await requisicaoErroDb(
         dio,
-        titulo.link!,
+        ((kIsWeb)
+                ? 'https://us-central1-leitor-mangas-flutter.cloudfunctions.net/cors?url='
+                : '') +
+            titulo.link!,
         refresh: refresh,
         cancel: cancel,
       );
@@ -51,7 +55,10 @@ class HqRepository extends IRepositoryUnique with RequisicaoMixin {
     try {
       data = await requisicaoErroDb(
         dio,
-        link,
+        ((kIsWeb)
+                ? 'https://us-central1-leitor-mangas-flutter.cloudfunctions.net/cors?url='
+                : '') +
+            link,
         refresh: refresh!,
         cancel: cancel,
       );
