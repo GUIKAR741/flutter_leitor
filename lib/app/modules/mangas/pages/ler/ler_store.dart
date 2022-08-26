@@ -1,23 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/shared/controllers/listagem_titulo.dart';
+import 'package:leitor/app/shared/interfaces/repository_unique.dart';
 import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
+import 'package:leitor/app/shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
+import 'package:leitor/app/shared/controllers/ler.dart';
 import 'package:mobx/mobx.dart';
-
-import '../../../../shared/controllers/ler.dart';
-import '../../../../shared/controllers/listagem_titulo.dart';
-import '../../../../shared/interfaces/repository_unique.dart';
-import '../../../../shared/widgets/pagina_imagem/pagina_imagem_widget.dart';
 
 part 'ler_store.g.dart';
 
-class LerStore extends _LerBase with _$LerStore{
-  LerStore(ListagemTitulo controller, CapEpModel capitulo) : super(controller, capitulo);
+class LerStore extends _LerBase with _$LerStore {
+  LerStore(ListagemTitulo controller, CapEpModel capitulo)
+      : super(controller, capitulo);
 }
 
 abstract class _LerBase extends Ler with Store {
   final IRepositoryUnique _repo = Modular.get();
 
-  _LerBase(ListagemTitulo controller, CapEpModel capitulo) : super(controller, capitulo);
+  _LerBase(ListagemTitulo controller, CapEpModel capitulo)
+      : super(controller, capitulo);
 
   @override
   @action

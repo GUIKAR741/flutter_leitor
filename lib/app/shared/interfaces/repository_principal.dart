@@ -22,5 +22,4 @@ abstract class IRepositoryPrincipal {
 
   Future<List<TituloModel>?>? pegarListagem(
       {bool refresh = false, CancelToken? cancel});
-
 }

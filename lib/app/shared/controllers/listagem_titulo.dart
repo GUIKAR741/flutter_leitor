@@ -1,15 +1,17 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:leitor/app/shared/controllers/auth_controller.dart';
+import 'package:leitor/app/shared/controllers/firestore_controller.dart';
+import 'package:leitor/app/shared/interfaces/repository_unique.dart';
+import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
+import 'package:leitor/app/shared/models/titulo_model.dart';
 import 'package:mobx/mobx.dart';
 import 'package:scroll_to_index/scroll_to_index.dart';
-
-import '../controllers/firestore_controller.dart';
-import '../interfaces/repository_unique.dart';
-import '../models/capitulo_episodio_model.dart';
-import '../models/titulo_model.dart';
-import 'auth_controller.dart';
 
 part 'listagem_titulo.g.dart';
 
@@ -23,8 +25,10 @@ abstract class _ListagemTituloBase extends Disposable with Store {
     axis: Axis.vertical,
   );
   final CancelToken _cancel = CancelToken();
-  final AuthController authController = Modular.get();
-  final FirestoreController _firestoreController = Modular.get();
+  final AuthController? authController =
+      (kIsWeb || !Platform.isLinux) ? Modular.get() : null;
+  final FirestoreController? _firestoreController =
+      (kIsWeb || !Platform.isLinux) ? Modular.get() : null;
 
   final String nomeBox;
   Box<TituloModel>? _box;
@@ -84,8 +88,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
         titulo?.lista = _box!.containsKey(titulo!.nomeFormatado)
             ? _box!.get(titulo?.nomeFormatado)!.lista
             : <String, CapEpModel>{};
-        if (authController.status == AuthStatus.logged) {
-          await _firestoreController.copiarDadosNuvem(
+        if (authController?.status == AuthStatus.logged) {
+          await _firestoreController?.copiarDadosNuvem(
             colecao: _colecao!,
             titulo: titulo!,
             box: _box!,
@@ -105,7 +109,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
                   }
                 }
               }
-              scroll.scrollToIndex(ind! + 1, duration: const Duration(seconds: 1));
+              scroll.scrollToIndex(ind! + 1,
+                  duration: const Duration(seconds: 1));
             } else {
               scroll.scrollToIndex(0);
             }
@@ -113,9 +118,9 @@ abstract class _ListagemTituloBase extends Disposable with Store {
         } else {
           scroll.scrollToIndex(0);
         }
-        if (authController.status == AuthStatus.logged) {
+        if (authController?.status == AuthStatus.logged) {
           _firestoreController
-              .copiarDadosParaNuvem(
+              ?.copiarDadosParaNuvem(
             colecao: _colecao!,
             titulo: titulo!,
             box: _box!,
@@ -138,8 +143,8 @@ abstract class _ListagemTituloBase extends Disposable with Store {
   }) async {
     value.mudarStatus(add: add);
     titulo?.addLista(key, value, add: add);
-    if (authController.status == AuthStatus.logged) {
-      _firestoreController.atualizarDados(
+    if (authController?.status == AuthStatus.logged) {
+      _firestoreController?.atualizarDados(
         colecao: _colecao!,
         titulo: titulo!,
         value: value,

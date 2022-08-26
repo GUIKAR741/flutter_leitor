@@ -32,7 +32,11 @@ class MangaRepository extends IRepositoryUnique with RequisicaoMixin {
     List<CapEpModel> capitulos = [];
     for (var data in divs) {
       capitulos.add(CapEpModel(
-          titulo: data.querySelector('a')!.text.replaceAll('Cap.', 'Cap').replaceAll('.', ' '),
+          titulo: data
+              .querySelector('a')!
+              .text
+              .replaceAll('Cap.', 'Cap')
+              .replaceAll('.', ' '),
           link: data.querySelector('a')!.attributes['href'],
           info: data.querySelector('a')!.nextElementSibling!.innerHtml));
     }

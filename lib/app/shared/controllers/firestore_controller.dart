@@ -1,11 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:leitor/app/shared/controllers/auth_controller.dart';
+import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
+import 'package:leitor/app/shared/models/titulo_model.dart';
 import 'package:mobx/mobx.dart';
-
-import '../controllers/auth_controller.dart';
-import '../models/capitulo_episodio_model.dart';
-import '../models/titulo_model.dart';
 
 part 'firestore_controller.g.dart';
 

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:extended_image/extended_image.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -18,14 +20,16 @@ class CardWidget extends StatelessWidget {
         Row(
           children: <Widget>[
             Expanded(
-              child: kIsWeb ? ExtendedImage.network(
-                titulo.imagem!,
-                height: 300,
-              ): ExtendedImage.network(
-                titulo.imagem!,
-                height: 300,
-                fit: BoxFit.fill,
-              ),
+              child: kIsWeb || Platform.isLinux
+                  ? ExtendedImage.network(
+                      titulo.imagem!,
+                      height: 300,
+                    )
+                  : ExtendedImage.network(
+                      titulo.imagem!,
+                      height: 300,
+                      fit: BoxFit.fill,
+                    ),
             ),
           ],
         ),

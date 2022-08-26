@@ -3,8 +3,7 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:leitor/app/shared/controllers/listagem_titulo.dart';
 import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:leitor/app/shared/widgets/item_lista/item_listagem_titulo.dart';
-
-import 'pesquisar_widget.dart';
+import 'package:leitor/app/shared/widgets/pesquisar/pesquisar_widget.dart';
 
 class PesquisarCapituloEpisodio extends Pesquisar {
   final String rota;

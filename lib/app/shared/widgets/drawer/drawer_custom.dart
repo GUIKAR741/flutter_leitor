@@ -1,10 +1,12 @@
+import 'dart:io';
+
 import 'package:extended_image/extended_image.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
-
-import './drawer_custom_controller.dart';
-import '../../controllers/auth_controller.dart';
+import 'package:leitor/app/shared/controllers/auth_controller.dart';
+import 'package:leitor/app/shared/widgets/drawer/drawer_custom_controller.dart';
 
 class DrawerCustom extends StatelessWidget {
   final DrawerCustomController controller = Modular.get();
@@ -24,7 +26,7 @@ class DrawerCustom extends StatelessWidget {
           leading: const Icon(Icons.book),
           title: const Text('HQs'),
           onTap: () => Modular.to.pushNamedAndRemoveUntil(
-            '/hq/',
+            '/hqs/',
             ModalRoute.withName('/'),
           ),
         ),
@@ -44,7 +46,8 @@ class DrawerCustom extends StatelessWidget {
         //     ModalRoute.withName('/'),
         //   ),
         // ),
-        controller.authController.status != AuthStatus.logged
+        controller.authController?.status != AuthStatus.logged &&
+                (kIsWeb || !Platform.isLinux)
             ? logar()
             : Container()
       ],
@@ -60,16 +63,14 @@ class DrawerCustom extends StatelessWidget {
   }
 
   Widget userAccount(context) {
-    switch (controller.authController.status) {
+    switch (controller.authController?.status) {
       case AuthStatus.logged:
         return UserAccountsDrawerHeader(
-          accountName: Text(controller.authController.user!.displayName!),
-          accountEmail: Text(controller.authController.user!.email!),
+          accountName: Text(controller.authController!.user!.displayName!),
+          accountEmail: Text(controller.authController!.user!.email!),
           currentAccountPicture: CircleAvatar(
             backgroundImage: ExtendedImage.network(
-              controller.authController.user!.photoURL!
-                  .replaceAll("s96-c", "s192-c")
-                  .toString(),
+              controller.authController!.user!.photoURL!,
             ).image,
           ),
           onDetailsPressed: controller.mostrarLogout,

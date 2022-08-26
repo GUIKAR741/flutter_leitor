@@ -2,10 +2,9 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:hive/hive.dart';
+import 'package:leitor/app/shared/interfaces/repository_principal.dart';
+import 'package:leitor/app/shared/models/titulo_model.dart';
 import 'package:mobx/mobx.dart';
-
-import '../interfaces/repository_principal.dart';
-import '../models/titulo_model.dart';
 
 part 'listagem_principal.g.dart';
 

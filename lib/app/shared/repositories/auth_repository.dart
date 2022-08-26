@@ -1,8 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-
-import '../interfaces/auth.dart';
+import 'package:leitor/app/shared/interfaces/auth.dart';
 
 class AuthRepository implements IAuthRepository {
   final GoogleSignIn _googleSignIn = GoogleSignIn();

@@ -1,4 +1,3 @@
-
 import 'package:flutter_modular/flutter_modular.dart';
 import 'package:leitor/app/modules/hqs/pages/ler/ler_store.dart';
 import 'package:leitor/app/modules/mangas/pages/manga/manga_page.dart';
@@ -15,9 +14,9 @@ class MangasModule extends Module {
     Bind.lazySingleton((i) => MangasStore()),
     Bind.lazySingleton((i) => MangaStore()),
     Bind.factory((i) => LerStore(
-      i.args.data['controller'],
-      i.args.data['capEp'],
-    )),
+          i.args.data['controller'],
+          i.args.data['capEp'],
+        )),
     Bind.lazySingleton((i) => MangasRepository()),
     Bind.lazySingleton((i) => MangaRepository()),
   ];

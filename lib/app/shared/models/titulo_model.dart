@@ -2,9 +2,8 @@ import 'dart:convert';
 
 import 'package:equatable/equatable.dart';
 import 'package:hive/hive.dart';
+import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
 import 'package:mobx/mobx.dart';
-
-import 'capitulo_episodio_model.dart';
 
 part 'titulo_model.g.dart';
 

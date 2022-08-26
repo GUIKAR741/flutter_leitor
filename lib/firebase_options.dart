@@ -61,8 +61,10 @@ class DefaultFirebaseOptions {
     projectId: 'leitor-mangas-flutter',
     databaseURL: 'https://leitor-mangas-flutter.firebaseio.com',
     storageBucket: 'leitor-mangas-flutter.appspot.com',
-    androidClientId: '83700052099-0gto5pc5f0k92cn3lt650qd1up2eaflf.apps.googleusercontent.com',
-    iosClientId: '83700052099-022v9ok8n3te8ptdh8osphe5272dc5nv.apps.googleusercontent.com',
+    androidClientId:
+        '83700052099-0gto5pc5f0k92cn3lt650qd1up2eaflf.apps.googleusercontent.com',
+    iosClientId:
+        '83700052099-022v9ok8n3te8ptdh8osphe5272dc5nv.apps.googleusercontent.com',
     iosBundleId: 'br.com.guilherme.leitor',
   );
 
@@ -73,8 +75,10 @@ class DefaultFirebaseOptions {
     projectId: 'leitor-mangas-flutter',
     databaseURL: 'https://leitor-mangas-flutter.firebaseio.com',
     storageBucket: 'leitor-mangas-flutter.appspot.com',
-    androidClientId: '83700052099-0gto5pc5f0k92cn3lt650qd1up2eaflf.apps.googleusercontent.com',
-    iosClientId: '83700052099-022v9ok8n3te8ptdh8osphe5272dc5nv.apps.googleusercontent.com',
+    androidClientId:
+        '83700052099-0gto5pc5f0k92cn3lt650qd1up2eaflf.apps.googleusercontent.com',
+    iosClientId:
+        '83700052099-022v9ok8n3te8ptdh8osphe5272dc5nv.apps.googleusercontent.com',
     iosBundleId: 'br.com.guilherme.leitor',
   );
 }

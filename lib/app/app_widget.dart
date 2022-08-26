@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:asuka/asuka.dart' as asuka;
 import 'package:firebase_analytics/observer.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
@@ -15,14 +18,15 @@ class AppWidget extends StatefulWidget {
 }
 
 class _AppWidgetState extends State<AppWidget> {
-  final FirebaseAnalyticsObserver _observer = Modular.get();
+  final FirebaseAnalyticsObserver? _observer =
+      (kIsWeb || !Platform.isLinux) ? Modular.get() : null;
   final ThemeStore controller = Modular.get();
 
   @override
   Widget build(BuildContext context) {
     Modular.setObservers([
       asuka.asukaHeroController,
-      _observer,
+      if (_observer != null) _observer!,
     ]);
     Modular.setInitialRoute('/');
     return Observer(

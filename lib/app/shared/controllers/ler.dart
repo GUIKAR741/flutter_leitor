@@ -3,12 +3,11 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/shared/controllers/listagem_titulo.dart';
+import 'package:leitor/app/shared/models/capitulo_episodio_model.dart';
+import 'package:leitor/app/shared/widgets/ler_controle/ler_controle_controller.dart';
 import 'package:mobx/mobx.dart';
 import 'package:preload_page_view/preload_page_view.dart';
-
-import '../controllers/listagem_titulo.dart';
-import '../models/capitulo_episodio_model.dart';
-import '../widgets/ler_controle/ler_controle_controller.dart';
 
 part 'ler.g.dart';
 
@@ -69,8 +68,7 @@ abstract class _LerBase extends Disposable with Store {
     if (_paginacao) {
       pagina = "${_index + 1}/${imagens!.value!.length}";
       _imagens = imagens!.value!;
-      imagens =
-          Future.value([imagens!.value![_index]]).asObservable();
+      imagens = Future.value([imagens!.value![_index]]).asObservable();
       icone = Icons.play_arrow;
     } else {
       imagens = Future.value(_imagens!).asObservable();

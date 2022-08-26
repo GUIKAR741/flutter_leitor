@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_cache_interceptor_hive_store/dio_cache_interceptor_hive_store.dart';
@@ -11,12 +13,14 @@ class DioService extends Disposable {
   DioCacheInterceptor? interceptor;
   CacheOptions? optionsCache;
   FirebaseCrashlytics? _crashlytics;
-  final Map<String, dynamic> headers = {
-    'Access-Control-Allow-Methods': '*',
-    'Access-Control-Allow-Origin': '*',
-    'Access-Control-Allow-Headers': '*',
-    'Sec-Fetch-Mode':'no-cors',
-  };
+  final Map<String, dynamic> headers = kIsWeb
+      ? {
+          'Access-Control-Allow-Methods': '*',
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Allow-Headers': '*',
+          'Sec-Fetch-Mode': 'no-cors',
+        }
+      : {};
 
   @protected
   Future<void> initInterceptor() async {
@@ -36,7 +40,7 @@ class DioService extends Disposable {
     interceptor = DioCacheInterceptor(
       options: optionsCache!,
     );
-    if (!kIsWeb) {
+    if (!kIsWeb && !Platform.isLinux) {
       _crashlytics = Modular.get();
     }
   }

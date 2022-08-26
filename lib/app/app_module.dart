@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_crashlytics/firebase_crashlytics.dart';
 import 'package:flutter/foundation.dart';
@@ -15,15 +17,21 @@ import 'package:leitor/app/shared/widgets/drawer/drawer_custom_controller.dart';
 class AppModule extends Module {
   @override
   final List<Bind> binds = [
-    Bind.lazySingleton((i) => AuthController()),
-    Bind.lazySingleton((i) => FirestoreController()),
+    if (kIsWeb || !Platform.isLinux)
+      Bind.lazySingleton((i) => AuthController()),
+    if (kIsWeb || !Platform.isLinux)
+      Bind.lazySingleton((i) => FirestoreController()),
     Bind.lazySingleton((i) => DioService()),
     Bind.lazySingleton((i) => ThemeStore()),
     Bind.lazySingleton((i) => DrawerCustomController()),
-    Bind.lazySingleton((i) => AuthRepository()),
-    Bind.singleton((i) => FirebaseAnalytics.instance),
-    Bind.singleton((i) => FirebaseAnalyticsObserver(analytics: i.get())),
-    if (!kIsWeb) Bind.singleton((i) => FirebaseCrashlytics.instance),
+    if (kIsWeb || !Platform.isLinux)
+      Bind.lazySingleton((i) => AuthRepository()),
+    if (kIsWeb || !Platform.isLinux)
+      Bind.singleton((i) => FirebaseAnalytics.instance),
+    if (kIsWeb || !Platform.isLinux)
+      Bind.singleton((i) => FirebaseAnalyticsObserver(analytics: i.get())),
+    if (!kIsWeb && !Platform.isLinux)
+      Bind.singleton((i) => FirebaseCrashlytics.instance),
   ];
 
   @override

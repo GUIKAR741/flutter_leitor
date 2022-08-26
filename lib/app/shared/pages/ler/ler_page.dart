@@ -3,11 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:flutter_modular/flutter_modular.dart';
+import 'package:leitor/app/shared/controllers/ler.dart';
+import 'package:leitor/app/shared/widgets/ler_controle/ler_controle.dart';
+import 'package:leitor/app/shared/widgets/mudar_pagina/mudar_pagina_widget.dart';
 import 'package:preload_page_view/preload_page_view.dart';
-
-import '../../controllers/ler.dart';
-import '../../widgets/ler_controle/ler_controle.dart';
-import '../../widgets/mudar_pagina/mudar_pagina_widget.dart';
 
 class LerPage extends StatefulWidget {
   const LerPage({Key? key}) : super(key: key);
